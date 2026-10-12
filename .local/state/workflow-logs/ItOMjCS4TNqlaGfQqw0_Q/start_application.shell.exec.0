@@ -1,0 +1,58 @@
+[32mConfiguration cache cleared![39m
+[32mNothing to migrate.[39m
+[32mApplication cache cleared![39m
+[32mStarting Laravel development server:[39m http://0.0.0.0:5000
+[101] [Mon Mar 30 14:50:36 2026] PHP 8.2.23 Development Server (http://0.0.0.0:5000) started
+[102] [Mon Mar 30 14:50:36 2026] PHP 8.2.23 Development Server (http://0.0.0.0:5000) started
+[103] [Mon Mar 30 14:50:36 2026] PHP 8.2.23 Development Server (http://0.0.0.0:5000) started
+[100] [Mon Mar 30 14:50:36 2026] PHP 8.2.23 Development Server (http://0.0.0.0:5000) started
+[104] [Mon Mar 30 14:50:36 2026] PHP 8.2.23 Development Server (http://0.0.0.0:5000) started
+[102] [Mon Mar 30 14:50:41 2026] 127.0.0.1:35128 Accepted
+[102] [Mon Mar 30 14:50:41 2026] 127.0.0.1:35128 Closing
+[102] [Mon Mar 30 14:50:41 2026] 127.0.0.1:35130 Accepted
+[102] [Mon Mar 30 14:50:41 2026] 127.0.0.1:35130 Closing
+[102] [Mon Mar 30 14:50:42 2026] 127.0.0.1:45574 Accepted
+[102] [Mon Mar 30 14:50:42 2026] 127.0.0.1:45574 [200]: GET /vertical/assets/plugins/simplebar/css/simplebar.css
+[102] [Mon Mar 30 14:50:42 2026] 127.0.0.1:45574 Closing
+[100] [Mon Mar 30 14:50:42 2026] 127.0.0.1:45588 Accepted
+[100] [Mon Mar 30 14:50:42 2026] 127.0.0.1:45588 [200]: GET /vertical/assets/plugins/perfect-scrollbar/css/perfect-scrollbar.css
+[100] [Mon Mar 30 14:50:42 2026] 127.0.0.1:45588 Closing
+[100] [Mon Mar 30 14:50:42 2026] 127.0.0.1:45590 Accepted
+[100] [Mon Mar 30 14:50:42 2026] 127.0.0.1:45590 [200]: GET /vertical/assets/plugins/metismenu/css/metisMenu.min.css
+[100] [Mon Mar 30 14:50:42 2026] 127.0.0.1:45590 Closing
+[103] [Mon Mar 30 14:50:42 2026] 127.0.0.1:45592 Accepted
+[103] [Mon Mar 30 14:50:42 2026] 127.0.0.1:45592 [200]: GET /vertical/assets/css/pace.min.css
+[103] [Mon Mar 30 14:50:42 2026] 127.0.0.1:45592 Closing
+[100] [Mon Mar 30 14:50:42 2026] 127.0.0.1:45608 Accepted
+[100] [Mon Mar 30 14:50:42 2026] 127.0.0.1:45608 [200]: GET /vertical/assets/css/bootstrap.min.css
+[104] [Mon Mar 30 14:50:43 2026] 127.0.0.1:45616 Accepted
+[104] [Mon Mar 30 14:50:43 2026] 127.0.0.1:45616 [200]: GET /vertical/assets/css/bootstrap-extended.css
+[104] [Mon Mar 30 14:50:43 2026] 127.0.0.1:45616 Closing
+[100] [Mon Mar 30 14:50:43 2026] 127.0.0.1:45608 Closing
+[104] [Mon Mar 30 14:50:43 2026] 127.0.0.1:45624 Accepted
+[104] [Mon Mar 30 14:50:43 2026] 127.0.0.1:45624 [200]: GET /vertical/assets/css/app.css
+[104] [Mon Mar 30 14:50:43 2026] 127.0.0.1:45624 Closing
+[102] [Mon Mar 30 14:50:43 2026] 127.0.0.1:45626 Accepted
+[102] [Mon Mar 30 14:50:43 2026] 127.0.0.1:45626 [200]: GET /vertical/assets/css/icons.css
+[102] [Mon Mar 30 14:50:43 2026] 127.0.0.1:45626 Closing
+[104] [Mon Mar 30 14:50:44 2026] 127.0.0.1:45630 Accepted
+[104] [Mon Mar 30 14:50:44 2026] 127.0.0.1:45630 [200]: GET /vertical/assets/js/pace.min.js
+[104] [Mon Mar 30 14:50:44 2026] 127.0.0.1:45630 Closing
+[104] [Mon Mar 30 14:50:51 2026] 127.0.0.1:45646 Accepted
+[101] [Mon Mar 30 14:50:51 2026] 127.0.0.1:45654 Accepted
+[104] [Mon Mar 30 14:50:51 2026] 127.0.0.1:45646 [200]: GET /vertical/assets/js/jquery.min.js
+[104] [Mon Mar 30 14:50:51 2026] 127.0.0.1:45646 Closing
+[101] [Mon Mar 30 14:50:51 2026] 127.0.0.1:45654 [200]: GET /vertical/assets/js/bootstrap.bundle.min.js
+[101] [Mon Mar 30 14:50:51 2026] 127.0.0.1:45654 Closing
+[101] [Mon Mar 30 14:50:55 2026] 127.0.0.1:51422 Accepted
+[101] [Mon Mar 30 14:50:55 2026] 127.0.0.1:51422 [200]: GET /vertical/assets/plugins/metismenu/js/metisMenu.min.js
+[102] [Mon Mar 30 14:50:55 2026] 127.0.0.1:51430 Accepted
+[102] [Mon Mar 30 14:50:55 2026] 127.0.0.1:51430 [200]: GET /vertical/assets/plugins/simplebar/js/simplebar.min.js
+[101] [Mon Mar 30 14:50:55 2026] 127.0.0.1:51422 Closing
+[102] [Mon Mar 30 14:50:55 2026] 127.0.0.1:51430 Closing
+[102] [Mon Mar 30 14:50:59 2026] 127.0.0.1:51446 Accepted
+[102] [Mon Mar 30 14:50:59 2026] 127.0.0.1:51446 [200]: GET /vertical/assets/js/app.js
+[103] [Mon Mar 30 14:50:59 2026] 127.0.0.1:51456 Accepted
+[103] [Mon Mar 30 14:50:59 2026] 127.0.0.1:51456 [200]: GET /vertical/assets/plugins/perfect-scrollbar/js/perfect-scrollbar.js
+[102] [Mon Mar 30 14:50:59 2026] 127.0.0.1:51446 Closing
+[103] [Mon Mar 30 14:50:59 2026] 127.0.0.1:51456 Closing

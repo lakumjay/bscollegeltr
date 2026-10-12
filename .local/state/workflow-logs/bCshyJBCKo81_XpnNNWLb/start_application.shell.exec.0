@@ -1,0 +1,349 @@
+[32mConfiguration cache cleared![39m
+[32mNothing to migrate.[39m
+[32mApplication cache cleared![39m
+[32mStarting Laravel development server:[39m http://0.0.0.0:5000
+[21651] [Thu Mar 26 14:04:10 2026] PHP 8.2.23 Development Server (http://0.0.0.0:5000) started
+[21652] [Thu Mar 26 14:04:10 2026] PHP 8.2.23 Development Server (http://0.0.0.0:5000) started
+[21653] [Thu Mar 26 14:04:10 2026] PHP 8.2.23 Development Server (http://0.0.0.0:5000) started
+[21650] [Thu Mar 26 14:04:10 2026] PHP 8.2.23 Development Server (http://0.0.0.0:5000) started
+[21654] [Thu Mar 26 14:04:10 2026] PHP 8.2.23 Development Server (http://0.0.0.0:5000) started
+[21653] [Thu Mar 26 14:04:11 2026] 127.0.0.1:49412 Accepted
+[21653] [Thu Mar 26 14:04:11 2026] 127.0.0.1:49412 Closing
+[21653] [Thu Mar 26 14:04:12 2026] 127.0.0.1:49426 Accepted
+[21653] [Thu Mar 26 14:04:12 2026] 127.0.0.1:49426 Closing
+[21653] [Thu Mar 26 14:04:12 2026] 127.0.0.1:49438 Accepted
+[21653] [Thu Mar 26 14:04:12 2026] 127.0.0.1:49438 Closing
+[21653] [Thu Mar 26 14:04:12 2026] 127.0.0.1:49446 Accepted
+[21653] [Thu Mar 26 14:04:12 2026] 127.0.0.1:49446 [200]: GET /vertical/assets/plugins/notifications/css/lobibox.min.css
+[21653] [Thu Mar 26 14:04:12 2026] 127.0.0.1:49446 Closing
+[21653] [Thu Mar 26 14:04:12 2026] 127.0.0.1:49456 Accepted
+[21653] [Thu Mar 26 14:04:12 2026] 127.0.0.1:49456 [200]: GET /vertical/assets/plugins/simplebar/css/simplebar.css
+[21653] [Thu Mar 26 14:04:12 2026] 127.0.0.1:49456 Closing
+[21653] [Thu Mar 26 14:04:12 2026] 127.0.0.1:49466 Accepted
+[21653] [Thu Mar 26 14:04:12 2026] 127.0.0.1:49466 [200]: GET /vertical/assets/plugins/perfect-scrollbar/css/perfect-scrollbar.css
+[21653] [Thu Mar 26 14:04:12 2026] 127.0.0.1:49466 Closing
+[21653] [Thu Mar 26 14:04:12 2026] 127.0.0.1:49482 Accepted
+[21653] [Thu Mar 26 14:04:12 2026] 127.0.0.1:49482 [200]: GET /vertical/assets/plugins/metismenu/css/metisMenu.min.css
+[21653] [Thu Mar 26 14:04:12 2026] 127.0.0.1:49482 Closing
+[21653] [Thu Mar 26 14:04:12 2026] 127.0.0.1:49488 Accepted
+[21653] [Thu Mar 26 14:04:12 2026] 127.0.0.1:49488 [200]: GET /vertical/assets/css/bootstrap.min.css
+[21653] [Thu Mar 26 14:04:12 2026] 127.0.0.1:49488 Closing
+[21651] [Thu Mar 26 14:04:12 2026] 127.0.0.1:49490 Accepted
+[21653] [Thu Mar 26 14:04:12 2026] 127.0.0.1:49494 Accepted
+[21653] [Thu Mar 26 14:04:12 2026] 127.0.0.1:49494 [200]: GET /vertical/assets/css/pace.min.css
+[21653] [Thu Mar 26 14:04:12 2026] 127.0.0.1:49494 Closing
+[21651] [Thu Mar 26 14:04:12 2026] 127.0.0.1:49490 [200]: GET /vertical/assets/plugins/datatable/css/dataTables.bootstrap5.min.css
+[21651] [Thu Mar 26 14:04:12 2026] 127.0.0.1:49490 Closing
+[21650] [Thu Mar 26 14:04:12 2026] 127.0.0.1:49502 Accepted
+[21650] [Thu Mar 26 14:04:12 2026] 127.0.0.1:49502 [200]: GET /vertical/assets/css/bootstrap-extended.css
+[21650] [Thu Mar 26 14:04:12 2026] 127.0.0.1:49502 Closing
+[21650] [Thu Mar 26 14:04:12 2026] 127.0.0.1:49512 Accepted
+[21650] [Thu Mar 26 14:04:12 2026] 127.0.0.1:49512 [200]: GET /vertical/assets/css/icons.css
+[21650] [Thu Mar 26 14:04:12 2026] 127.0.0.1:49512 Closing
+[21650] [Thu Mar 26 14:04:12 2026] 127.0.0.1:49522 Accepted
+[21650] [Thu Mar 26 14:04:12 2026] 127.0.0.1:49522 [200]: GET /vertical/assets/css/app.css
+[21650] [Thu Mar 26 14:04:12 2026] 127.0.0.1:49522 Closing
+[21650] [Thu Mar 26 14:04:12 2026] 127.0.0.1:49530 Accepted
+[21650] [Thu Mar 26 14:04:12 2026] 127.0.0.1:49530 [200]: GET /vertical/assets/css/semi-dark.css
+[21650] [Thu Mar 26 14:04:12 2026] 127.0.0.1:49530 Closing
+[21652] [Thu Mar 26 14:04:12 2026] 127.0.0.1:49534 Accepted
+[21652] [Thu Mar 26 14:04:12 2026] 127.0.0.1:49534 [200]: GET /vertical/assets/css/dark-theme.css
+[21652] [Thu Mar 26 14:04:12 2026] 127.0.0.1:49534 Closing
+[21650] [Thu Mar 26 14:04:12 2026] 127.0.0.1:49550 Accepted
+[21650] [Thu Mar 26 14:04:12 2026] 127.0.0.1:49550 [200]: GET /vertical/assets/css/header-colors.css
+[21650] [Thu Mar 26 14:04:12 2026] 127.0.0.1:49550 Closing
+[21650] [Thu Mar 26 14:04:13 2026] 127.0.0.1:49556 Accepted
+[21650] [Thu Mar 26 14:04:13 2026] 127.0.0.1:49556 [200]: GET /vertical/assets/js/pace.min.js
+[21650] [Thu Mar 26 14:04:13 2026] 127.0.0.1:49556 Closing
+[21650] [Thu Mar 26 14:04:13 2026] 127.0.0.1:49562 Accepted
+[21654] [Thu Mar 26 14:04:13 2026] 127.0.0.1:49570 Accepted
+[21654] [Thu Mar 26 14:04:13 2026] 127.0.0.1:49570 [200]: GET /vertical/assets/js/jquery.min.js
+[21654] [Thu Mar 26 14:04:13 2026] 127.0.0.1:49570 Closing
+[21650] [Thu Mar 26 14:04:13 2026] 127.0.0.1:49562 Closing
+[21650] [Thu Mar 26 14:04:13 2026] 127.0.0.1:49576 Accepted
+[21650] [Thu Mar 26 14:04:13 2026] 127.0.0.1:49576 [200]: GET /vertical/assets/js/bootstrap.bundle.min.js
+[21650] [Thu Mar 26 14:04:13 2026] 127.0.0.1:49576 Closing
+[21650] [Thu Mar 26 14:04:13 2026] 127.0.0.1:49590 Accepted
+[21650] [Thu Mar 26 14:04:13 2026] 127.0.0.1:49590 [200]: GET /vertical/assets/plugins/simplebar/js/simplebar.min.js
+[21650] [Thu Mar 26 14:04:13 2026] 127.0.0.1:49590 Closing
+[21650] [Thu Mar 26 14:04:13 2026] 127.0.0.1:49602 Accepted
+[21650] [Thu Mar 26 14:04:13 2026] 127.0.0.1:49602 [200]: GET /vertical/assets/plugins/metismenu/js/metisMenu.min.js
+[21650] [Thu Mar 26 14:04:13 2026] 127.0.0.1:49602 Closing
+[21650] [Thu Mar 26 14:04:13 2026] 127.0.0.1:49612 Accepted
+[21650] [Thu Mar 26 14:04:13 2026] 127.0.0.1:49612 [200]: GET /vertical/assets/plugins/perfect-scrollbar/js/perfect-scrollbar.js
+[21650] [Thu Mar 26 14:04:13 2026] 127.0.0.1:49612 Closing
+[21650] [Thu Mar 26 14:04:13 2026] 127.0.0.1:49626 Accepted
+[21650] [Thu Mar 26 14:04:13 2026] 127.0.0.1:49626 [200]: GET /vertical/assets/plugins/datatable/js/jquery.dataTables.min.js
+[21650] [Thu Mar 26 14:04:13 2026] 127.0.0.1:49626 Closing
+[21650] [Thu Mar 26 14:04:13 2026] 127.0.0.1:49638 Accepted
+[21650] [Thu Mar 26 14:04:13 2026] 127.0.0.1:49638 [200]: GET /vertical/assets/plugins/datatable/js/dataTables.bootstrap5.min.js
+[21650] [Thu Mar 26 14:04:13 2026] 127.0.0.1:49638 Closing
+[21650] [Thu Mar 26 14:04:13 2026] 127.0.0.1:49642 Accepted
+[21650] [Thu Mar 26 14:04:13 2026] 127.0.0.1:49642 [200]: GET /vertical/assets/plugins/notifications/js/lobibox.min.js
+[21650] [Thu Mar 26 14:04:13 2026] 127.0.0.1:49642 Closing
+[21650] [Thu Mar 26 14:04:13 2026] 127.0.0.1:49654 Accepted
+[21650] [Thu Mar 26 14:04:13 2026] 127.0.0.1:49654 [200]: GET /vertical/assets/plugins/notifications/js/notifications.min.js
+[21650] [Thu Mar 26 14:04:13 2026] 127.0.0.1:49654 Closing
+[21650] [Thu Mar 26 14:04:13 2026] 127.0.0.1:49656 Accepted
+[21650] [Thu Mar 26 14:04:13 2026] 127.0.0.1:49656 [200]: GET /vertical/assets/plugins/notifications/js/notification-custom-script.js
+[21650] [Thu Mar 26 14:04:13 2026] 127.0.0.1:49656 Closing
+[21653] [Thu Mar 26 14:04:13 2026] 127.0.0.1:49670 Accepted
+[21653] [Thu Mar 26 14:04:13 2026] 127.0.0.1:49670 [200]: GET /vertical/assets/plugins/chartjs/js/Chart.extension.js
+[21653] [Thu Mar 26 14:04:13 2026] 127.0.0.1:49670 Closing
+[21650] [Thu Mar 26 14:04:13 2026] 127.0.0.1:49686 Accepted
+[21650] [Thu Mar 26 14:04:13 2026] 127.0.0.1:49686 [200]: GET /vertical/assets/plugins/chartjs/js/Chart.min.js
+[21650] [Thu Mar 26 14:04:13 2026] 127.0.0.1:49686 Closing
+[21653] [Thu Mar 26 14:04:13 2026] 127.0.0.1:49692 Accepted
+[21653] [Thu Mar 26 14:04:13 2026] 127.0.0.1:49692 [200]: GET /vertical/assets/js/app.js
+[21653] [Thu Mar 26 14:04:13 2026] 127.0.0.1:49692 Closing
+[21654] [Thu Mar 26 14:04:13 2026] 127.0.0.1:49706 Accepted
+[21654] [Thu Mar 26 14:04:13 2026] 127.0.0.1:49706 [200]: GET /vertical/assets/images/bg-themes/1.png
+[21654] [Thu Mar 26 14:04:13 2026] 127.0.0.1:49706 Closing
+[21654] [Thu Mar 26 14:04:13 2026] 127.0.0.1:49714 Accepted
+[21654] [Thu Mar 26 14:04:13 2026] 127.0.0.1:49714 [200]: GET /vertical/assets/images/bg-themes/4.png
+[21654] [Thu Mar 26 14:04:13 2026] 127.0.0.1:49714 Closing
+[21654] [Thu Mar 26 14:04:13 2026] 127.0.0.1:49720 Accepted
+[21654] [Thu Mar 26 14:04:13 2026] 127.0.0.1:49720 [200]: GET /vertical/assets/images/bg-themes/2.png
+[21654] [Thu Mar 26 14:04:13 2026] 127.0.0.1:49720 Closing
+[21654] [Thu Mar 26 14:04:13 2026] 127.0.0.1:49724 Accepted
+[21654] [Thu Mar 26 14:04:13 2026] 127.0.0.1:49724 [200]: GET /vertical/assets/images/bg-themes/3.png
+[21654] [Thu Mar 26 14:04:13 2026] 127.0.0.1:49724 Closing
+[21652] [Thu Mar 26 14:04:13 2026] 127.0.0.1:49740 Accepted
+[21652] [Thu Mar 26 14:04:13 2026] 127.0.0.1:49740 [200]: GET /vertical/assets/images/bg-themes/5.png
+[21652] [Thu Mar 26 14:04:13 2026] 127.0.0.1:49740 Closing
+[21652] [Thu Mar 26 14:04:14 2026] 127.0.0.1:49742 Accepted
+[21652] [Thu Mar 26 14:04:14 2026] 127.0.0.1:49742 [200]: GET /vertical/assets/images/bg-themes/6.png
+[21652] [Thu Mar 26 14:04:14 2026] 127.0.0.1:49742 Closing
+[21653] [Thu Mar 26 14:04:14 2026] 127.0.0.1:49756 Accepted
+[21653] [Thu Mar 26 14:04:14 2026] 127.0.0.1:49756 [200]: GET /vertical/assets/images/bg-themes/7.png
+[21653] [Thu Mar 26 14:04:14 2026] 127.0.0.1:49756 Closing
+[21653] [Thu Mar 26 14:04:14 2026] 127.0.0.1:49762 Accepted
+[21653] [Thu Mar 26 14:04:14 2026] 127.0.0.1:49762 [200]: GET /vertical/assets/images/bg-themes/8.png
+[21653] [Thu Mar 26 14:04:14 2026] 127.0.0.1:49762 Closing
+[21653] [Thu Mar 26 14:04:14 2026] 127.0.0.1:49764 Accepted
+[21653] [Thu Mar 26 14:04:14 2026] 127.0.0.1:49764 [200]: GET /vertical/assets/fonts/boxicons.woff2
+[21653] [Thu Mar 26 14:04:14 2026] 127.0.0.1:49764 Closing
+[21653] [Thu Mar 26 14:04:33 2026] 127.0.0.1:38166 Accepted
+[21653] [Thu Mar 26 14:04:33 2026] 127.0.0.1:38166 Closing
+[21653] [Thu Mar 26 14:04:35 2026] 127.0.0.1:38174 Accepted
+[21653] [Thu Mar 26 14:04:35 2026] 127.0.0.1:38174 [200]: GET /vertical/assets/plugins/notifications/css/lobibox.min.css
+[21653] [Thu Mar 26 14:04:35 2026] 127.0.0.1:38174 Closing
+[21651] [Thu Mar 26 14:04:35 2026] 127.0.0.1:38186 Accepted
+[21651] [Thu Mar 26 14:04:35 2026] 127.0.0.1:38186 [200]: GET /vertical/assets/plugins/simplebar/css/simplebar.css
+[21651] [Thu Mar 26 14:04:35 2026] 127.0.0.1:38186 Closing
+[21651] [Thu Mar 26 14:04:36 2026] 127.0.0.1:38198 Accepted
+[21651] [Thu Mar 26 14:04:36 2026] 127.0.0.1:38198 [200]: GET /vertical/assets/plugins/datatable/css/dataTables.bootstrap5.min.css
+[21653] [Thu Mar 26 14:04:36 2026] 127.0.0.1:38214 Accepted
+[21651] [Thu Mar 26 14:04:36 2026] 127.0.0.1:38198 Closing
+[21653] [Thu Mar 26 14:04:36 2026] 127.0.0.1:38214 [200]: GET /vertical/assets/plugins/perfect-scrollbar/css/perfect-scrollbar.css
+[21653] [Thu Mar 26 14:04:36 2026] 127.0.0.1:38214 Closing
+[21653] [Thu Mar 26 14:04:36 2026] 127.0.0.1:38216 Accepted
+[21653] [Thu Mar 26 14:04:36 2026] 127.0.0.1:38218 Accepted
+[21653] [Thu Mar 26 14:04:36 2026] 127.0.0.1:38216 [200]: GET /vertical/assets/css/pace.min.css
+[21653] [Thu Mar 26 14:04:36 2026] 127.0.0.1:38218 [200]: GET /vertical/assets/plugins/metismenu/css/metisMenu.min.css
+[21653] [Thu Mar 26 14:04:36 2026] 127.0.0.1:38216 Closing
+[21653] [Thu Mar 26 14:04:36 2026] 127.0.0.1:38218 Closing
+[21653] [Thu Mar 26 14:04:36 2026] 127.0.0.1:38226 Accepted
+[21653] [Thu Mar 26 14:04:36 2026] 127.0.0.1:38226 [200]: GET /vertical/assets/css/bootstrap-extended.css
+[21653] [Thu Mar 26 14:04:36 2026] 127.0.0.1:38226 Closing
+[21653] [Thu Mar 26 14:04:36 2026] 127.0.0.1:38228 Accepted
+[21653] [Thu Mar 26 14:04:36 2026] 127.0.0.1:38228 [200]: GET /vertical/assets/css/bootstrap.min.css
+[21653] [Thu Mar 26 14:04:36 2026] 127.0.0.1:38228 Closing
+[21651] [Thu Mar 26 14:04:36 2026] 127.0.0.1:38244 Accepted
+[21650] [Thu Mar 26 14:04:36 2026] 127.0.0.1:38252 Accepted
+[21651] [Thu Mar 26 14:04:36 2026] 127.0.0.1:38244 [200]: GET /vertical/assets/css/header-colors.css
+[21650] [Thu Mar 26 14:04:36 2026] 127.0.0.1:38252 [200]: GET /vertical/assets/css/icons.css
+[21651] [Thu Mar 26 14:04:36 2026] 127.0.0.1:38262 Accepted
+[21651] [Thu Mar 26 14:04:36 2026] 127.0.0.1:38244 Closing
+[21650] [Thu Mar 26 14:04:36 2026] 127.0.0.1:38252 Closing
+[21651] [Thu Mar 26 14:04:36 2026] 127.0.0.1:38262 [200]: GET /vertical/assets/css/app.css
+[21651] [Thu Mar 26 14:04:36 2026] 127.0.0.1:38262 Closing
+[21650] [Thu Mar 26 14:04:36 2026] 127.0.0.1:38266 Accepted
+[21651] [Thu Mar 26 14:04:36 2026] 127.0.0.1:38272 Accepted
+[21651] [Thu Mar 26 14:04:36 2026] 127.0.0.1:38272 [200]: GET /vertical/assets/css/semi-dark.css
+[21651] [Thu Mar 26 14:04:36 2026] 127.0.0.1:38272 Closing
+[21650] [Thu Mar 26 14:04:36 2026] 127.0.0.1:38266 [200]: GET /vertical/assets/css/dark-theme.css
+[21650] [Thu Mar 26 14:04:36 2026] 127.0.0.1:38266 Closing
+[21651] [Thu Mar 26 14:04:36 2026] 127.0.0.1:38286 Accepted
+[21651] [Thu Mar 26 14:04:36 2026] 127.0.0.1:38286 [200]: GET /vertical/assets/js/pace.min.js
+[21651] [Thu Mar 26 14:04:36 2026] 127.0.0.1:38286 Closing
+[21651] [Thu Mar 26 14:04:36 2026] 127.0.0.1:38288 Accepted
+[21651] [Thu Mar 26 14:04:36 2026] 127.0.0.1:38288 Closing
+[21652] [Thu Mar 26 14:04:36 2026] 127.0.0.1:38296 Accepted
+[21653] [Thu Mar 26 14:04:36 2026] 127.0.0.1:38298 Accepted
+[21652] [Thu Mar 26 14:04:36 2026] 127.0.0.1:38296 [200]: GET /vertical/assets/js/bootstrap.bundle.min.js
+[21652] [Thu Mar 26 14:04:36 2026] 127.0.0.1:38296 Closing
+[21653] [Thu Mar 26 14:04:36 2026] 127.0.0.1:38298 [200]: GET /vertical/assets/js/jquery.min.js
+[21653] [Thu Mar 26 14:04:36 2026] 127.0.0.1:38298 Closing
+[21650] [Thu Mar 26 14:04:36 2026] 127.0.0.1:38306 Accepted
+[21650] [Thu Mar 26 14:04:36 2026] 127.0.0.1:38306 [200]: GET /vertical/assets/plugins/simplebar/js/simplebar.min.js
+[21650] [Thu Mar 26 14:04:36 2026] 127.0.0.1:38306 Closing
+[21650] [Thu Mar 26 14:04:36 2026] 127.0.0.1:38316 Accepted
+[21650] [Thu Mar 26 14:04:36 2026] 127.0.0.1:38316 [200]: GET /vertical/assets/plugins/metismenu/js/metisMenu.min.js
+[21650] [Thu Mar 26 14:04:36 2026] 127.0.0.1:38316 Closing
+[21650] [Thu Mar 26 14:04:36 2026] 127.0.0.1:38332 Accepted
+[21650] [Thu Mar 26 14:04:36 2026] 127.0.0.1:38332 [200]: GET /vertical/assets/plugins/perfect-scrollbar/js/perfect-scrollbar.js
+[21650] [Thu Mar 26 14:04:36 2026] 127.0.0.1:38332 Closing
+[21650] [Thu Mar 26 14:04:36 2026] 127.0.0.1:38346 Accepted
+[21650] [Thu Mar 26 14:04:36 2026] 127.0.0.1:38346 [200]: GET /vertical/assets/plugins/datatable/js/jquery.dataTables.min.js
+[21650] [Thu Mar 26 14:04:36 2026] 127.0.0.1:38346 Closing
+[21650] [Thu Mar 26 14:04:36 2026] 127.0.0.1:38360 Accepted
+[21650] [Thu Mar 26 14:04:36 2026] 127.0.0.1:38360 [200]: GET /vertical/assets/plugins/datatable/js/dataTables.bootstrap5.min.js
+[21650] [Thu Mar 26 14:04:36 2026] 127.0.0.1:38360 Closing
+[21651] [Thu Mar 26 14:04:36 2026] 127.0.0.1:38362 Accepted
+[21654] [Thu Mar 26 14:04:36 2026] 127.0.0.1:38366 Accepted
+[21651] [Thu Mar 26 14:04:36 2026] 127.0.0.1:38362 [200]: GET /vertical/assets/plugins/notifications/js/lobibox.min.js
+[21651] [Thu Mar 26 14:04:36 2026] 127.0.0.1:38362 Closing
+[21654] [Thu Mar 26 14:04:36 2026] 127.0.0.1:38366 [200]: GET /vertical/assets/plugins/notifications/js/notifications.min.js
+[21654] [Thu Mar 26 14:04:36 2026] 127.0.0.1:38366 Closing
+[21651] [Thu Mar 26 14:04:36 2026] 127.0.0.1:38368 Accepted
+[21651] [Thu Mar 26 14:04:36 2026] 127.0.0.1:38368 [200]: GET /vertical/assets/plugins/chartjs/js/Chart.min.js
+[21651] [Thu Mar 26 14:04:36 2026] 127.0.0.1:38370 Accepted
+[21651] [Thu Mar 26 14:04:36 2026] 127.0.0.1:38368 Closing
+[21651] [Thu Mar 26 14:04:36 2026] 127.0.0.1:38370 [200]: GET /vertical/assets/plugins/notifications/js/notification-custom-script.js
+[21651] [Thu Mar 26 14:04:36 2026] 127.0.0.1:38370 Closing
+[21654] [Thu Mar 26 14:04:36 2026] 127.0.0.1:38384 Accepted
+[21654] [Thu Mar 26 14:04:36 2026] 127.0.0.1:38384 [200]: GET /vertical/assets/plugins/chartjs/js/Chart.extension.js
+[21654] [Thu Mar 26 14:04:36 2026] 127.0.0.1:38384 Closing
+[21650] [Thu Mar 26 14:04:37 2026] 127.0.0.1:38390 Accepted
+[21652] [Thu Mar 26 14:04:37 2026] 127.0.0.1:38394 Accepted
+[21650] [Thu Mar 26 14:04:37 2026] 127.0.0.1:38390 [200]: GET /vertical/assets/js/app.js
+[21650] [Thu Mar 26 14:04:37 2026] 127.0.0.1:38390 Closing
+[21652] [Thu Mar 26 14:04:37 2026] 127.0.0.1:38394 [200]: GET /vertical/assets/images/bg-themes/1.png
+[21652] [Thu Mar 26 14:04:37 2026] 127.0.0.1:38394 Closing
+[21654] [Thu Mar 26 14:04:37 2026] 127.0.0.1:38404 Accepted
+[21654] [Thu Mar 26 14:04:37 2026] 127.0.0.1:38404 [200]: GET /vertical/assets/images/bg-themes/2.png
+[21654] [Thu Mar 26 14:04:37 2026] 127.0.0.1:38404 Closing
+[21651] [Thu Mar 26 14:04:37 2026] 127.0.0.1:38406 Accepted
+[21651] [Thu Mar 26 14:04:37 2026] 127.0.0.1:38406 [200]: GET /vertical/assets/images/bg-themes/3.png
+[21651] [Thu Mar 26 14:04:37 2026] 127.0.0.1:38406 Closing
+[21654] [Thu Mar 26 14:04:37 2026] 127.0.0.1:38418 Accepted
+[21654] [Thu Mar 26 14:04:37 2026] 127.0.0.1:38418 [200]: GET /vertical/assets/images/bg-themes/4.png
+[21654] [Thu Mar 26 14:04:37 2026] 127.0.0.1:38418 Closing
+[21654] [Thu Mar 26 14:04:37 2026] 127.0.0.1:38432 Accepted
+[21654] [Thu Mar 26 14:04:37 2026] 127.0.0.1:38432 [200]: GET /vertical/assets/fonts/boxicons.woff2
+[21654] [Thu Mar 26 14:04:37 2026] 127.0.0.1:38432 Closing
+[21654] [Thu Mar 26 14:04:37 2026] 127.0.0.1:38438 Accepted
+[21654] [Thu Mar 26 14:04:37 2026] 127.0.0.1:38438 [200]: GET /vertical/assets/images/bg-themes/5.png
+[21654] [Thu Mar 26 14:04:37 2026] 127.0.0.1:38438 Closing
+[21654] [Thu Mar 26 14:04:37 2026] 127.0.0.1:38442 Accepted
+[21654] [Thu Mar 26 14:04:37 2026] 127.0.0.1:38442 [200]: GET /vertical/assets/images/bg-themes/6.png
+[21654] [Thu Mar 26 14:04:37 2026] 127.0.0.1:38442 Closing
+[21654] [Thu Mar 26 14:04:37 2026] 127.0.0.1:38456 Accepted
+[21654] [Thu Mar 26 14:04:37 2026] 127.0.0.1:38456 [200]: GET /vertical/assets/images/bg-themes/7.png
+[21654] [Thu Mar 26 14:04:37 2026] 127.0.0.1:38456 Closing
+[21654] [Thu Mar 26 14:04:38 2026] 127.0.0.1:38468 Accepted
+[21654] [Thu Mar 26 14:04:38 2026] 127.0.0.1:38468 [200]: GET /vertical/assets/images/bg-themes/8.png
+[21654] [Thu Mar 26 14:04:38 2026] 127.0.0.1:38468 Closing
+[21652] [Thu Mar 26 14:16:54 2026] 127.0.0.1:36388 Accepted
+[21652] [Thu Mar 26 14:16:54 2026] 127.0.0.1:36388 Closing
+[21652] [Thu Mar 26 14:16:55 2026] 127.0.0.1:36404 Accepted
+[21652] [Thu Mar 26 14:16:55 2026] 127.0.0.1:36404 [200]: GET /vertical/assets/plugins/notifications/css/lobibox.min.css
+[21652] [Thu Mar 26 14:16:55 2026] 127.0.0.1:36404 Closing
+[21652] [Thu Mar 26 14:16:55 2026] 127.0.0.1:36414 Accepted
+[21652] [Thu Mar 26 14:16:55 2026] 127.0.0.1:36414 [200]: GET /vertical/assets/plugins/simplebar/css/simplebar.css
+[21652] [Thu Mar 26 14:16:55 2026] 127.0.0.1:36414 Closing
+[21652] [Thu Mar 26 14:16:55 2026] 127.0.0.1:36430 Accepted
+[21652] [Thu Mar 26 14:16:55 2026] 127.0.0.1:36430 [200]: GET /vertical/assets/plugins/metismenu/css/metisMenu.min.css
+[21652] [Thu Mar 26 14:16:55 2026] 127.0.0.1:36430 Closing
+[21653] [Thu Mar 26 14:16:55 2026] 127.0.0.1:36432 Accepted
+[21653] [Thu Mar 26 14:16:55 2026] 127.0.0.1:36432 [200]: GET /vertical/assets/plugins/datatable/css/dataTables.bootstrap5.min.css
+[21653] [Thu Mar 26 14:16:55 2026] 127.0.0.1:36432 Closing
+[21653] [Thu Mar 26 14:16:55 2026] 127.0.0.1:36440 Accepted
+[21653] [Thu Mar 26 14:16:55 2026] 127.0.0.1:36440 [200]: GET /vertical/assets/plugins/perfect-scrollbar/css/perfect-scrollbar.css
+[21653] [Thu Mar 26 14:16:55 2026] 127.0.0.1:36440 Closing
+[21654] [Thu Mar 26 14:16:55 2026] 127.0.0.1:36448 Accepted
+[21654] [Thu Mar 26 14:16:55 2026] 127.0.0.1:36448 [200]: GET /vertical/assets/css/pace.min.css
+[21654] [Thu Mar 26 14:16:55 2026] 127.0.0.1:36448 Closing
+[21653] [Thu Mar 26 14:16:55 2026] 127.0.0.1:36462 Accepted
+[21653] [Thu Mar 26 14:16:55 2026] 127.0.0.1:36462 [200]: GET /vertical/assets/css/dark-theme.css
+[21653] [Thu Mar 26 14:16:55 2026] 127.0.0.1:36462 Closing
+[21653] [Thu Mar 26 14:16:55 2026] 127.0.0.1:36472 Accepted
+[21653] [Thu Mar 26 14:16:55 2026] 127.0.0.1:36472 [200]: GET /vertical/assets/css/app.css
+[21653] [Thu Mar 26 14:16:55 2026] 127.0.0.1:36472 Closing
+[21654] [Thu Mar 26 14:16:55 2026] 127.0.0.1:36482 Accepted
+[21653] [Thu Mar 26 14:16:55 2026] 127.0.0.1:36494 Accepted
+[21654] [Thu Mar 26 14:16:55 2026] 127.0.0.1:36482 [200]: GET /vertical/assets/css/icons.css
+[21653] [Thu Mar 26 14:16:55 2026] 127.0.0.1:36494 [200]: GET /vertical/assets/css/bootstrap-extended.css
+[21653] [Thu Mar 26 14:16:55 2026] 127.0.0.1:36494 Closing
+[21654] [Thu Mar 26 14:16:55 2026] 127.0.0.1:36482 Closing
+[21654] [Thu Mar 26 14:16:55 2026] 127.0.0.1:36506 Accepted
+[21654] [Thu Mar 26 14:16:55 2026] 127.0.0.1:36506 [200]: GET /vertical/assets/css/bootstrap.min.css
+[21654] [Thu Mar 26 14:16:55 2026] 127.0.0.1:36506 Closing
+[21651] [Thu Mar 26 14:16:55 2026] 127.0.0.1:36510 Accepted
+[21651] [Thu Mar 26 14:16:55 2026] 127.0.0.1:36510 [200]: GET /vertical/assets/css/semi-dark.css
+[21651] [Thu Mar 26 14:16:55 2026] 127.0.0.1:36510 Closing
+[21651] [Thu Mar 26 14:16:56 2026] 127.0.0.1:36524 Accepted
+[21651] [Thu Mar 26 14:16:56 2026] 127.0.0.1:36524 [200]: GET /vertical/assets/css/header-colors.css
+[21651] [Thu Mar 26 14:16:56 2026] 127.0.0.1:36524 Closing
+[21652] [Thu Mar 26 14:16:56 2026] 127.0.0.1:36536 Accepted
+[21652] [Thu Mar 26 14:16:56 2026] 127.0.0.1:36536 [200]: GET /vertical/assets/js/pace.min.js
+[21652] [Thu Mar 26 14:16:56 2026] 127.0.0.1:36536 Closing
+[21652] [Thu Mar 26 14:16:56 2026] 127.0.0.1:36546 Accepted
+[21652] [Thu Mar 26 14:16:56 2026] 127.0.0.1:36546 Closing
+[21651] [Thu Mar 26 14:16:56 2026] 127.0.0.1:36554 Accepted
+[21651] [Thu Mar 26 14:16:56 2026] 127.0.0.1:36554 [200]: GET /vertical/assets/js/jquery.min.js
+[21651] [Thu Mar 26 14:16:56 2026] 127.0.0.1:36554 Closing
+[21651] [Thu Mar 26 14:16:56 2026] 127.0.0.1:36558 Accepted
+[21651] [Thu Mar 26 14:16:56 2026] 127.0.0.1:36558 [200]: GET /vertical/assets/js/bootstrap.bundle.min.js
+[21651] [Thu Mar 26 14:16:56 2026] 127.0.0.1:36558 Closing
+[21650] [Thu Mar 26 14:16:56 2026] 127.0.0.1:36566 Accepted
+[21653] [Thu Mar 26 14:16:56 2026] 127.0.0.1:36582 Accepted
+[21650] [Thu Mar 26 14:16:56 2026] 127.0.0.1:36566 [200]: GET /vertical/assets/plugins/metismenu/js/metisMenu.min.js
+[21650] [Thu Mar 26 14:16:56 2026] 127.0.0.1:36566 Closing
+[21653] [Thu Mar 26 14:16:56 2026] 127.0.0.1:36582 [200]: GET /vertical/assets/plugins/simplebar/js/simplebar.min.js
+[21653] [Thu Mar 26 14:16:56 2026] 127.0.0.1:36582 Closing
+[21653] [Thu Mar 26 14:16:57 2026] 127.0.0.1:36590 Accepted
+[21653] [Thu Mar 26 14:16:57 2026] 127.0.0.1:36590 [200]: GET /vertical/assets/plugins/perfect-scrollbar/js/perfect-scrollbar.js
+[21653] [Thu Mar 26 14:16:57 2026] 127.0.0.1:36590 Closing
+[21653] [Thu Mar 26 14:16:57 2026] 127.0.0.1:36606 Accepted
+[21653] [Thu Mar 26 14:16:57 2026] 127.0.0.1:36606 [200]: GET /vertical/assets/plugins/datatable/js/jquery.dataTables.min.js
+[21653] [Thu Mar 26 14:16:57 2026] 127.0.0.1:36606 Closing
+[21653] [Thu Mar 26 14:16:57 2026] 127.0.0.1:36612 Accepted
+[21653] [Thu Mar 26 14:16:57 2026] 127.0.0.1:36612 [200]: GET /vertical/assets/plugins/datatable/js/dataTables.bootstrap5.min.js
+[21653] [Thu Mar 26 14:16:57 2026] 127.0.0.1:36612 Closing
+[21653] [Thu Mar 26 14:16:57 2026] 127.0.0.1:36624 Accepted
+[21653] [Thu Mar 26 14:16:57 2026] 127.0.0.1:36624 [200]: GET /vertical/assets/plugins/notifications/js/lobibox.min.js
+[21653] [Thu Mar 26 14:16:57 2026] 127.0.0.1:36624 Closing
+[21653] [Thu Mar 26 14:16:57 2026] 127.0.0.1:36634 Accepted
+[21653] [Thu Mar 26 14:16:57 2026] 127.0.0.1:36634 [200]: GET /vertical/assets/plugins/notifications/js/notifications.min.js
+[21653] [Thu Mar 26 14:16:57 2026] 127.0.0.1:36634 Closing
+[21653] [Thu Mar 26 14:16:57 2026] 127.0.0.1:36648 Accepted
+[21653] [Thu Mar 26 14:16:57 2026] 127.0.0.1:36648 [200]: GET /vertical/assets/plugins/notifications/js/notification-custom-script.js
+[21653] [Thu Mar 26 14:16:57 2026] 127.0.0.1:36648 Closing
+[21653] [Thu Mar 26 14:16:57 2026] 127.0.0.1:36650 Accepted
+[21653] [Thu Mar 26 14:16:57 2026] 127.0.0.1:36650 [200]: GET /vertical/assets/plugins/chartjs/js/Chart.min.js
+[21653] [Thu Mar 26 14:16:57 2026] 127.0.0.1:36650 Closing
+[21653] [Thu Mar 26 14:16:57 2026] 127.0.0.1:36660 Accepted
+[21653] [Thu Mar 26 14:16:57 2026] 127.0.0.1:36660 [200]: GET /vertical/assets/plugins/chartjs/js/Chart.extension.js
+[21653] [Thu Mar 26 14:16:57 2026] 127.0.0.1:36660 Closing
+[21653] [Thu Mar 26 14:16:57 2026] 127.0.0.1:36672 Accepted
+[21653] [Thu Mar 26 14:16:57 2026] 127.0.0.1:36672 [200]: GET /vertical/assets/js/app.js
+[21653] [Thu Mar 26 14:16:57 2026] 127.0.0.1:36672 Closing
+[21653] [Thu Mar 26 14:16:57 2026] 127.0.0.1:36682 Accepted
+[21653] [Thu Mar 26 14:16:57 2026] 127.0.0.1:36682 [200]: GET /vertical/assets/images/bg-themes/2.png
+[21653] [Thu Mar 26 14:16:57 2026] 127.0.0.1:36682 Closing
+[21653] [Thu Mar 26 14:16:57 2026] 127.0.0.1:36694 Accepted
+[21653] [Thu Mar 26 14:16:57 2026] 127.0.0.1:36694 [200]: GET /vertical/assets/images/bg-themes/3.png
+[21653] [Thu Mar 26 14:16:57 2026] 127.0.0.1:36694 Closing
+[21653] [Thu Mar 26 14:16:57 2026] 127.0.0.1:36700 Accepted
+[21653] [Thu Mar 26 14:16:57 2026] 127.0.0.1:36700 [200]: GET /vertical/assets/images/bg-themes/1.png
+[21653] [Thu Mar 26 14:16:57 2026] 127.0.0.1:36700 Closing
+[21653] [Thu Mar 26 14:16:57 2026] 127.0.0.1:36708 Accepted
+[21653] [Thu Mar 26 14:16:57 2026] 127.0.0.1:36708 [200]: GET /vertical/assets/images/bg-themes/4.png
+[21653] [Thu Mar 26 14:16:57 2026] 127.0.0.1:36708 Closing
+[21650] [Thu Mar 26 14:16:57 2026] 127.0.0.1:36720 Accepted
+[21650] [Thu Mar 26 14:16:57 2026] 127.0.0.1:36720 [200]: GET /vertical/assets/images/bg-themes/6.png
+[21650] [Thu Mar 26 14:16:57 2026] 127.0.0.1:36720 Closing
+[21650] [Thu Mar 26 14:16:57 2026] 127.0.0.1:36736 Accepted
+[21650] [Thu Mar 26 14:16:57 2026] 127.0.0.1:36736 [200]: GET /vertical/assets/images/bg-themes/5.png
+[21650] [Thu Mar 26 14:16:57 2026] 127.0.0.1:36736 Closing
+[21651] [Thu Mar 26 14:16:58 2026] 127.0.0.1:36746 Accepted
+[21651] [Thu Mar 26 14:16:58 2026] 127.0.0.1:36746 [200]: GET /vertical/assets/fonts/boxicons.woff2
+[21651] [Thu Mar 26 14:16:58 2026] 127.0.0.1:36746 Closing
+[21650] [Thu Mar 26 14:16:58 2026] 127.0.0.1:36754 Accepted
+[21650] [Thu Mar 26 14:16:58 2026] 127.0.0.1:36754 [200]: GET /vertical/assets/images/bg-themes/7.png
+[21650] [Thu Mar 26 14:16:58 2026] 127.0.0.1:36754 Closing
+[21650] [Thu Mar 26 14:16:58 2026] 127.0.0.1:36766 Accepted
+[21650] [Thu Mar 26 14:16:58 2026] 127.0.0.1:36766 [200]: GET /vertical/assets/images/bg-themes/8.png
+[21650] [Thu Mar 26 14:16:58 2026] 127.0.0.1:36766 Closing

@@ -1,0 +1,168 @@
+[32mConfiguration cache cleared![39m
+[32mNothing to migrate.[39m
+[32mApplication cache cleared![39m
+[32mStarting Laravel development server:[39m http://0.0.0.0:5000
+[15099] [Mon Mar 30 17:54:36 2026] PHP 8.2.23 Development Server (http://0.0.0.0:5000) started
+[15100] [Mon Mar 30 17:54:36 2026] PHP 8.2.23 Development Server (http://0.0.0.0:5000) started
+[15101] [Mon Mar 30 17:54:36 2026] PHP 8.2.23 Development Server (http://0.0.0.0:5000) started
+[15098] [Mon Mar 30 17:54:36 2026] PHP 8.2.23 Development Server (http://0.0.0.0:5000) started
+[15102] [Mon Mar 30 17:54:36 2026] PHP 8.2.23 Development Server (http://0.0.0.0:5000) started
+[15102] [Mon Mar 30 17:54:37 2026] 127.0.0.1:41386 Accepted
+[15102] [Mon Mar 30 17:54:37 2026] 127.0.0.1:41386 Closing
+[15100] [Mon Mar 30 17:54:37 2026] 127.0.0.1:41414 Accepted
+[15100] [Mon Mar 30 17:54:37 2026] 127.0.0.1:41414 Closing
+[15102] [Mon Mar 30 17:54:37 2026] 127.0.0.1:41422 Accepted
+[15102] [Mon Mar 30 17:54:37 2026] 127.0.0.1:41422 [200]: GET /vertical/assets/plugins/simplebar/css/simplebar.css
+[15102] [Mon Mar 30 17:54:37 2026] 127.0.0.1:41422 Closing
+[15100] [Mon Mar 30 17:54:37 2026] 127.0.0.1:41436 Accepted
+[15100] [Mon Mar 30 17:54:37 2026] 127.0.0.1:41436 [200]: GET /vertical/assets/plugins/perfect-scrollbar/css/perfect-scrollbar.css
+[15100] [Mon Mar 30 17:54:37 2026] 127.0.0.1:41436 Closing
+[15101] [Mon Mar 30 17:54:38 2026] 127.0.0.1:41450 Accepted
+[15098] [Mon Mar 30 17:54:38 2026] 127.0.0.1:41452 Accepted
+[15101] [Mon Mar 30 17:54:38 2026] 127.0.0.1:41450 [200]: GET /vertical/assets/css/pace.min.css
+[15098] [Mon Mar 30 17:54:38 2026] 127.0.0.1:41452 [200]: GET /vertical/assets/plugins/metismenu/css/metisMenu.min.css
+[15101] [Mon Mar 30 17:54:38 2026] 127.0.0.1:41450 Closing
+[15098] [Mon Mar 30 17:54:38 2026] 127.0.0.1:41452 Closing
+[15101] [Mon Mar 30 17:54:38 2026] 127.0.0.1:41454 Accepted
+[15101] [Mon Mar 30 17:54:38 2026] 127.0.0.1:41454 [200]: GET /vertical/assets/css/app.css
+[15100] [Mon Mar 30 17:54:38 2026] 127.0.0.1:41458 Accepted
+[15101] [Mon Mar 30 17:54:38 2026] 127.0.0.1:41454 Closing
+[15100] [Mon Mar 30 17:54:38 2026] 127.0.0.1:41458 [200]: GET /vertical/assets/css/bootstrap.min.css
+[15100] [Mon Mar 30 17:54:38 2026] 127.0.0.1:41458 Closing
+[15100] [Mon Mar 30 17:54:38 2026] 127.0.0.1:41466 Accepted
+[15100] [Mon Mar 30 17:54:38 2026] 127.0.0.1:41466 [200]: GET /vertical/assets/css/bootstrap-extended.css
+[15100] [Mon Mar 30 17:54:38 2026] 127.0.0.1:41466 Closing
+[15098] [Mon Mar 30 17:54:38 2026] 127.0.0.1:41480 Accepted
+[15098] [Mon Mar 30 17:54:38 2026] 127.0.0.1:41480 [200]: GET /vertical/assets/css/icons.css
+[15098] [Mon Mar 30 17:54:38 2026] 127.0.0.1:41480 Closing
+[15100] [Mon Mar 30 17:54:38 2026] 127.0.0.1:41482 Accepted
+[15099] [Mon Mar 30 17:54:38 2026] 127.0.0.1:41490 Accepted
+[15100] [Mon Mar 30 17:54:38 2026] 127.0.0.1:41482 [200]: GET /vertical/assets/js/pace.min.js
+[15100] [Mon Mar 30 17:54:38 2026] 127.0.0.1:41482 Closing
+[15099] [Mon Mar 30 17:54:38 2026] 127.0.0.1:41490 [200]: GET /vertical/assets/js/bootstrap.bundle.min.js
+[15099] [Mon Mar 30 17:54:38 2026] 127.0.0.1:41490 Closing
+[15100] [Mon Mar 30 17:54:38 2026] 127.0.0.1:41504 Accepted
+[15100] [Mon Mar 30 17:54:38 2026] 127.0.0.1:41512 Accepted
+[15100] [Mon Mar 30 17:54:38 2026] 127.0.0.1:41504 [200]: GET /vertical/assets/js/jquery.min.js
+[15099] [Mon Mar 30 17:54:38 2026] 127.0.0.1:41516 Accepted
+[15100] [Mon Mar 30 17:54:38 2026] 127.0.0.1:41512 [200]: GET /vertical/assets/plugins/simplebar/js/simplebar.min.js
+[15100] [Mon Mar 30 17:54:38 2026] 127.0.0.1:41504 Closing
+[15100] [Mon Mar 30 17:54:38 2026] 127.0.0.1:41512 Closing
+[15099] [Mon Mar 30 17:54:38 2026] 127.0.0.1:41516 [200]: GET /vertical/assets/plugins/perfect-scrollbar/js/perfect-scrollbar.js
+[15099] [Mon Mar 30 17:54:38 2026] 127.0.0.1:41516 Closing
+[15100] [Mon Mar 30 17:54:38 2026] 127.0.0.1:41528 Accepted
+[15100] [Mon Mar 30 17:54:38 2026] 127.0.0.1:41528 [200]: GET /vertical/assets/plugins/metismenu/js/metisMenu.min.js
+[15100] [Mon Mar 30 17:54:38 2026] 127.0.0.1:41528 Closing
+[15102] [Mon Mar 30 17:54:38 2026] 127.0.0.1:41534 Accepted
+[15102] [Mon Mar 30 17:54:38 2026] 127.0.0.1:41534 [200]: GET /vertical/assets/js/app.js
+[15102] [Mon Mar 30 17:54:38 2026] 127.0.0.1:41534 Closing
+[15102] [Mon Mar 30 17:54:38 2026] 127.0.0.1:41536 Accepted
+[15102] [Mon Mar 30 17:54:38 2026] 127.0.0.1:41536 [200]: GET /vertical/assets/fonts/boxicons.woff2
+[15102] [Mon Mar 30 17:54:38 2026] 127.0.0.1:41536 Closing
+[15098] [Mon Mar 30 17:54:41 2026] 127.0.0.1:41558 Accepted
+[15098] [Mon Mar 30 17:54:41 2026] 127.0.0.1:41558 Closing
+[15098] [Mon Mar 30 17:54:41 2026] 127.0.0.1:41582 Accepted
+[15098] [Mon Mar 30 17:54:41 2026] 127.0.0.1:41582 Closing
+[15098] [Mon Mar 30 17:54:41 2026] 127.0.0.1:41594 Accepted
+[15098] [Mon Mar 30 17:54:41 2026] 127.0.0.1:41606 Accepted
+[15099] [Mon Mar 30 17:54:41 2026] 127.0.0.1:41622 Accepted
+[15101] [Mon Mar 30 17:54:41 2026] 127.0.0.1:41632 Accepted
+[15100] [Mon Mar 30 17:54:41 2026] 127.0.0.1:41646 Accepted
+[15100] [Mon Mar 30 17:54:41 2026] 127.0.0.1:41656 Accepted
+[15098] [Mon Mar 30 17:54:41 2026] 127.0.0.1:41594 [200]: GET /vertical/assets/plugins/simplebar/css/simplebar.css
+[15098] [Mon Mar 30 17:54:41 2026] 127.0.0.1:41594 Closing
+[15098] [Mon Mar 30 17:54:41 2026] 127.0.0.1:41606 [200]: GET /vertical/assets/plugins/perfect-scrollbar/css/perfect-scrollbar.css
+[15098] [Mon Mar 30 17:54:41 2026] 127.0.0.1:41606 Closing
+[15099] [Mon Mar 30 17:54:41 2026] 127.0.0.1:41622 [200]: GET /vertical/assets/plugins/metismenu/css/metisMenu.min.css
+[15099] [Mon Mar 30 17:54:41 2026] 127.0.0.1:41622 Closing
+[15101] [Mon Mar 30 17:54:41 2026] 127.0.0.1:41632 [200]: GET /vertical/assets/css/pace.min.css
+[15101] [Mon Mar 30 17:54:41 2026] 127.0.0.1:41632 Closing
+[15100] [Mon Mar 30 17:54:41 2026] 127.0.0.1:41646 [200]: GET /vertical/assets/css/bootstrap.min.css
+[15100] [Mon Mar 30 17:54:41 2026] 127.0.0.1:41646 Closing
+[15100] [Mon Mar 30 17:54:41 2026] 127.0.0.1:41656 [200]: GET /vertical/assets/css/bootstrap-extended.css
+[15100] [Mon Mar 30 17:54:41 2026] 127.0.0.1:41656 Closing
+[15102] [Mon Mar 30 17:54:41 2026] 127.0.0.1:41664 Accepted
+[15098] [Mon Mar 30 17:54:41 2026] 127.0.0.1:41666 Accepted
+[15102] [Mon Mar 30 17:54:41 2026] 127.0.0.1:41674 Accepted
+[15102] [Mon Mar 30 17:54:41 2026] 127.0.0.1:41664 [200]: GET /vertical/assets/css/app.css
+[15102] [Mon Mar 30 17:54:41 2026] 127.0.0.1:41664 Closing
+[15098] [Mon Mar 30 17:54:41 2026] 127.0.0.1:41666 [200]: GET /vertical/assets/css/icons.css
+[15098] [Mon Mar 30 17:54:41 2026] 127.0.0.1:41666 Closing
+[15102] [Mon Mar 30 17:54:41 2026] 127.0.0.1:41674 [200]: GET /vertical/assets/js/pace.min.js
+[15102] [Mon Mar 30 17:54:41 2026] 127.0.0.1:41674 Closing
+[15101] [Mon Mar 30 17:54:41 2026] 127.0.0.1:41678 Accepted
+[15101] [Mon Mar 30 17:54:41 2026] 127.0.0.1:41684 Accepted
+[15098] [Mon Mar 30 17:54:41 2026] 127.0.0.1:41686 Accepted
+[15098] [Mon Mar 30 17:54:41 2026] 127.0.0.1:41696 Accepted
+[15101] [Mon Mar 30 17:54:41 2026] 127.0.0.1:41712 Accepted
+[15101] [Mon Mar 30 17:54:41 2026] 127.0.0.1:41720 Accepted
+[15101] [Mon Mar 30 17:54:41 2026] 127.0.0.1:41678 [200]: GET /vertical/assets/js/bootstrap.bundle.min.js
+[15098] [Mon Mar 30 17:54:41 2026] 127.0.0.1:41686 [200]: GET /vertical/assets/plugins/simplebar/js/simplebar.min.js
+[15098] [Mon Mar 30 17:54:41 2026] 127.0.0.1:41696 [200]: GET /vertical/assets/plugins/metismenu/js/metisMenu.min.js
+[15101] [Mon Mar 30 17:54:41 2026] 127.0.0.1:41684 [200]: GET /vertical/assets/js/jquery.min.js
+[15098] [Mon Mar 30 17:54:41 2026] 127.0.0.1:41686 Closing
+[15098] [Mon Mar 30 17:54:41 2026] 127.0.0.1:41696 Closing
+[15101] [Mon Mar 30 17:54:41 2026] 127.0.0.1:41712 [200]: GET /vertical/assets/plugins/perfect-scrollbar/js/perfect-scrollbar.js
+[15101] [Mon Mar 30 17:54:41 2026] 127.0.0.1:41678 Closing
+[15101] [Mon Mar 30 17:54:41 2026] 127.0.0.1:41684 Closing
+[15101] [Mon Mar 30 17:54:41 2026] 127.0.0.1:41712 Closing
+[15101] [Mon Mar 30 17:54:41 2026] 127.0.0.1:41720 [200]: GET /vertical/assets/js/app.js
+[15101] [Mon Mar 30 17:54:41 2026] 127.0.0.1:41720 Closing
+[15101] [Mon Mar 30 17:54:42 2026] 127.0.0.1:41726 Accepted
+[15101] [Mon Mar 30 17:54:42 2026] 127.0.0.1:41726 [200]: GET /vertical/assets/fonts/boxicons.woff2
+[15101] [Mon Mar 30 17:54:42 2026] 127.0.0.1:41726 Closing
+[15099] [Mon Mar 30 18:02:45 2026] 127.0.0.1:53236 Accepted
+[15099] [Mon Mar 30 18:02:45 2026] 127.0.0.1:53236 Closing
+[15099] [Mon Mar 30 18:02:45 2026] 127.0.0.1:53250 Accepted
+[15099] [Mon Mar 30 18:02:45 2026] 127.0.0.1:53250 Closing
+[15099] [Mon Mar 30 18:02:45 2026] 127.0.0.1:53264 Accepted
+[15099] [Mon Mar 30 18:02:45 2026] 127.0.0.1:53264 [200]: GET /vertical/assets/plugins/simplebar/css/simplebar.css
+[15099] [Mon Mar 30 18:02:45 2026] 127.0.0.1:53264 Closing
+[15101] [Mon Mar 30 18:02:46 2026] 127.0.0.1:53280 Accepted
+[15101] [Mon Mar 30 18:02:46 2026] 127.0.0.1:53280 [200]: GET /vertical/assets/plugins/perfect-scrollbar/css/perfect-scrollbar.css
+[15101] [Mon Mar 30 18:02:46 2026] 127.0.0.1:53280 Closing
+[15101] [Mon Mar 30 18:02:46 2026] 127.0.0.1:53294 Accepted
+[15101] [Mon Mar 30 18:02:46 2026] 127.0.0.1:53294 [200]: GET /vertical/assets/plugins/metismenu/css/metisMenu.min.css
+[15101] [Mon Mar 30 18:02:46 2026] 127.0.0.1:53294 Closing
+[15100] [Mon Mar 30 18:02:46 2026] 127.0.0.1:53308 Accepted
+[15100] [Mon Mar 30 18:02:46 2026] 127.0.0.1:53308 [200]: GET /vertical/assets/css/pace.min.css
+[15100] [Mon Mar 30 18:02:46 2026] 127.0.0.1:53308 Closing
+[15098] [Mon Mar 30 18:02:46 2026] 127.0.0.1:53318 Accepted
+[15098] [Mon Mar 30 18:02:46 2026] 127.0.0.1:53318 [200]: GET /vertical/assets/css/bootstrap.min.css
+[15098] [Mon Mar 30 18:02:46 2026] 127.0.0.1:53318 Closing
+[15099] [Mon Mar 30 18:02:46 2026] 127.0.0.1:53332 Accepted
+[15099] [Mon Mar 30 18:02:46 2026] 127.0.0.1:53332 [200]: GET /vertical/assets/css/bootstrap-extended.css
+[15099] [Mon Mar 30 18:02:46 2026] 127.0.0.1:53332 Closing
+[15099] [Mon Mar 30 18:02:46 2026] 127.0.0.1:53338 Accepted
+[15099] [Mon Mar 30 18:02:46 2026] 127.0.0.1:53338 [200]: GET /vertical/assets/css/app.css
+[15099] [Mon Mar 30 18:02:46 2026] 127.0.0.1:53338 Closing
+[15102] [Mon Mar 30 18:02:46 2026] 127.0.0.1:53340 Accepted
+[15102] [Mon Mar 30 18:02:46 2026] 127.0.0.1:53340 [200]: GET /vertical/assets/css/icons.css
+[15102] [Mon Mar 30 18:02:46 2026] 127.0.0.1:53340 Closing
+[15098] [Mon Mar 30 18:02:46 2026] 127.0.0.1:53342 Accepted
+[15098] [Mon Mar 30 18:02:46 2026] 127.0.0.1:53342 [200]: GET /vertical/assets/js/pace.min.js
+[15098] [Mon Mar 30 18:02:46 2026] 127.0.0.1:53342 Closing
+[15099] [Mon Mar 30 18:02:47 2026] 127.0.0.1:53356 Accepted
+[15099] [Mon Mar 30 18:02:47 2026] 127.0.0.1:53356 [200]: GET /vertical/assets/js/jquery.min.js
+[15099] [Mon Mar 30 18:02:47 2026] 127.0.0.1:53356 Closing
+[15099] [Mon Mar 30 18:02:47 2026] 127.0.0.1:53358 Accepted
+[15099] [Mon Mar 30 18:02:47 2026] 127.0.0.1:53358 [200]: GET /vertical/assets/js/bootstrap.bundle.min.js
+[15099] [Mon Mar 30 18:02:47 2026] 127.0.0.1:53358 Closing
+[15099] [Mon Mar 30 18:02:47 2026] 127.0.0.1:53362 Accepted
+[15099] [Mon Mar 30 18:02:47 2026] 127.0.0.1:53368 Accepted
+[15099] [Mon Mar 30 18:02:47 2026] 127.0.0.1:53362 [200]: GET /vertical/assets/plugins/simplebar/js/simplebar.min.js
+[15099] [Mon Mar 30 18:02:47 2026] 127.0.0.1:53368 [200]: GET /vertical/assets/plugins/metismenu/js/metisMenu.min.js
+[15099] [Mon Mar 30 18:02:47 2026] 127.0.0.1:53362 Closing
+[15099] [Mon Mar 30 18:02:47 2026] 127.0.0.1:53368 Closing
+[15100] [Mon Mar 30 18:02:47 2026] 127.0.0.1:53370 Accepted
+[15100] [Mon Mar 30 18:02:47 2026] 127.0.0.1:53370 [200]: GET /vertical/assets/fonts/boxicons.woff2
+[15100] [Mon Mar 30 18:02:47 2026] 127.0.0.1:53370 Closing
+[15099] [Mon Mar 30 18:02:47 2026] 127.0.0.1:53382 Accepted
+[15099] [Mon Mar 30 18:02:47 2026] 127.0.0.1:53382 [200]: GET /vertical/assets/plugins/perfect-scrollbar/js/perfect-scrollbar.js
+[15099] [Mon Mar 30 18:02:47 2026] 127.0.0.1:53382 Closing
+[15099] [Mon Mar 30 18:02:47 2026] 127.0.0.1:53394 Accepted
+[15099] [Mon Mar 30 18:02:47 2026] 127.0.0.1:53394 [200]: GET /vertical/assets/js/app.js
+[15099] [Mon Mar 30 18:02:47 2026] 127.0.0.1:53394 Closing
+[15099] [Mon Mar 30 18:04:49 2026] 127.0.0.1:51804 Accepted
+[15099] [Mon Mar 30 18:04:49 2026] 127.0.0.1:51804 [200]: GET /exports/aks_college_backup.sql
+[15099] [Mon Mar 30 18:04:49 2026] 127.0.0.1:51804 Closing

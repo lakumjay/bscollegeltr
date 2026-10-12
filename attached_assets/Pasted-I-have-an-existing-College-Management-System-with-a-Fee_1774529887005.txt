@@ -1,0 +1,126 @@
+I have an existing College Management System with a Fee Management module. I need to enhance the "Record Payment" functionality without breaking any existing features.
+
+### Current System:
+
+* Fees are defined degree-wise and semester-wise (e.g., BA, MA, BCA, MCA).
+* Each semester has multiple fee heads like:
+  Admission Fee, Tuition Fee, Library, Exam Fee, etc.
+* Currently, while recording payment:
+
+  * Admin manually enters *Amount*
+  * Selects *single Fee Head*
+
+---
+
+### Required Enhancement:
+
+#### 1. Replace Manual Amount + Fee Head
+
+* Remove:
+
+  * Amount field
+  * Fee Head dropdown
+
+* Add:
+
+  * *Semester dropdown (Sem 1 – Sem 8)*
+  * *Dynamic Fee Heads Checkbox list*
+
+---
+
+#### 2. Dynamic Fee Loading
+
+* When admin selects a semester:
+
+  * Load all fee heads for that semester dynamically
+  * Show them as checkboxes
+
+Example:
+☑ Admission Form
+☑ Admission Fee
+☑ Tuition Fee
+☑ Library
+
+---
+
+#### 3. Auto Calculation
+
+* When admin selects multiple fee heads:
+
+  * Fetch amounts from fee structure table
+  * Calculate total automatically
+
+Example:
+Admission Fee = 200
+Tuition Fee = 500
+Library = 300
+
+👉 Total = 1000 (auto calculated)
+
+---
+
+#### 4. Store Data (IMPORTANT)
+
+* Instead of single entry:
+
+  * Create *separate records for each selected fee head*
+
+Example DB entries:
+
+| Head          | Amount |
+| ------------- | ------ |
+| Admission Fee | 200    |
+| Tuition Fee   | 500    |
+| Library       | 300    |
+
+---
+
+#### 5. Payment Table Display
+
+* In "Payments" section:
+
+  * Show each fee head as separate row
+
+---
+
+#### 6. Receipt Generation
+
+* On "Print Receipt":
+
+  * Generate *separate line items* for each fee head
+  * OR separate invoices (based on current system design)
+
+---
+
+#### 7. Student Image Fix
+
+* On this page:
+  /admin/fee/management/view/{student_id}/{semester}
+* Fetch and display student image from DB properly
+
+---
+
+### Technical Constraints:
+
+* ⚠️ DO NOT break existing code
+* ⚠️ DO NOT change existing DB structure drastically
+* ✅ Only extend functionality
+* ✅ Use backward-compatible approach
+
+---
+
+### Suggested Approach:
+
+* Use JS (AJAX) to fetch fee heads by semester
+* Maintain existing payment flow internally
+* Loop through selected checkboxes and insert records
+* Keep validation intact
+
+---
+
+### Expected Result:
+
+* Faster fee entry
+* No manual calculation
+* Better UX
+* Clean accounting records

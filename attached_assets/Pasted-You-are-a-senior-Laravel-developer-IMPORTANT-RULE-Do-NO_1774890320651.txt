@@ -1,0 +1,113 @@
+You are a senior Laravel developer.
+
+IMPORTANT RULE:
+
+* Do NOT modify or remove any existing code.
+* Do NOT change current APIs, controllers, or UI logic.
+* Only ADD new functionality in a clean and modular way.
+
+Current system:
+
+* A student listing page already exists
+* "Download Data" button currently downloads all records
+* No filter-based export exists
+
+Your task is to ADD a new feature:
+
+### Feature: Filter-Based Export (Excel + PDF)
+
+#### Requirements:
+
+1. Add NEW filter UI (without breaking existing UI):
+
+   * Course dropdown
+   * Batch dropdown
+   * Subjects dropdown
+   * Current Year dropdown
+
+2. Add NEW buttons:
+
+   * "Download Excel (Filtered)"
+   * "Download PDF (Filtered)"
+
+3. DO NOT modify existing "Download Data" button
+
+---
+
+### Backend (Laravel)
+
+* Create NEW routes:
+
+  * /students/export/excel
+  * /students/export/pdf
+
+* Create NEW controller:
+
+  * StudentExportController
+
+* DO NOT modify existing controllers
+
+* In new controller:
+
+  * Accept filters:
+
+    * course_id
+    * batch
+    * subject_id
+    * year
+
+* Apply filters using Eloquent Query Builder
+
+---
+
+### Excel Export
+
+* Use Laravel Excel (maatwebsite)
+* Create new Export class:
+
+  * FilteredStudentsExport
+* Export only filtered records
+
+---
+
+### PDF Export
+
+* Use DomPDF
+* Create new Blade view:
+
+  * students_pdf.blade.php
+* Display filtered data in table format
+* Show selected filters at top
+
+---
+
+### Important Constraints:
+
+* Reuse existing database tables only
+* No schema changes
+* No breaking existing functionality
+* Keep code modular and clean
+* Ensure no duplicate data
+* Optimize for large datasets
+
+---
+
+### Frontend
+
+* Add filters in a separate section (above table)
+* Keep styling consistent with current UI
+* Send filter params in request when exporting
+* Do NOT change existing table rendering logic
+
+---
+
+### Output required:
+
+* New Controller code
+* New Routes
+* Export class (Excel)
+* Blade file for PDF
+* Frontend filter + button code
+* Example API calls
+
+Return only code. No explanation.

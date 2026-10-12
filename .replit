@@ -1,0 +1,61 @@
+modules = ["nodejs-20", "php-8.2", "web", "postgresql-16"]
+[agent]
+expertMode = true
+
+[nix]
+channel = "stable-25_05"
+
+[userenv]
+
+[userenv.shared]
+APP_NAME = "Power College"
+APP_ENV = "local"
+APP_DEBUG = "true"
+APP_URL = "http://localhost"
+LOG_CHANNEL = "stack"
+LOG_DEPRECATIONS_CHANNEL = "null"
+LOG_LEVEL = "debug"
+DB_CONNECTION = "pgsql"
+DB_HOST = "helium"
+DB_PORT = "5432"
+DB_DATABASE = "heliumdb"
+DB_USERNAME = "postgres"
+BROADCAST_DRIVER = "log"
+CACHE_DRIVER = "file"
+FILESYSTEM_DRIVER = "local"
+QUEUE_CONNECTION = "sync"
+SESSION_DRIVER = "file"
+SESSION_LIFETIME = "120"
+APP_KEY = "base64:73VaGzl72kdw7fFgNr8YVB2GzRT1PpHf1rOOk2BMTsE="
+
+[[ports]]
+localPort = 5000
+externalPort = 80
+
+[workflows]
+runButton = "Project"
+
+[[workflows.workflow]]
+name = "Project"
+mode = "parallel"
+author = "agent"
+
+[[workflows.workflow.tasks]]
+task = "workflow.run"
+args = "Start application"
+
+[[workflows.workflow]]
+name = "Start application"
+author = "agent"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "bash start.sh"
+waitForPort = 5000
+
+[workflows.workflow.metadata]
+outputType = "webview"
+
+[deployment]
+deploymentTarget = "autoscale"
+run = ["bash", "start.sh"]
