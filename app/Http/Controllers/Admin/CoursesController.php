@@ -256,10 +256,11 @@ class CoursesController extends Controller
     $allBatches = Student::query()->whereNotNull('batch')->where('batch', '!=', '')->distinct()->orderBy('batch')->pluck('batch');
     $allSubjects = Subject::when($course, fn ($query) => $query->where('course_id', $course))->orderBy('name')->get(['id', 'name']);
     $sessions = Session::orderBy('session_name')->get(['id', 'session_name']);
+    $profile = Profile::first();
 
     return view('admin.students', compact(
         'students', 'course', 'course_name', 'certificate_fields',
-        'allCourses', 'allBatches', 'allSubjects', 'sessions', 'activeSessionId'
+        'allCourses', 'allBatches', 'allSubjects', 'sessions', 'activeSessionId', 'profile'
     ));
 }
 public function download_csv(Request $request){
@@ -363,6 +364,10 @@ public function certificate_certificate($student_id,$type,Request $request, ClcC
         ]);
     }
 
+    $profile = $request->user()->profile ?: Profile::first();
+    $autoCertNumber = $profile ? ($profile->auto_cert_number ?? true) : true;
+    $manualNumber = $request->filled('manual_certificate_number') ? trim((string)$request->manual_certificate_number) : null;
+
     $attributes = [
         'student_id'=>$student_id,
         'type'=>$type,
@@ -371,8 +376,16 @@ public function certificate_certificate($student_id,$type,Request $request, ClcC
         'generated_by'=>$request->user()->id,
     ];
 
-    if (in_array($type, ['clc', 'character'], true)) {
-        $profile = $request->user()->profile ?: Profile::first();
+    if ($manualNumber !== null && $manualNumber !== '') {
+        // Manual patrak / certificate number entered by college staff
+        $attributes['certificate_number'] = $manualNumber;
+        $cert = StudentCertificate::create($attributes);
+    } elseif (! $autoCertNumber) {
+        // Auto generation is turned off in profile, but no manual number given
+        $tag = $type === 'character' ? 'CHR' : null;
+        $attributes['certificate_number'] = $numberGenerator->generate($profile?->lc_prefix, null, $sr, $tag);
+        $cert = StudentCertificate::create($attributes);
+    } elseif (in_array($type, ['clc', 'character'], true)) {
         $tag = $type === 'character' ? 'CHR' : null;
 
         // The unique database index protects concurrent certificate requests;

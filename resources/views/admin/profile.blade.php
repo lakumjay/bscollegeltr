@@ -42,7 +42,22 @@
                             <div class="premium-field" style="grid-column:span 6"><label for="email" class="premium-label">Email <span class="text-danger">*</span></label><input type="email" class="form-control @error('email') is-invalid @enderror" id="email" name="email" value="{{ old('email', $profile->email ?? '') }}" required>@error('email')<div class="invalid-feedback">{{ $message }}</div>@enderror</div>
                             <div class="premium-field" style="grid-column:span 6"><label for="address" class="premium-label">Address</label><textarea class="form-control @error('address') is-invalid @enderror" id="address" name="address">{{ old('address', $profile->address ?? '') }}</textarea>@error('address')<div class="invalid-feedback">{{ $message }}</div>@enderror</div>
                             <div class="premium-field" style="grid-column:span 6"><label for="website" class="premium-label">Website</label><input type="text" class="form-control @error('website') is-invalid @enderror" id="website" name="website" value="{{ old('website', $profile->website ?? '') }}">@error('website')<div class="invalid-feedback">{{ $message }}</div>@enderror</div>
-                            <div class="premium-field" style="grid-column:span 6"><label for="lc_prefix" class="premium-label">L.C prefix</label><input type="text" class="form-control text-uppercase @error('lc_prefix') is-invalid @enderror" id="lc_prefix" name="lc_prefix" maxlength="20" placeholder="KCB" value="{{ old('lc_prefix', $profile->lc_prefix ?? '') }}" aria-describedby="lc-prefix-help">@error('lc_prefix')<div class="invalid-feedback">{{ $message }}</div>@enderror<small id="lc-prefix-help" class="premium-muted">Used for CLC numbers, for example KCB/CLC/{{ now()->year }}/0009.</small></div>
+                            <div class="premium-field" style="grid-column:span 6">
+                                <label for="lc_prefix" class="premium-label">L.C prefix</label>
+                                <input type="text" class="form-control text-uppercase @error('lc_prefix') is-invalid @enderror" id="lc_prefix" name="lc_prefix" maxlength="20" placeholder="BSM/LTR" value="{{ old('lc_prefix', $profile->lc_prefix ?? '') }}" aria-describedby="lc-prefix-help">
+                                @error('lc_prefix')<div class="invalid-feedback">{{ $message }}</div>@enderror
+                                <small id="lc-prefix-help" class="premium-muted">Used for CLC numbers, for example BSM/LTR/{{ now()->year }}/0009.</small>
+                            </div>
+                            <div class="premium-field" style="grid-column:span 6; display: flex; flex-direction: column; justify-content: center;">
+                                <label class="premium-label">Certificate Serial Number Mode</label>
+                                <div class="form-check form-switch mt-2">
+                                    <input class="form-check-input" type="checkbox" role="switch" id="auto_cert_number" name="auto_cert_number" value="1" {{ old('auto_cert_number', $profile->auto_cert_number ?? true) ? 'checked' : '' }} style="width: 2.8em; height: 1.4em; cursor: pointer;">
+                                    <label class="form-check-label fw-bold ms-2" for="auto_cert_number" style="cursor: pointer; padding-top: 3px;">
+                                        Auto-generate Certificate Serial Number (e.g. /0009)
+                                    </label>
+                                </div>
+                                <small class="premium-muted mt-1">If enabled, serial numbers are assigned automatically. If turned off, college staff can manually type the custom patrak/certificate number when generating certificates.</small>
+                            </div>
                             <div class="premium-field-wide"><button type="submit" class="premium-btn premium-btn-gold"><i class="bx bx-save"></i> Save profile</button></div>
                         </div>
                     </div>

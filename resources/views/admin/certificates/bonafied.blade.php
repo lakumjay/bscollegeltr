@@ -157,7 +157,7 @@
                 </center>
 
             <p class="hindi">
-                पत्रांक- <font style="font-weight:600;  font-size: 15px;">BSM/LTR-{{$StudentCertificate->sr}}</font>
+                पत्रांक- <font style="font-weight:600;  font-size: 15px;">{{ $StudentCertificate->certificate_number ?: (($profile->lc_prefix ?? 'BSM/LTR') . '-' . $StudentCertificate->sr) }}</font>
                 <span class="date-align">दिनांक- {{ date('d M Y') }}</span>
             </p>
 
@@ -221,7 +221,7 @@
                 </center>
 
                 <p class="hindi">
-                    पत्रांक <font style="font-weight:600;  font-size: 15px;">BSM/LTR-{{$StudentCertificate->sr}}</font>
+                    पत्रांक <font style="font-weight:600;  font-size: 15px;">{{ $StudentCertificate->certificate_number ?: (($profile->lc_prefix ?? 'BSM/LTR') . '-' . $StudentCertificate->sr) }}</font>
                     <span class="date-align">दिनांक- {{ date('d M Y') }}</span>
                 </p>
 

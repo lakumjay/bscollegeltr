@@ -247,7 +247,7 @@
                                     <tbody>
                                         @foreach($clcCertificates as $clcCertificate)
                                             <tr>
-                                                <td style="padding: 10px 14px;"><strong class="text-dark">{{ $K === 'clc' ? ($clcCertificate->certificate_number ?: $clcCertificate->sr) : $clcCertificate->sr }}</strong></td>
+                                                <td style="padding: 10px 14px;"><strong class="text-dark">{{ $clcCertificate->certificate_number ?: $clcCertificate->sr }}</strong></td>
                                                 <td style="padding: 10px 14px; color: #5a6a80;">{{ \Carbon\Carbon::parse($clcCertificate->created_at)->format('d-m-Y h:i A') }}</td>
                                                 <td style="padding: 10px 14px;" class="text-center">
                                                     <a href="{{ url('admin/students/'.$student->id.'/'.$K) }}?certId={{$clcCertificate->id}}" target="_blank" rel="noopener" class="btn btn-sm btn-outline-primary px-3 py-1">
@@ -274,6 +274,15 @@
                             <form action="{{url('admin/certificate-create/'.$student->id.'/'.$K)}}" method="post">
                                 @csrf
                                 <div class="row g-3">
+                                    @if(isset($profile) && !($profile->auto_cert_number ?? true))
+                                        <div class="col-md-12">
+                                            <label class="form-label small fw-semibold text-danger mb-1">
+                                                <i class="bx bx-edit-alt me-1"></i> Patrak / Certificate Number (Manual) <span class="text-danger">*</span>
+                                            </label>
+                                            <input type="text" name="manual_certificate_number" class="form-control border-danger" placeholder="e.g. {{ ($profile->lc_prefix ?? 'BSM/LTR') . '/' . strtoupper($K) . '/' . date('Y') . '/0001' }}" required />
+                                            <small class="text-muted">Auto-numbering is OFF in Profile Settings. College staff can enter the custom patrak / certificate number here.</small>
+                                        </div>
+                                    @endif
                                     @foreach($certificate_fields[$K] as $key=>$val)
                                         <div class="col-md-6">
                                             <label class="form-label small fw-semibold text-secondary mb-1">{{$val}}</label>

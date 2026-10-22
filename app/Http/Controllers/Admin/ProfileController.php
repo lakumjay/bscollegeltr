@@ -31,6 +31,7 @@ class ProfileController extends Controller
             'address' => 'nullable|string',
             'website' => 'nullable|max:255',
             'lc_prefix' => ['nullable', 'string', 'max:30', 'regex:/^[A-Za-z0-9_\-\/]+$/'],
+            'auto_cert_number' => 'nullable|boolean',
             'logo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'banner' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             
@@ -57,6 +58,7 @@ class ProfileController extends Controller
             'address' => $request->address,
             'website' => $request->website,
             'lc_prefix' => $lcPrefix,
+            'auto_cert_number' => $request->boolean('auto_cert_number'),
         ];
 
         if ($request->hasFile('logo')) {
