@@ -4,7 +4,7 @@
 <div class="container-fluid premium-page student-listing-page">
     <div class="premium-page-header">
         <div><span class="premium-page-eyebrow">Student directory</span><h1 class="premium-page-title">Students for {{ $course_name }}</h1><p class="premium-page-subtitle">Review admissions, update student records and generate documents.</p></div>
-        <div class="premium-header-actions"><a href="{{ url('admin/students/strength') }}" class="premium-btn premium-btn-outline"><i class="bx bx-arrow-back"></i> Student strength</a><a href="{{ url('admin/students/create') }}" class="premium-btn premium-btn-gold"><i class="bx bx-user-plus"></i> Create student</a></div>
+        <div class="premium-header-actions"><a href="{{ url('admin/students/run-import-2026') }}" class="premium-btn premium-btn-outline" title="Verify or run 2026-2030 dataset import"><i class="bx bx-sync"></i> Sync 2026-30 Students</a><a href="{{ url('admin/students/strength') }}" class="premium-btn premium-btn-outline"><i class="bx bx-arrow-back"></i> Student strength</a><a href="{{ url('admin/students/create') }}" class="premium-btn premium-btn-gold"><i class="bx bx-user-plus"></i> Create student</a></div>
     </div>
 
     <div class="premium-card mb-4">

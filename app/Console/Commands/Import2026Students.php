@@ -27,7 +27,10 @@ class Import2026Students extends Command
         $adminUser = User::where('type', 'admin')->first() ?: User::first();
         $adminId = $adminUser ? $adminUser->id : 1;
 
-        $session = Session::firstOrCreate(['session_name' => '2026-2030']);
+        $session = Session::where('session_name', '2026-2030')->orWhere('session_name', '2026-30')->first();
+        if (!$session) {
+            $session = Session::create(['session_name' => '2026-2030']);
+        }
         $sessionId = $session->id;
 
         $file = fopen($csvPath, 'r');
@@ -56,6 +59,7 @@ class Import2026Students extends Command
             $courseName = $data['COURSE'] ?? 'BA';
             $subjectName = $data['SUBJECT'] ?? '';
             $firstName = $data['FIRST NAME'] ?? '';
+            $lastName = $data['LAST NAME'] ?? '';
             $batch = $data['BATCH'] ?? '2026-2030';
             $admissionDate = $data['ADMISSION DATE'] ?? '2026-08-17';
             $gender = $data['GENDER'] ?? 'FEMALE';
@@ -105,13 +109,25 @@ class Import2026Students extends Command
                 }
             }
 
-            // Check if already in database
-            $exists = Student::where('roll_no', $rollNo)
-                ->where('course', (string)$course->id)
-                ->where('batch', $batch)
-                ->exists();
+            // Check if already in database (either 2026-2030 or 2026-30 batch)
+            $existingStudent = Student::where('roll_no', $rollNo)
+                ->where(function ($q) use ($course) {
+                    $q->where('course', (string)$course->id)
+                      ->orWhere('course', $course->name);
+                })
+                ->where(function ($q) use ($batch) {
+                    $q->where('batch', '2026-2030')->orWhere('batch', '2026-30')->orWhere('batch', $batch);
+                })
+                ->first();
 
-            if ($exists) {
+            if ($existingStudent) {
+                StudentCourse::firstOrCreate([
+                    'student_id' => $existingStudent->id,
+                    'session_id' => $sessionId,
+                    'semaster' => $semester,
+                ], [
+                    'user_id' => $adminId,
+                ]);
                 $existingCount++;
                 continue;
             }
@@ -121,9 +137,14 @@ class Import2026Students extends Command
                 $email = 'roll' . $rollNo . '_' . $email;
             }
 
-            $nameParts = explode(' ', $firstName, 2);
-            $fName = $nameParts[0];
-            $lName = $nameParts[1] ?? '';
+            if (!empty($lastName)) {
+                $fName = $firstName;
+                $lName = $lastName;
+            } else {
+                $nameParts = explode(' ', $firstName, 2);
+                $fName = $nameParts[0];
+                $lName = $nameParts[1] ?? '';
+            }
 
             $student = Student::create([
                 'user_id' => $adminId,
@@ -153,7 +174,6 @@ class Import2026Students extends Command
 
             StudentCourse::firstOrCreate([
                 'student_id' => $student->id,
-                'course_id' => $course->id,
                 'session_id' => $sessionId,
                 'semaster' => $semester,
             ], [

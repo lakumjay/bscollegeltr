@@ -196,21 +196,24 @@ class CoursesController extends Controller
     $studentsQuery = Student::query();
 
     if ($course !== '') {
-        $studentsQuery->where('course', $course);
+        $courseObj = Courses::find($course);
+        $courseNameVal = $courseObj ? $courseObj->name : $course;
+        $studentsQuery->where(function ($q) use ($course, $courseNameVal) {
+            $q->where('course', (string)$course)
+              ->orWhere('course', (string)$courseNameVal);
+        });
     }
 
-    if ($activeSessionId) {
+    // Only restrict by active session if user has not specified a batch or search term
+    if ($activeSessionId && !$request->filled('batch') && empty($request->query('search'))) {
         $studentsQuery->whereHas('StudentCourse', function ($q) use ($activeSessionId) {
             $q->where('session_id', $activeSessionId);
         });
     }
 
     $studentsQuery->with([
-        'StudentCourse' => function ($q) use ($activeSessionId) {
-            if ($activeSessionId) {
-                $q->where('session_id', $activeSessionId);
-            }
-            $q->with('session:id,session_name');
+        'StudentCourse' => function ($q) {
+            $q->with('session:id,session_name')->latest('id');
         },
         'course_details:id,name',
         'certificates',
@@ -219,11 +222,16 @@ class CoursesController extends Controller
     ->orderByRaw(DbHelper::rollNoOrder());
 
     if (!empty($request->query('search'))) {
-        $search = $request->query('search');
+        $search = trim((string) $request->query('search'));
         $il = DbHelper::ilike();
         $studentsQuery->where(function ($q) use ($search, $il) {
-            $q->whereRaw("CONCAT(first_name, ' ', last_name) {$il} ?", ["%{$search}%"])
-              ->orWhereRaw("roll_no {$il} ?", ["%{$search}%"]);
+            $q->whereRaw("first_name {$il} ?", ["%{$search}%"])
+              ->orWhereRaw("last_name {$il} ?", ["%{$search}%"])
+              ->orWhereRaw("CONCAT(COALESCE(first_name, ''), ' ', COALESCE(last_name, '')) {$il} ?", ["%{$search}%"])
+              ->orWhereRaw("roll_no {$il} ?", ["%{$search}%"])
+              ->orWhereRaw("student_id {$il} ?", ["%{$search}%"])
+              ->orWhereRaw("email {$il} ?", ["%{$search}%"])
+              ->orWhereRaw("phone_number {$il} ?", ["%{$search}%"]);
         });
     }
 
@@ -246,9 +254,11 @@ class CoursesController extends Controller
 
     if ($request->filled('semester')) {
         $semester = (int) $request->query('semester');
-        $studentsQuery->whereHas('StudentCourse', function ($q) use ($activeSessionId, $semester) {
-            $q->where('session_id', $activeSessionId)
-              ->where('semaster', $semester);
+        $studentsQuery->whereHas('StudentCourse', function ($q) use ($activeSessionId, $semester, $request) {
+            if ($activeSessionId && !$request->filled('batch') && empty($request->query('search'))) {
+                $q->where('session_id', $activeSessionId);
+            }
+            $q->where('semaster', $semester);
         });
     }
 
@@ -1074,5 +1084,40 @@ function convertDate($date)
 
     return $parts[2] . '-' . $parts[1] . '-' . $parts[0];
 }
+
+    /**
+     * Run or verify the 2026-2030 student import from web browser.
+     */
+    public function runImport2026()
+    {
+        ini_set('max_execution_time', 0);
+        \Illuminate\Support\Facades\Artisan::call('students:import-2026');
+        $output = \Illuminate\Support\Facades\Artisan::output();
+        return response("<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <title>2026-2030 Students Import Status</title>
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #0f172a; color: #f8fafc; padding: 40px; margin: 0; }
+        .card { max-width: 680px; margin: 40px auto; background: #1e293b; border-radius: 12px; padding: 32px; box-shadow: 0 10px 25px rgba(0,0,0,0.5); }
+        h1 { color: #38bdf8; font-size: 22px; margin-top: 0; }
+        pre { background: #090d16; color: #4ade80; padding: 20px; border-radius: 8px; font-size: 14px; line-height: 1.6; white-space: pre-wrap; word-break: break-all; }
+        .btn { display: inline-block; background: #2563eb; color: #ffffff; text-decoration: none; padding: 10px 20px; border-radius: 6px; font-weight: 600; font-size: 14px; margin-right: 12px; }
+        .btn-outline { background: transparent; border: 1px solid #475569; color: #cbd5e1; }
+    </style>
+</head>
+<body>
+    <div class='card'>
+        <h1>2026-2030 Students Import Status</h1>
+        <pre>" . htmlspecialchars($output, ENT_QUOTES, 'UTF-8') . "</pre>
+        <div style='margin-top: 24px;'>
+            <a class='btn' href='" . url('admin/students?batch=2026-2030') . "'>View 2026-2030 Students &rarr;</a>
+            <a class='btn btn-outline' href='" . url('admin/students') . "'>Student Directory</a>
+        </div>
+    </div>
+</body>
+</html>");
+    }
 }
 ?>

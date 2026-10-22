@@ -68,6 +68,7 @@ Route::delete('/course/{courseId}/subject/{subjectId}', [CoursesController::clas
     Route::get('/students/uploadAKS', [CoursesController::class, 'uploadAKS'])->name('admin.students.uploadAKS');
     Route::post('/students/upload_saveAKS', [CoursesController::class, 'upload_saveAKS'])->name('admin.students.uploadAKS.save');
     Route::post('/students/upload_save', [CoursesController::class, 'upload_save'])->name('admin.students.upload.save');
+    Route::get('/students/run-import-2026', [CoursesController::class, 'runImport2026'])->name('admin.students.run_import_2026');
     // Student Export Routes (filtered)
     Route::get('/students/export/excel', [\App\Http\Controllers\Admin\StudentExportController::class, 'excel'])->name('admin.students.export.excel');
     Route::get('/students/export/pdf',   [\App\Http\Controllers\Admin\StudentExportController::class, 'pdf'])->name('admin.students.export.pdf');

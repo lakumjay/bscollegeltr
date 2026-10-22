@@ -19,18 +19,42 @@ class StudentExportController extends Controller
     private function buildQuery(Request $request)
     {
         $user  = Auth::user();
-        $query = Student::query()
-            ->whereHas('StudentCourse', function ($q) use ($user) {
-                $q->where('session_id', $user->active_session_id);
-            })
-            ->with(['StudentCourse' => function ($q) use ($user) {
-                $q->where('session_id', $user->active_session_id);
-            }, 'course_details', 'session'])
-            ->orderByRaw(DbHelper::rollNoOrder());
+        $activeSessionId = (int) ($user->active_session_id ?? 0);
+        $query = Student::query();
+
+        if ($activeSessionId && !$request->filled('batch') && empty($request->input('search'))) {
+            $query->whereHas('StudentCourse', function ($q) use ($activeSessionId) {
+                $q->where('session_id', $activeSessionId);
+            });
+        }
+
+        $query->with(['StudentCourse' => function ($q) {
+            $q->with('session:id,session_name')->latest('id');
+        }, 'course_details', 'session'])
+        ->orderByRaw(DbHelper::rollNoOrder());
 
         $courseId = $request->input('course_id', $request->input('course'));
-        if ($courseId) {
-            $query->where('course', (string) $courseId);
+        if ($courseId !== null && $courseId !== '') {
+            $courseObj = Courses::find($courseId);
+            $courseNameVal = $courseObj ? $courseObj->name : $courseId;
+            $query->where(function ($q) use ($courseId, $courseNameVal) {
+                $q->where('course', (string) $courseId)
+                  ->orWhere('course', (string) $courseNameVal);
+            });
+        }
+
+        if ($request->filled('search')) {
+            $search = trim((string) $request->input('search'));
+            $il = DbHelper::ilike();
+            $query->where(function ($q) use ($search, $il) {
+                $q->whereRaw("first_name {$il} ?", ["%{$search}%"])
+                  ->orWhereRaw("last_name {$il} ?", ["%{$search}%"])
+                  ->orWhereRaw("CONCAT(COALESCE(first_name, ''), ' ', COALESCE(last_name, '')) {$il} ?", ["%{$search}%"])
+                  ->orWhereRaw("roll_no {$il} ?", ["%{$search}%"])
+                  ->orWhereRaw("student_id {$il} ?", ["%{$search}%"])
+                  ->orWhereRaw("email {$il} ?", ["%{$search}%"])
+                  ->orWhereRaw("phone_number {$il} ?", ["%{$search}%"]);
+            });
         }
 
         if ($request->filled('batch')) {
@@ -52,9 +76,11 @@ class StudentExportController extends Controller
 
         if ($request->filled('semester')) {
             $semester = (int) $request->semester;
-            $query->whereHas('StudentCourse', function ($q) use ($user, $semester) {
-                $q->where('session_id', $user->active_session_id)
-                  ->where('semaster', $semester);
+            $query->whereHas('StudentCourse', function ($q) use ($activeSessionId, $semester, $request) {
+                if ($activeSessionId && !$request->filled('batch') && empty($request->input('search'))) {
+                    $q->where('session_id', $activeSessionId);
+                }
+                $q->where('semaster', $semester);
             });
         }
 
