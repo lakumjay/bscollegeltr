@@ -65,6 +65,7 @@ Route::delete('/course/{courseId}/subject/{subjectId}', [CoursesController::clas
     // Students Routes Start
     Route::get('/students/strength', [CoursesController::class, 'studentStrength'])->name('admin.students.strength');
     Route::get('/students', [CoursesController::class, 'students'])->name('admin.students.index');
+    Route::get('/students/quick-search', [CoursesController::class, 'quickSearch'])->name('admin.students.quickSearch');
     Route::get('/students/download-csv', [CoursesController::class, 'download_csv'])->name('admin.students.download');
     Route::post('/certificate-create/{student_id}/{type}', [CoursesController::class, 'certificate_certificate'])->name('admin.students.certificate_certificate');
     Route::get('/students/upload', [CoursesController::class, 'upload'])->name('admin.students.upload');

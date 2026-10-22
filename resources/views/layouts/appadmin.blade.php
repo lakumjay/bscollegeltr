@@ -41,8 +41,159 @@ if (isset($_POST['reset_password'])) {
     <link href="{{url('vertical/assets/css/common.css')}}" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@400;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+    /* Topbar Search & Shortcut Badges */
+    .topbar-cmd-btn {
+        background: #f1f4f9;
+        border: 1px solid #dce2eb;
+        border-radius: 20px;
+        padding: 6px 14px;
+        font-size: 0.83rem;
+        color: #64748b;
+        display: inline-flex;
+        align-items: center;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        margin-left: 15px;
+        max-width: 310px;
+    }
+    .topbar-cmd-btn:hover {
+        background: #ffffff;
+        border-color: #2563eb;
+        color: #1e293b;
+        box-shadow: 0 2px 10px rgba(37,99,235,0.12);
+    }
+    .cmd-kbd-badge {
+        background: #e2e8f0;
+        border: 1px solid #cbd5e1;
+        border-radius: 6px;
+        padding: 2px 7px;
+        font-size: 0.72rem;
+        font-weight: 700;
+        font-family: inherit;
+        color: #334155;
+        letter-spacing: 0.5px;
+        box-shadow: inset 0 -1px 0 rgba(0,0,0,0.15);
+    }
+    .btn-shortcuts-badge {
+        background: rgba(37,99,235,0.08);
+        border: 1px solid rgba(37,99,235,0.2);
+        border-radius: 20px;
+        padding: 5px 11px;
+        font-size: 0.81rem;
+        color: #1d4ed8;
+        display: inline-flex;
+        align-items: center;
+        cursor: pointer;
+        transition: all 0.2s ease;
+    }
+    .btn-shortcuts-badge:hover {
+        background: #2563eb;
+        color: #fff;
+    }
+    .btn-shortcuts-badge:hover .cmd-kbd-badge {
+        background: #1d4ed8;
+        color: #fff;
+        border-color: #1e40af;
+    }
+    /* Command Palette Item Styles */
+    .cmd-nav-item {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 10px 12px;
+        border-radius: 10px;
+        text-decoration: none !important;
+        color: #1e293b;
+        background: #f8fafc;
+        border: 1px solid #e2e8f0;
+        transition: all 0.15s ease;
+    }
+    .cmd-nav-item:hover {
+        background: #eff6ff;
+        border-color: #93c5fd;
+        color: #1d4ed8;
+        transform: translateY(-1px);
+    }
+    .cmd-icon-box {
+        width: 36px;
+        height: 36px;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1rem;
+        flex-shrink: 0;
+    }
+    /* Floating Speed Dial */
+    .floating-speed-dial {
+        position: fixed;
+        bottom: 24px;
+        right: 24px;
+        z-index: 1040;
+    }
+    .speed-dial-main {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #0b1f3a, #1e3d6e);
+        color: #fff;
+        border: none;
+        box-shadow: 0 4px 18px rgba(11,31,58,0.35);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.35rem;
+        cursor: pointer;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .speed-dial-main:hover {
+        transform: scale(1.08);
+        box-shadow: 0 6px 24px rgba(11,31,58,0.45);
+    }
+    .speed-dial-menu {
+        position: absolute;
+        bottom: 60px;
+        right: 0;
+        display: none;
+        flex-direction: column;
+        gap: 9px;
+        align-items: flex-end;
+    }
+    .speed-dial-menu.show {
+        display: flex;
+    }
+    .speed-dial-item {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        text-decoration: none !important;
+        background: #fff;
+        padding: 6px 12px;
+        border-radius: 20px;
+        box-shadow: 0 3px 12px rgba(0,0,0,0.12);
+        font-size: 0.81rem;
+        font-weight: 600;
+        color: #1e293b;
+        white-space: nowrap;
+        transition: transform 0.18s ease;
+    }
+    .speed-dial-item:hover {
+        transform: translateX(-4px);
+        background: #f8fafc;
+        color: #2563eb;
+    }
+    .speed-dial-item i {
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #fff;
+    }
+    </style>
     <title>{{ $collegeProfile?->college_name ?? config('app.name', 'College Management') }} | College Management</title>
-
 </head>
 
 <!-- Reset Password Modal -->
@@ -305,22 +456,71 @@ if (isset($_POST['reset_password'])) {
             <nav class="navbar navbar-expand" style="width:100%;padding:0;">
                 <div class="mobile-toggle-menu"><i class='bx bx-menu'></i></div>
 
-                <div class="ms-auto d-flex align-items-center gap-3">
-                    <?php $date = date('d M l'); ?>
+                <!-- Global Command Search Trigger with Visible Kbd Badge -->
+                <button type="button" class="topbar-cmd-btn d-none d-sm-flex align-items-center" onclick="openGlobalSearch()" title="Search anything... (Ctrl + K)">
+                    <i class="bx bx-search text-muted me-2" style="font-size: 1.15rem;"></i>
+                    <span class="cmd-btn-text text-muted">Search student, roll no, or page...</span>
+                    <kbd class="cmd-kbd-badge ms-3">Ctrl + K</kbd>
+                </button>
+
+                <div class="ms-auto d-flex align-items-center gap-2 gap-md-3">
+                    <!-- Mobile Search Icon -->
+                    <button type="button" class="btn btn-sm btn-light d-sm-none" onclick="openGlobalSearch()" title="Search (Ctrl + K)">
+                        <i class="bx bx-search"></i>
+                    </button>
+
+                    <!-- Keyboard Shortcuts Quick Helper Button with Visible Badge -->
+                    <button type="button" class="btn-shortcuts-badge" onclick="openShortcutsModal()" title="Keyboard Shortcuts (Press ?)">
+                        <i class="fa fa-keyboard text-primary me-1"></i>
+                        <span class="d-none d-md-inline fw-semibold small">Shortcuts</span>
+                        <kbd class="cmd-kbd-badge ms-1">?</kbd>
+                    </button>
+
+                    <!-- Session Switcher Dropdown with Visible Badge -->
+                    @php
+                        $userSession = Auth::user()->session;
+                        $sessionName = $userSession ? $userSession->session_name : 'Not Set';
+                        $headerSessions = \App\Models\Session::all()->sort(fn($a, $b) => strnatcasecmp($b->session_name, $a->session_name));
+                    @endphp
+                    <div class="dropdown">
+                        <button class="session-badge dropdown-toggle dropdown-toggle-nocaret d-flex align-items-center" type="button" data-bs-toggle="dropdown" aria-expanded="false" title="Switch Academic Session (Alt + Y)">
+                            <i class="bx bx-calendar-alt me-1 text-warning"></i>
+                            <span class="d-none d-sm-inline me-1">Session:</span>
+                            <strong>{{ $sessionName }}</strong>
+                            <i class="bx bx-chevron-down ms-1"></i>
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-end shadow-sm border-0 py-2" style="border-radius: 12px; min-width: 200px;">
+                            <li class="dropdown-header small text-uppercase text-muted fw-bold">Select Active Session</li>
+                            @foreach($headerSessions as $hs)
+                                <li>
+                                    <form method="POST" action="{{ route('admin.sessions.activate', $hs->id) }}">
+                                        @csrf
+                                        <button type="submit" class="dropdown-item d-flex align-items-center justify-content-between py-2 {{ (int)Auth::user()->active_session_id === (int)$hs->id ? 'bg-light text-primary fw-bold' : '' }}">
+                                            <span>{{ $hs->session_name }}</span>
+                                            @if((int)Auth::user()->active_session_id === (int)$hs->id)
+                                                <i class="bx bx-check-circle text-primary"></i>
+                                            @endif
+                                        </button>
+                                    </form>
+                                </li>
+                            @endforeach
+                            <li><hr class="dropdown-divider my-1"></li>
+                            <li>
+                                <a class="dropdown-item small text-muted text-center" href="{{ url('admin/sessions') }}">
+                                    <i class="bx bx-cog me-1"></i> Manage Sessions
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
 
                     <!-- Date / Time Pill -->
-                    <div class="date-time-pill">
+                    <?php $date = date('d M l'); ?>
+                    <div class="date-time-pill d-none d-lg-flex">
                         <span class="pill-date">📅 <?= $date ?></span>
                         <div class="pill-divider"></div>
                         <span id="live-time">--:--:--</span>
                         <button class="btn-holiday" onclick="showHolidays()">Holidays</button>
                     </div>
-
-                    <!-- Session badge -->
-                    <button class="session-badge" onclick="window.location='{{url('admin/sessions')}}'">
-                        <i class="bx bx-calendar-alt me-1"></i>
-                        Session: {{ Auth::user()->session->session_name ?? 'N/A' }}
-                    </button>
 
                     <!-- User dropdown -->
                     <div class="user-box dropdown">
@@ -542,6 +742,375 @@ window.addEventListener('load', function () {
     });
 </script>
 
+{{-- Global Search & Command Palette Modal --}}
+<div class="modal fade" id="globalSearchModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content shadow-lg border-0" style="border-radius: 16px; overflow: hidden; background: #ffffff;">
+            <div class="p-3 border-bottom d-flex align-items-center" style="background: #f8fafc;">
+                <i class="bx bx-search text-primary me-2" style="font-size: 1.45rem;"></i>
+                <input type="text" id="globalSearchInput" class="form-control form-control-lg border-0 shadow-none px-1" placeholder="Search by Roll No, Student Name, or Page... (e.g. 101, Aarti, Fee, CLC)" style="background: transparent; font-size: 1.05rem;" autocomplete="off">
+                <span class="cmd-kbd-badge ms-2" onclick="closeGlobalSearch()" style="cursor:pointer;" title="Close">Esc</span>
+            </div>
+            <div class="modal-body p-3" style="max-height: 60vh; overflow-y: auto;" id="globalSearchResults">
+                <!-- Quick Navigation Shortcuts (Default view) -->
+                <div id="cmdDefaultNavigation">
+                    <div class="d-flex align-items-center justify-content-between px-2 mb-2">
+                        <span class="small fw-bold text-uppercase text-muted">⚡ Quick Page Shortcuts</span>
+                        <span class="small text-muted">Press key combination anywhere</span>
+                    </div>
+                    <div class="row g-2">
+                        <div class="col-md-6">
+                            <a href="{{ url('admin/students/create') }}" class="cmd-nav-item">
+                                <span class="cmd-icon-box" style="background: rgba(22,163,74,0.12); color: #16a34a;"><i class="fa fa-user-plus"></i></span>
+                                <div class="flex-grow-1">
+                                    <div class="fw-semibold">New Admission</div>
+                                    <small class="text-muted">Create new student</small>
+                                </div>
+                                <kbd class="cmd-kbd-badge">Alt + N</kbd>
+                            </a>
+                        </div>
+                        <div class="col-md-6">
+                            <a href="{{ url('admin/fee/management') }}" class="cmd-nav-item">
+                                <span class="cmd-icon-box" style="background: rgba(201,168,76,0.15); color: #8b6914;"><i class="fa fa-file-invoice-dollar"></i></span>
+                                <div class="flex-grow-1">
+                                    <div class="fw-semibold">Fee Management</div>
+                                    <small class="text-muted">Collect fees & receipts</small>
+                                </div>
+                                <kbd class="cmd-kbd-badge">Alt + F</kbd>
+                            </a>
+                        </div>
+                        <div class="col-md-6">
+                            <a href="{{ url('admin/students') }}" class="cmd-nav-item">
+                                <span class="cmd-icon-box" style="background: rgba(37,99,235,0.1); color: #2563eb;"><i class="fa fa-users"></i></span>
+                                <div class="flex-grow-1">
+                                    <div class="fw-semibold">Students Directory</div>
+                                    <small class="text-muted">All students & certificates</small>
+                                </div>
+                                <kbd class="cmd-kbd-badge">Alt + S</kbd>
+                            </a>
+                        </div>
+                        <div class="col-md-6">
+                            <a href="{{ url('home') }}" class="cmd-nav-item">
+                                <span class="cmd-icon-box" style="background: rgba(14,165,233,0.12); color: #0284c7;"><i class="fa fa-home"></i></span>
+                                <div class="flex-grow-1">
+                                    <div class="fw-semibold">Dashboard</div>
+                                    <small class="text-muted">Overview & statistics</small>
+                                </div>
+                                <kbd class="cmd-kbd-badge">Alt + D</kbd>
+                            </a>
+                        </div>
+                        <div class="col-md-6">
+                            <a href="{{ url('admin/students/strength') }}" class="cmd-nav-item">
+                                <span class="cmd-icon-box" style="background: rgba(147,51,234,0.1); color: #7e22ce;"><i class="fa fa-chart-pie"></i></span>
+                                <div class="flex-grow-1">
+                                    <div class="fw-semibold">Student Strength</div>
+                                    <small class="text-muted">Course enrolment count</small>
+                                </div>
+                                <kbd class="cmd-kbd-badge">Alt + C</kbd>
+                            </a>
+                        </div>
+                        <div class="col-md-6">
+                            <a href="{{ url('admin/accounts/income') }}" class="cmd-nav-item">
+                                <span class="cmd-icon-box" style="background: rgba(220,38,38,0.1); color: #dc2626;"><i class="fa fa-chart-line"></i></span>
+                                <div class="flex-grow-1">
+                                    <div class="fw-semibold">Accounts & Incomes</div>
+                                    <small class="text-muted">Daily accounts ledger</small>
+                                </div>
+                                <kbd class="cmd-kbd-badge">Alt + A</kbd>
+                            </a>
+                        </div>
+                        <div class="col-md-6">
+                            <a href="{{ route('admin.staff.attendance.markAttendancePre') }}" class="cmd-nav-item">
+                                <span class="cmd-icon-box" style="background: rgba(13,148,136,0.12); color: #0d9488;"><i class="fa fa-calendar-check"></i></span>
+                                <div class="flex-grow-1">
+                                    <div class="fw-semibold">Staff Attendance</div>
+                                    <small class="text-muted">Mark daily staff records</small>
+                                </div>
+                                <kbd class="cmd-kbd-badge">Alt + M</kbd>
+                            </a>
+                        </div>
+                        <div class="col-md-6">
+                            <a href="{{ url('admin/sessions') }}" class="cmd-nav-item">
+                                <span class="cmd-icon-box" style="background: rgba(11,31,58,0.1); color: #0b1f3a;"><i class="fa fa-clock"></i></span>
+                                <div class="flex-grow-1">
+                                    <div class="fw-semibold">Academic Sessions</div>
+                                    <small class="text-muted">Manage academic years</small>
+                                </div>
+                                <kbd class="cmd-kbd-badge">Alt + Y</kbd>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Live Dynamic Search Results Container -->
+                <div id="cmdDynamicResults" style="display: none;"></div>
+            </div>
+            <div class="p-2 px-3 border-top d-flex align-items-center justify-content-between small text-muted" style="background: #f8fafc;">
+                <div><kbd class="cmd-kbd-badge me-1">Ctrl + K</kbd> Search &nbsp;·&nbsp; <kbd class="cmd-kbd-badge me-1">Esc</kbd> Close</div>
+                <div><a href="javascript:;" onclick="closeGlobalSearch(); openShortcutsModal();" class="text-primary text-decoration-none fw-semibold"><i class="fa fa-keyboard me-1"></i>View All Shortcuts (<kbd class="cmd-kbd-badge">?</kbd>)</a></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{{-- All Keyboard Shortcuts Guide Modal --}}
+<div class="modal fade" id="shortcutsModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content shadow border-0" style="border-radius: 16px;">
+            <div class="modal-header border-0 pb-1">
+                <div>
+                    <h5 class="modal-title fw-bold"><i class="fa fa-keyboard text-primary me-2"></i>Keyboard Shortcuts</h5>
+                    <p class="text-muted small mb-0">Use these shortcuts from any page in the software.</p>
+                </div>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body py-2">
+                <div class="table-responsive">
+                    <table class="table table-sm table-borderless align-middle mb-0">
+                        <thead>
+                            <tr class="text-uppercase text-muted border-bottom" style="font-size: 0.72rem;">
+                                <th style="width: 35%;">Shortcut Key</th>
+                                <th>Action / Destination</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><kbd class="cmd-kbd-badge">Ctrl + K</kbd> / <kbd class="cmd-kbd-badge">⌘K</kbd></td>
+                                <td><strong>Global Search</strong> (Student, Roll No, Page)</td>
+                            </tr>
+                            <tr>
+                                <td><kbd class="cmd-kbd-badge">Alt + N</kbd></td>
+                                <td><strong>Add New Student</strong> Admission</td>
+                            </tr>
+                            <tr>
+                                <td><kbd class="cmd-kbd-badge">Alt + S</kbd></td>
+                                <td><strong>Students Directory</strong> (All Batches)</td>
+                            </tr>
+                            <tr>
+                                <td><kbd class="cmd-kbd-badge">Alt + F</kbd></td>
+                                <td><strong>Fee Management</strong> &amp; Collection</td>
+                            </tr>
+                            <tr>
+                                <td><kbd class="cmd-kbd-badge">Alt + D</kbd></td>
+                                <td><strong>Home Dashboard</strong></td>
+                            </tr>
+                            <tr>
+                                <td><kbd class="cmd-kbd-badge">Alt + C</kbd></td>
+                                <td><strong>Student Strength</strong></td>
+                            </tr>
+                            <tr>
+                                <td><kbd class="cmd-kbd-badge">Alt + A</kbd></td>
+                                <td><strong>Accounts &amp; Incomes</strong></td>
+                            </tr>
+                            <tr>
+                                <td><kbd class="cmd-kbd-badge">Alt + M</kbd></td>
+                                <td><strong>Mark Staff Attendance</strong></td>
+                            </tr>
+                            <tr>
+                                <td><kbd class="cmd-kbd-badge">Alt + Y</kbd></td>
+                                <td><strong>Academic Sessions</strong></td>
+                            </tr>
+                            <tr>
+                                <td><kbd class="cmd-kbd-badge">Alt + P</kbd></td>
+                                <td><strong>Print</strong> current page / form / receipt</td>
+                            </tr>
+                            <tr>
+                                <td><kbd class="cmd-kbd-badge">?</kbd></td>
+                                <td>Open this <strong>Shortcuts Guide</strong></td>
+                            </tr>
+                            <tr>
+                                <td><kbd class="cmd-kbd-badge">Esc</kbd></td>
+                                <td>Close any search, dialog, or modal</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer border-0 pt-0">
+                <button type="button" class="btn btn-primary btn-sm px-4" data-bs-dismiss="modal">Got it!</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+{{-- Floating Speed Dial (Bottom Right) --}}
+<div class="floating-speed-dial">
+    <div class="speed-dial-menu" id="speedDialMenu">
+        <a href="{{ url('admin/students/create') }}" class="speed-dial-item">
+            <span>Add Student <kbd class="cmd-kbd-badge">Alt+N</kbd></span>
+            <i class="fa fa-user-plus" style="background:#16a34a;"></i>
+        </a>
+        <a href="{{ url('admin/fee/management') }}" class="speed-dial-item">
+            <span>Fee Collect <kbd class="cmd-kbd-badge">Alt+F</kbd></span>
+            <i class="fa fa-file-invoice-dollar" style="background:#c9a84c;"></i>
+        </a>
+        <a href="javascript:;" onclick="openGlobalSearch()" class="speed-dial-item">
+            <span>Quick Search <kbd class="cmd-kbd-badge">Ctrl+K</kbd></span>
+            <i class="fa fa-search" style="background:#2563eb;"></i>
+        </a>
+        <a href="javascript:;" onclick="openShortcutsModal()" class="speed-dial-item">
+            <span>Shortcuts <kbd class="cmd-kbd-badge">?</kbd></span>
+            <i class="fa fa-keyboard" style="background:#7c3aed;"></i>
+        </a>
+    </div>
+    <button type="button" class="speed-dial-main" id="speedDialToggle" title="Quick Actions (Alt + Q)">
+        <i class="fa fa-bolt" id="speedDialIcon"></i>
+    </button>
+</div>
+
+{{-- Global Shortcut Event Handlers --}}
+<script>
+var globalSearchModalInstance = null;
+var shortcutsModalInstance = null;
+
+function openGlobalSearch() {
+    var modalEl = document.getElementById('globalSearchModal');
+    if (!modalEl) return;
+    if (!globalSearchModalInstance) {
+        globalSearchModalInstance = new bootstrap.Modal(modalEl);
+    }
+    globalSearchModalInstance.show();
+    setTimeout(function() {
+        var input = document.getElementById('globalSearchInput');
+        if (input) { input.focus(); input.select(); }
+    }, 300);
+}
+
+function closeGlobalSearch() {
+    if (globalSearchModalInstance) {
+        globalSearchModalInstance.hide();
+    }
+}
+
+function openShortcutsModal() {
+    var modalEl = document.getElementById('shortcutsModal');
+    if (!modalEl) return;
+    if (!shortcutsModalInstance) {
+        shortcutsModalInstance = new bootstrap.Modal(modalEl);
+    }
+    shortcutsModalInstance.show();
+}
+
+// Global Keyboard Hotkeys Listener
+document.addEventListener('keydown', function(e) {
+    var activeTag = document.activeElement ? document.activeElement.tagName : '';
+    var isEditing = ['INPUT', 'TEXTAREA', 'SELECT'].includes(activeTag);
+
+    // Ctrl + K or Cmd + K (Works everywhere)
+    if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') {
+        e.preventDefault();
+        openGlobalSearch();
+        return;
+    }
+
+    // ? key opens shortcuts guide (only when NOT typing in an input)
+    if (!isEditing && (e.key === '?' || (e.shiftKey && e.key === '/'))) {
+        e.preventDefault();
+        openShortcutsModal();
+        return;
+    }
+
+    // Alt + Hotkeys
+    if (e.altKey && !e.ctrlKey && !e.metaKey) {
+        var key = e.key.toLowerCase();
+        if (key === 'n') { e.preventDefault(); window.location.href = "{{ url('admin/students/create') }}"; }
+        else if (key === 's') { e.preventDefault(); window.location.href = "{{ url('admin/students') }}"; }
+        else if (key === 'f') { e.preventDefault(); window.location.href = "{{ url('admin/fee/management') }}"; }
+        else if (key === 'd') { e.preventDefault(); window.location.href = "{{ url('home') }}"; }
+        else if (key === 'c') { e.preventDefault(); window.location.href = "{{ url('admin/students/strength') }}"; }
+        else if (key === 'a') { e.preventDefault(); window.location.href = "{{ url('admin/accounts/income') }}"; }
+        else if (key === 'm') { e.preventDefault(); window.location.href = "{{ route('admin.staff.attendance.markAttendancePre') }}"; }
+        else if (key === 'y') { e.preventDefault(); window.location.href = "{{ url('admin/sessions') }}"; }
+        else if (key === 'p') { e.preventDefault(); window.print(); }
+        else if (key === 'q') {
+            e.preventDefault();
+            var menu = document.getElementById('speedDialMenu');
+            if (menu) menu.classList.toggle('show');
+        }
+    }
+});
+
+// Floating Speed Dial Toggle
+document.addEventListener('DOMContentLoaded', function() {
+    var dialBtn = document.getElementById('speedDialToggle');
+    var dialMenu = document.getElementById('speedDialMenu');
+    var dialIcon = document.getElementById('speedDialIcon');
+
+    if (dialBtn && dialMenu) {
+        dialBtn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            var isOpen = dialMenu.classList.toggle('show');
+            if (dialIcon) {
+                dialIcon.className = isOpen ? 'fa fa-times' : 'fa fa-bolt';
+            }
+        });
+
+        document.addEventListener('click', function(e) {
+            if (!dialBtn.contains(e.target) && !dialMenu.contains(e.target)) {
+                dialMenu.classList.remove('show');
+                if (dialIcon) dialIcon.className = 'fa fa-bolt';
+            }
+        });
+    }
+
+    // Live Instant Search in Command Palette
+    var searchInput = document.getElementById('globalSearchInput');
+    var defaultNav = document.getElementById('cmdDefaultNavigation');
+    var dynamicResults = document.getElementById('cmdDynamicResults');
+    var searchTimer = null;
+
+    if (searchInput && dynamicResults && defaultNav) {
+        searchInput.addEventListener('input', function() {
+            var q = this.value.trim();
+            clearTimeout(searchTimer);
+
+            if (q.length === 0) {
+                defaultNav.style.display = 'block';
+                dynamicResults.style.display = 'none';
+                dynamicResults.innerHTML = '';
+                return;
+            }
+
+            searchTimer = setTimeout(function() {
+                dynamicResults.innerHTML = '<div class="text-center py-4 text-muted"><i class="fa fa-spinner fa-spin me-2"></i>Searching student records...</div>';
+                defaultNav.style.display = 'none';
+                dynamicResults.style.display = 'block';
+
+                fetch("{{ url('admin/students/quick-search') }}?q=" + encodeURIComponent(q))
+                    .then(function(res) { return res.json(); })
+                    .then(function(data) {
+                        if (!data || data.length === 0) {
+                            dynamicResults.innerHTML = '<div class="text-center py-4 text-muted"><i class="bx bx-info-circle me-1"></i>No student found for "<strong>' + $('<div>').text(q).html() + '</strong>".<br><a href="{{ url("admin/students/create") }}" class="btn btn-sm btn-outline-primary mt-2"><i class="fa fa-user-plus me-1"></i>Add New Student</a></div>';
+                            return;
+                        }
+
+                        var html = '<div class="small fw-bold text-uppercase text-muted px-2 mb-2">🎓 Student Results (' + data.length + ')</div><div class="d-flex flex-column gap-2">';
+                        data.forEach(function(s) {
+                            html += '<div class="p-2 px-3 border rounded-3 bg-light d-flex align-items-center justify-content-between flex-wrap gap-2">' +
+                                '<div>' +
+                                    '<span class="badge bg-primary me-2">Roll #' + (s.roll_no || 'N/A') + '</span>' +
+                                    '<strong>' + $('<div>').text(s.name).html() + '</strong>' +
+                                    '<span class="text-muted ms-2 small">(' + (s.course || '—') + ' · ' + (s.batch || '') + ')</span>' +
+                                '</div>' +
+                                '<div class="d-flex align-items-center gap-1">' +
+                                    '<a href="' + s.url_view + '" class="btn btn-sm btn-outline-dark px-2" title="View Admission Form"><i class="bx bx-show me-1"></i>Form</a>' +
+                                    '<a href="' + s.url_fee + '" class="btn btn-sm btn-outline-success px-2" title="Collect Fees"><i class="fa fa-money-bill me-1"></i>Fee</a>' +
+                                    '<a href="' + s.url_clc + '" class="btn btn-sm btn-outline-primary px-2" title="Issue CLC Certificate">CLC</a>' +
+                                    '<a href="' + s.url_bonafide + '" class="btn btn-sm btn-outline-info px-2" title="Issue Bonafide Certificate">Bonafide</a>' +
+                                '</div>' +
+                            '</div>';
+                        });
+                        html += '</div>';
+                        dynamicResults.innerHTML = html;
+                    })
+                    .catch(function(err) {
+                        dynamicResults.innerHTML = '<div class="text-danger py-2 text-center">Search error. Please try again.</div>';
+                    });
+            }, 220);
+        });
+    }
+});
+</script>
 
 @yield('scripts')
 </body>

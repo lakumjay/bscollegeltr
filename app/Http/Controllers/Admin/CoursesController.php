@@ -481,6 +481,49 @@ public function certificate_certificate($student_id,$type,Request $request, ClcC
 }
 
     /**
+     * Instant search for students by roll_no, student_id, name, or phone.
+     */
+    public function quickSearch(Request $request)
+    {
+        $q = trim((string) $request->query('q'));
+        if (strlen($q) < 1) {
+            return response()->json([]);
+        }
+
+        $il = DbHelper::ilike();
+        $students = Student::with('course_details:id,name')
+            ->where(function ($query) use ($q, $il) {
+                $query->whereRaw("roll_no {$il} ?", ["%{$q}%"])
+                      ->orWhereRaw("student_id {$il} ?", ["%{$q}%"])
+                      ->orWhereRaw("first_name {$il} ?", ["%{$q}%"])
+                      ->orWhereRaw("last_name {$il} ?", ["%{$q}%"])
+                      ->orWhereRaw("phone_number {$il} ?", ["%{$q}%"])
+                      ->orWhereRaw("CONCAT(COALESCE(first_name,''), ' ', COALESCE(last_name,'')) {$il} ?", ["%{$q}%"]);
+            })
+            ->orderByRaw(DbHelper::rollNoOrder())
+            ->limit(10)
+            ->get(['id', 'roll_no', 'student_id', 'first_name', 'last_name', 'course', 'batch'])
+            ->map(function ($s) {
+                return [
+                    'id' => $s->id,
+                    'roll_no' => $s->roll_no,
+                    'student_id' => $s->student_id,
+                    'name' => trim($s->first_name . ' ' . $s->last_name),
+                    'course' => optional($s->course_details)->name ?: ($s->course ?: '—'),
+                    'batch' => $s->batch ?: '—',
+                    'url_view' => url('admin/students/' . $s->id),
+                    'url_edit' => url('admin/students/' . $s->id . '/edit'),
+                    'url_fee' => url('admin/fee/management?search=' . urlencode($s->roll_no ?: $s->first_name)),
+                    'url_clc' => url('admin/students/' . $s->id . '/clc'),
+                    'url_bonafide' => url('admin/students/' . $s->id . '/bonafied'),
+                    'url_char' => url('admin/students/' . $s->id . '/character'),
+                ];
+            });
+
+        return response()->json($students);
+    }
+
+    /**
      * Show the form for creating a new student.
      */
     public function createStudent()
