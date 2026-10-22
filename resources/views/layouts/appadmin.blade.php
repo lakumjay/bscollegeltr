@@ -44,57 +44,85 @@ if (isset($_POST['reset_password'])) {
     <style>
     /* Topbar Search & Shortcut Badges */
     .topbar-cmd-btn {
-        background: #f1f4f9;
-        border: 1px solid #dce2eb;
+        background: #f8fafc;
+        border: 1px solid #e2e8f0;
         border-radius: 20px;
-        padding: 6px 14px;
-        font-size: 0.83rem;
+        height: 38px;
+        padding: 0 14px;
+        font-size: 0.82rem;
         color: #64748b;
         display: inline-flex;
         align-items: center;
+        justify-content: space-between;
         cursor: pointer;
         transition: all 0.2s ease;
         margin-left: 15px;
-        max-width: 310px;
+        width: 290px;
+        white-space: nowrap;
     }
     .topbar-cmd-btn:hover {
         background: #ffffff;
-        border-color: #2563eb;
+        border-color: #cbd5e1;
         color: #1e293b;
-        box-shadow: 0 2px 10px rgba(37,99,235,0.12);
+        box-shadow: 0 3px 12px rgba(15, 23, 42, 0.08);
+    }
+    .topbar-cmd-btn .cmd-btn-text {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        font-weight: 500;
+        color: #64748b;
     }
     .cmd-kbd-badge {
         background: #e2e8f0;
         border: 1px solid #cbd5e1;
-        border-radius: 6px;
-        padding: 2px 7px;
-        font-size: 0.72rem;
+        border-radius: 5px;
+        padding: 2px 6px;
+        font-size: 0.70rem;
         font-weight: 700;
         font-family: inherit;
-        color: #334155;
-        letter-spacing: 0.5px;
-        box-shadow: inset 0 -1px 0 rgba(0,0,0,0.15);
-    }
-    .btn-shortcuts-badge {
-        background: rgba(37,99,235,0.08);
-        border: 1px solid rgba(37,99,235,0.2);
-        border-radius: 20px;
-        padding: 5px 11px;
-        font-size: 0.81rem;
-        color: #1d4ed8;
+        color: #475569;
+        letter-spacing: 0.3px;
+        box-shadow: inset 0 -1px 0 rgba(0,0,0,0.12);
+        white-space: nowrap;
+        flex-shrink: 0;
+        line-height: 1.2;
         display: inline-flex;
         align-items: center;
+    }
+    .btn-shortcuts-badge {
+        background: #f8fafc;
+        border: 1px solid #e2e8f0;
+        border-radius: 20px;
+        height: 38px;
+        padding: 0 13px;
+        font-size: 0.81rem;
+        color: #475569;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
         cursor: pointer;
         transition: all 0.2s ease;
+        white-space: nowrap;
     }
     .btn-shortcuts-badge:hover {
-        background: #2563eb;
-        color: #fff;
+        background: #0b1f3a;
+        border-color: #0b1f3a;
+        color: #f8e6a4;
     }
     .btn-shortcuts-badge:hover .cmd-kbd-badge {
-        background: #1d4ed8;
-        color: #fff;
-        border-color: #1e40af;
+        background: rgba(255, 255, 255, 0.15);
+        border-color: rgba(255, 255, 255, 0.3);
+        color: #f8e6a4;
+    }
+    .session-badge {
+        height: 38px !important;
+        display: inline-flex !important;
+        align-items: center !important;
+        border-radius: 20px !important;
+        padding: 0 14px !important;
+        font-size: 0.82rem !important;
+        white-space: nowrap;
     }
     /* Command Palette Item Styles */
     .cmd-nav-item {
@@ -458,9 +486,11 @@ if (isset($_POST['reset_password'])) {
 
                 <!-- Global Command Search Trigger with Visible Kbd Badge -->
                 <button type="button" class="topbar-cmd-btn d-none d-sm-flex align-items-center" onclick="openGlobalSearch()" title="Search anything... (Ctrl + K)">
-                    <i class="bx bx-search text-muted me-2" style="font-size: 1.15rem;"></i>
-                    <span class="cmd-btn-text text-muted">Search student, roll no, or page...</span>
-                    <kbd class="cmd-kbd-badge ms-3">Ctrl + K</kbd>
+                    <div class="d-flex align-items-center gap-2 overflow-hidden me-2">
+                        <i class="bx bx-search text-muted" style="font-size: 1.15rem; flex-shrink: 0;"></i>
+                        <span class="cmd-btn-text">Search student, fee, or page...</span>
+                    </div>
+                    <kbd class="cmd-kbd-badge">Ctrl K</kbd>
                 </button>
 
                 <div class="ms-auto d-flex align-items-center gap-2 gap-md-3">
@@ -471,7 +501,7 @@ if (isset($_POST['reset_password'])) {
 
                     <!-- Keyboard Shortcuts Quick Helper Button with Visible Badge -->
                     <button type="button" class="btn-shortcuts-badge" onclick="openShortcutsModal()" title="Keyboard Shortcuts (Press ?)">
-                        <i class="fa fa-keyboard text-primary me-1"></i>
+                        <i class="fa fa-keyboard text-muted me-1"></i>
                         <span class="d-none d-md-inline fw-semibold small">Shortcuts</span>
                         <kbd class="cmd-kbd-badge ms-1">?</kbd>
                     </button>
