@@ -7,7 +7,7 @@
     $fileUrl = static fn ($path) => $path ? url('uploads/' . basename($path)) : null;
     $profile = $collegeProfile ?? \App\Models\Profile::first();
     $collegeName = $profile?->college_name ?? config('app.name', 'College Management');
-    $brandAsset = $profile?->banner ?? $profile?->logo ?? null;
+    $brandAsset = $profile?->logo ?? $profile?->banner ?? null;
     $collegeLogo = null;
     if ($brandAsset && file_exists(public_path($brandAsset))) {
         $mime = @mime_content_type(public_path($brandAsset)) ?: 'image/png';
@@ -28,29 +28,29 @@
 
     <article class="classic-admission-form" style="position: relative; overflow: hidden;">
         @if($collegeLogo)
-            <img src="{{ $collegeLogo }}" alt="Watermark" style="position: absolute; top: 52%; left: 50%; transform: translate(-50%, -50%); width: 120mm; height: 120mm; opacity: 0.07; pointer-events: none; z-index: 0; object-fit: contain;">
+            <img src="{{ $collegeLogo }}" alt="Watermark" style="position: absolute; top: 52%; left: 50%; transform: translate(-50%, -50%); width: 140mm; height: 140mm; opacity: 0.07; pointer-events: none; z-index: 0; object-fit: contain;">
         @endif
 
         <div style="position: relative; z-index: 1;">
             <header class="classic-form-header" style="border-bottom: 2px solid #111; padding-bottom: 12px; margin-bottom: 16px;">
                 <h1 style="margin: 0 0 6px; font-family: Arial, sans-serif; font-size: 24px; font-weight: 900; letter-spacing: 0.5px; text-transform: uppercase; color: #111; text-align: center;">{{ $collegeName }}</h1>
-                <div style="display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 6px;">
+                <div style="display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-top: 6px;">
                     @if($collegeLogo)
-                        <div style="flex: 0 0 70px; height: 70px; display: flex; align-items: center; justify-content: center;">
-                            <img src="{{ $collegeLogo }}" onerror="this.onerror=null;this.src='{{ asset('images/default-college-logo.svg') }}';" alt="{{ $collegeName }}" style="max-height: 65px; max-width: 65px; object-fit: contain; border-radius: 50%; border: 1.5px solid #222; padding: 2px;">
+                        <div style="flex: 0 0 130px; min-height: 80px; display: flex; align-items: center; justify-content: center;">
+                            <img src="{{ $collegeLogo }}" onerror="this.onerror=null;this.src='{{ asset('images/default-college-logo.svg') }}';" alt="{{ $collegeName }}" style="max-height: 80px; max-width: 130px; object-fit: contain;">
                         </div>
                     @endif
                     <div style="flex: 1 1 auto; text-align: center;">
-                        <p style="margin: 0; font-size: 13.5px; font-weight: 700; color: #111; line-height: 1.3;">{{ $profile?->address ?? '' }}</p>
+                        <p style="margin: 0; font-size: 14px; font-weight: 700; color: #111; line-height: 1.3;">{{ $profile?->address ?? '' }}</p>
                         @if($profile?->affiliation)
                             <p style="margin: 3px 0 0; font-size: 12.5px; font-style: italic; color: #333;">{{ $profile->affiliation }}</p>
                         @endif
                         <div style="margin-top: 6px;">
-                            <span style="display: inline-block; font-size: 13px; font-weight: 800; letter-spacing: 0.5px; text-transform: uppercase; border: 1.5px solid #111; padding: 2px 10px; background: #fafafa;">Student Admission Form</span>
+                            <span style="display: inline-block; font-size: 13px; font-weight: 800; letter-spacing: 0.5px; text-transform: uppercase; border: 1.5px solid #111; padding: 2px 12px; background: #fafafa;">Student Admission Form</span>
                         </div>
-                        <p style="margin: 4px 0 0; font-size: 12px; font-weight: 600; color: #444;">Academic Session: {{ optional($student->session)->session_name ?? 'N/A' }}</p>
+                        <p style="margin: 4px 0 0; font-size: 12px; font-weight: 600; color: #444;">Academic Session: {{ optional($student->session)->session_name ?: ($student->batch ?? 'N/A') }}</p>
                     </div>
-                    <div style="flex: 0 0 70px;"></div>
+                    <div style="flex: 0 0 130px;"></div>
                 </div>
             </header>
 

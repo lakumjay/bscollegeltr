@@ -33,7 +33,13 @@ return new class extends Migration
                 // Normalize session name by trimming and collapsing whitespace around dashes
                 $normalized = trim(preg_replace('/\s*-\s*/', '-', (string)$s->session_name));
                 $normalized = trim(preg_replace('/\s+/', ' ', $normalized));
-                $key = strtolower($normalized);
+
+                // Canonical: e.g. 2026-2030 -> 2026-30
+                $canonical = $normalized;
+                if (preg_match('/^(\d{4})-(\d{2})(\d{2})$/', $normalized, $m) && substr($m[1], 0, 2) === $m[2]) {
+                    $canonical = $m[1] . '-' . $m[3];
+                }
+                $key = strtolower($canonical);
 
                 if (!isset($grouped[$key])) {
                     $grouped[$key] = [
@@ -41,12 +47,16 @@ return new class extends Migration
                         'name' => $normalized,
                         'duplicate_ids' => [],
                     ];
-                    // Update primary with normalized name if different
-                    if ($s->session_name !== $normalized) {
-                        DB::table('sessions')->where('id', $s->id)->update(['session_name' => $normalized]);
-                    }
                 } else {
-                    $grouped[$key]['duplicate_ids'][] = $s->id;
+                    // Prefer the 2-digit format (2026-30) as primary session name
+                    if ($normalized === $canonical) {
+                        $oldPrimaryId = $grouped[$key]['primary_id'];
+                        $grouped[$key]['primary_id'] = $s->id;
+                        $grouped[$key]['name'] = $normalized;
+                        $grouped[$key]['duplicate_ids'][] = $oldPrimaryId;
+                    } else {
+                        $grouped[$key]['duplicate_ids'][] = $s->id;
+                    }
                 }
             }
 

@@ -8,13 +8,20 @@
             <div>
                 <span>Current session</span><strong>{{ optional($sessions->firstWhere('id', $currentSessionId))->session_name ?? 'Not selected' }}</strong>
             </div>
-            <button type="button" class="btn btn-primary btn-sm ms-3" data-bs-toggle="collapse" data-bs-target="#createSessionBox" style="font-weight: 600;">
+            <form action="{{ route('admin.sessions.merge') }}" method="POST" class="d-inline" onsubmit="return confirm('Do you want to automatically merge equivalent duplicate sessions (e.g. 2026-2030 into 2026-30)?');">
+                @csrf
+                <button type="submit" class="btn btn-outline-warning btn-sm ms-2" style="font-weight: 600;">
+                    <i class="fa fa-magic me-1"></i> Clean Duplicates
+                </button>
+            </form>
+            <button type="button" class="btn btn-primary btn-sm ms-2" data-bs-toggle="collapse" data-bs-target="#createSessionBox" style="font-weight: 600;">
                 <i class="fa fa-plus me-1"></i> Add Session
             </button>
         </div>
     </section>
 
     @if(session('success')) <div class="alert alert-success">{{ session('success') }}</div> @endif
+    @if(session('error')) <div class="alert alert-danger">{{ session('error') }}</div> @endif
     @if($errors->any()) <div class="alert alert-danger">{{ $errors->first() }}</div> @endif
 
     <div class="collapse mb-4" id="createSessionBox">
@@ -24,7 +31,7 @@
                 @csrf
                 <div class="col-md-5">
                     <label class="form-label small fw-semibold text-secondary mb-1">Session Name / Year</label>
-                    <input type="text" name="session_name" class="form-control" placeholder="e.g. 2026-2030 or 2026-30" required>
+                    <input type="text" name="session_name" class="form-control" placeholder="e.g. 2026-30" required>
                     <small class="text-muted">Enter the 4-year or custom academic session format.</small>
                 </div>
                 <div class="col-md-3">
@@ -44,11 +51,25 @@
                 <article class="session-tile {{ $isActive ? 'is-active' : '' }}">
                     <div class="session-tile__icon"><i class="fa fa-calendar"></i></div>
                     <div class="session-tile__content"><span class="premium-eyebrow">Academic session</span><h3>{{ $session->session_name }}</h3><span class="session-status {{ $isActive ? 'is-active' : '' }}"><i class="fa fa-circle"></i> {{ $isActive ? 'Currently active' : 'Available' }}</span></div>
-                    @if($isActive)
-                        <span class="premium-btn premium-btn-outline premium-btn-sm is-static"><i class="fa fa-check"></i> Active</span>
-                    @else
-                        <form method="POST" action="{{ route('admin.sessions.activate', $session->id) }}">@csrf<button type="submit" class="premium-btn premium-btn-primary premium-btn-sm"><i class="fa fa-power-off"></i> Activate</button></form>
-                    @endif
+                    <div class="d-flex align-items-center gap-2">
+                        @if($isActive)
+                            <span class="premium-btn premium-btn-outline premium-btn-sm is-static"><i class="fa fa-check"></i> Active</span>
+                        @else
+                            <form method="POST" action="{{ route('admin.sessions.activate', $session->id) }}" class="d-inline">@csrf<button type="submit" class="premium-btn premium-btn-primary premium-btn-sm"><i class="fa fa-power-off"></i> Activate</button></form>
+                        @endif
+                        <button type="button" class="btn btn-sm btn-outline-secondary px-2" title="Edit Session" onclick="editSessionName({{ $session->id }}, '{{ addslashes($session->session_name) }}')">
+                            <i class="fa fa-pencil"></i>
+                        </button>
+                        @if(!$isActive)
+                            <form method="POST" action="{{ route('admin.sessions.destroy', $session->id) }}" onsubmit="return confirm('Are you sure you want to delete session \'{{ addslashes($session->session_name) }}\'? Any linked records will remain safe.');" class="d-inline">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-sm btn-outline-danger px-2" title="Delete Session">
+                                    <i class="fa fa-trash"></i>
+                                </button>
+                            </form>
+                        @endif
+                    </div>
                 </article>
             @empty
                 <div class="premium-empty-state"><i class="fa fa-calendar-o"></i><h3>No academic sessions available</h3><p>Create a session before selecting an active academic year.</p></div>
@@ -56,4 +77,39 @@
         </div>
     </section>
 </div>
+
+{{-- Edit Session Modal --}}
+<div class="modal fade" id="editSessionModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content shadow border-0" style="border-radius: 12px;">
+            <form id="editSessionForm" method="POST">
+                @csrf
+                @method('PUT')
+                <div class="modal-header border-0 pb-0">
+                    <h5 class="modal-title fw-bold">Edit Academic Session</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body py-3">
+                    <label class="form-label small fw-semibold text-secondary mb-1">Session Name</label>
+                    <input type="text" name="session_name" id="editSessionInput" class="form-control" placeholder="e.g. 2026-30" required>
+                </div>
+                <div class="modal-footer border-0 pt-0">
+                    <button type="button" class="btn btn-light" data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-primary px-3">Update Session</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+@endsection
+
+@section('scripts')
+<script>
+function editSessionName(id, name) {
+    document.getElementById('editSessionForm').action = '{{ url("admin/sessions") }}/' + id;
+    document.getElementById('editSessionInput').value = name;
+    var modal = new bootstrap.Modal(document.getElementById('editSessionModal'));
+    modal.show();
+}
+</script>
 @endsection

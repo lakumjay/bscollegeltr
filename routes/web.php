@@ -57,7 +57,10 @@ Route::delete('/course/{courseId}/subject/{subjectId}', [CoursesController::clas
     // Session Routes Start
     Route::get('/sessions', [SessionsController::class, 'index'])->name('admin.sessions.index');
     Route::post('/sessions/create', [SessionsController::class, 'store'])->name('admin.sessions.store');
+    Route::put('/sessions/{id}', [SessionsController::class, 'update'])->name('admin.sessions.update');
+    Route::delete('/sessions/{id}', [SessionsController::class, 'destroy'])->name('admin.sessions.destroy');
     Route::post('/sessions/activate/{id}', [SessionsController::class, 'activate'])->name('admin.sessions.activate');
+    Route::post('/sessions/merge-duplicates', [SessionsController::class, 'mergeDuplicates'])->name('admin.sessions.merge');
     // Session Routes End
     // Students Routes Start
     Route::get('/students/strength', [CoursesController::class, 'studentStrength'])->name('admin.students.strength');
