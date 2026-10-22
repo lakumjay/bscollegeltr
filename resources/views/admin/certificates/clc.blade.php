@@ -278,7 +278,7 @@
         }
     }
 
-    $courseName = optional($student->course_details)->name ?: '—';
+    $courseName = optional($student->course_details)->name ?: ($student->course ?: '—');
     $sessionName = $certificateData->session ?? optional($student->session)->session_name ?: ($student->batch ?? '—');
     $academicYear = $certificateData->academic_year ?? null;
     if (empty($academicYear) && preg_match('/^(\d{4})/', (string)$sessionName, $m)) {

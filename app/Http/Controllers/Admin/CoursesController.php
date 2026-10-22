@@ -523,10 +523,22 @@ public function certificate_certificate($student_id,$type,Request $request, ClcC
         $user = Auth::user();
 
         if ($request->filled('admission_date')) {
-            $request->merge(['admission_date' => str_replace('/', '-', trim($request->admission_date))]);
+            $parsedAdm = self::parseDateSafe($request->admission_date);
+            if ($parsedAdm) {
+                $request->merge(['admission_date' => $parsedAdm]);
+            }
         }
         if ($request->filled('date_of_birth')) {
-            $request->merge(['date_of_birth' => str_replace('/', '-', trim($request->date_of_birth))]);
+            $parsedDob = self::parseDateSafe($request->date_of_birth);
+            if ($parsedDob) {
+                $request->merge(['date_of_birth' => $parsedDob]);
+            }
+        }
+        if ($request->filled('course') && !is_numeric($request->course)) {
+            $cMatch = Courses::where('name', trim($request->course))->first();
+            if ($cMatch) {
+                $request->merge(['course' => $cMatch->id]);
+            }
         }
 
         $request->validate([
@@ -679,10 +691,22 @@ public function certificate_certificate($student_id,$type,Request $request, ClcC
         $student = Student::where('id', $id)->firstOrFail();
 
         if ($request->filled('admission_date')) {
-            $request->merge(['admission_date' => str_replace('/', '-', trim($request->admission_date))]);
+            $parsedAdm = self::parseDateSafe($request->admission_date);
+            if ($parsedAdm) {
+                $request->merge(['admission_date' => $parsedAdm]);
+            }
         }
         if ($request->filled('date_of_birth')) {
-            $request->merge(['date_of_birth' => str_replace('/', '-', trim($request->date_of_birth))]);
+            $parsedDob = self::parseDateSafe($request->date_of_birth);
+            if ($parsedDob) {
+                $request->merge(['date_of_birth' => $parsedDob]);
+            }
+        }
+        if ($request->filled('course') && !is_numeric($request->course)) {
+            $cMatch = Courses::where('name', trim($request->course))->first();
+            if ($cMatch) {
+                $request->merge(['course' => $cMatch->id]);
+            }
         }
 
         $request->validate([

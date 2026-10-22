@@ -91,12 +91,23 @@ class FeeManagementController extends Controller
                 });
 
             if ($sessionId) {
-                $query->where(function ($q) use ($sessionId) {
+                $sessionObj = \App\Models\Session::find($sessionId);
+                $sessionName = $sessionObj ? $sessionObj->session_name : null;
+                $query->where(function ($q) use ($sessionId, $sessionName) {
                     $q->whereIn('id', function ($sub) use ($sessionId) {
                         $sub->select('student_id')
                             ->from('student_courses')
                             ->where('session_id', $sessionId);
                     })->orWhere('session_id', $sessionId);
+
+                    if ($sessionName && $sessionName !== 'Not Assigned') {
+                        $q->orWhere('batch', $sessionName);
+                        if (preg_match('/^(\d{4})-(\d{2})$/', $sessionName, $m)) {
+                            $q->orWhere('batch', $m[1] . '-' . substr($m[1], 0, 2) . $m[2]);
+                        } elseif (preg_match('/^(\d{4})-(\d{2})(\d{2})$/', $sessionName, $m) && substr($m[1], 0, 2) === $m[2]) {
+                            $q->orWhere('batch', $m[1] . '-' . $m[3]);
+                        }
+                    }
                 });
             }
 

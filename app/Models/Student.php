@@ -12,9 +12,10 @@ class Student extends Model
         'current_year', 'current_semester', 'status', 'session_id', 'subjects', 'photo',
         'aadhar_card', 'id_proof', 'category', 'caste', 'category_certificate', 'user_id'
     ,
-    'correspondence_address',
-'permanent_address',
-'student_id',
+        'correspondence_address',
+        'permanent_address',
+        'student_id',
+        'special_category',
     ];
 
     protected $casts = [
@@ -22,6 +23,26 @@ class Student extends Model
         'date_of_birth' => 'date',
         'admission_date' => 'date',
     ];
+
+    public function getFormattedAdmissionDateAttribute()
+    {
+        if (empty($this->attributes['admission_date'])) return '';
+        try {
+            return \Carbon\Carbon::parse($this->attributes['admission_date'])->format('d-m-Y');
+        } catch (\Exception $e) {
+            return (string)$this->attributes['admission_date'];
+        }
+    }
+
+    public function getFormattedDateOfBirthAttribute()
+    {
+        if (empty($this->attributes['date_of_birth'])) return '';
+        try {
+            return \Carbon\Carbon::parse($this->attributes['date_of_birth'])->format('d-m-Y');
+        } catch (\Exception $e) {
+            return (string)$this->attributes['date_of_birth'];
+        }
+    }
 
     public function session()
     {

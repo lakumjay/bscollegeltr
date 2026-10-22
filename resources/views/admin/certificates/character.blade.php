@@ -266,7 +266,7 @@
     }
 
     $certData = json_decode($StudentCertificate->data ?? '{}') ?: (object) [];
-    $courseName = optional($student->course_details)->name ?: '—';
+    $courseName = optional($student->course_details)->name ?: ($student->course ?: '—');
     $sessionName = $certData->session ?? optional($student->session)->session_name ?: ($student->batch ?? '—');
     $academicYear = $certData->academic_year ?? null;
     $certSemester = $certData->semester ?? null;

@@ -254,7 +254,7 @@ public function markAttendancePre(Request $request){
         return view('admin.staff.attendance.mark', compact('staff', 'date', 'attendance'));
     }
 
-    public function viewAttendance(Request $request, Staff $staff = null)
+    public function viewAttendance(Request $request, ?Staff $staff = null)
     {
         $start_date = $request->filled('start_date') ? Carbon::parse($request->input('start_date'))->format('Y-m-d') : Carbon::today()->toDateString();
         $end_date = $request->filled('end_date') ? Carbon::parse($request->input('end_date'))->format('Y-m-d') : Carbon::today()->toDateString();
@@ -346,7 +346,7 @@ public function markAttendancePre(Request $request){
         return view('admin.staff.salary.structure', compact('staff', 'structure'));
     }
 
-    public function manageSalaryPayments_view(Request $request, Staff $staff = null)
+    public function manageSalaryPayments_view(Request $request, ?Staff $staff = null)
 {
     $start_date = $request->input('start_date', Carbon::today()->subMonth()->toDateString());
     $end_date = $request->input('end_date', Carbon::today()->toDateString());
@@ -364,7 +364,7 @@ public function markAttendancePre(Request $request){
 
     return view('admin.staff.salary.payments_view', compact('payments', 'staff', 'staffList', 'start_date', 'end_date'));
 }
-    public function manageSalaryPayments(Request $request, Staff $staff = null)
+    public function manageSalaryPayments(Request $request, ?Staff $staff = null)
     {
         $start_date = $request->input('start_date', Carbon::today()->subMonth()->toDateString());
         $end_date = $request->input('end_date', Carbon::today()->toDateString());
