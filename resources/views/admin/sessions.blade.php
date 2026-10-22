@@ -25,7 +25,7 @@
         <div class="premium-card-heading"><div><span class="premium-eyebrow">Available years</span><h2>Select an academic session</h2></div><span class="premium-count-badge">{{ $sessions->count() }} sessions</span></div>
         <div class="sessions-grid">
             @forelse($sessions as $session)
-                @php($isActive = (int) $currentSessionId === (int) $session->id)
+                <?php $isActive = (int) $currentSessionId === (int) $session->id; ?>
                 <article class="session-tile {{ $isActive ? 'is-active' : '' }}">
                     <div class="session-tile__content">
                         <span class="premium-eyebrow">Academic session</span>

@@ -265,7 +265,7 @@ if (isset($_POST['reset_password'])) {
             <div class="toggle-icon ms-auto"><i class='bx bx-arrow-to-left'></i></div>
         </div>
 
-        @php($currentUser = Auth::user())
+        <?php $currentUser = Auth::user(); ?>
 
         <ul class="metismenu" id="menu">
 
@@ -477,11 +477,13 @@ if (isset($_POST['reset_password'])) {
                     </button>
 
                     <!-- Session Switcher Dropdown with Visible Badge -->
-                    @php
+                    <?php
                         $userSession = Auth::user()->session;
                         $sessionName = $userSession ? $userSession->session_name : 'Not Set';
-                        $headerSessions = \App\Models\Session::all()->sort(fn($a, $b) => strnatcasecmp($b->session_name, $a->session_name));
-                    @endphp
+                        $headerSessions = \App\Models\Session::all()->sort(function($a, $b) {
+                            return strnatcasecmp($b->session_name, $a->session_name);
+                        });
+                    ?>
                     <div class="dropdown">
                         <button class="session-badge dropdown-toggle dropdown-toggle-nocaret d-flex align-items-center" type="button" data-bs-toggle="dropdown" aria-expanded="false" title="Switch Academic Session (Alt + Y)">
                             <i class="bx bx-calendar-alt me-1 text-warning"></i>

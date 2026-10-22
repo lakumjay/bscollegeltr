@@ -24,7 +24,7 @@
     <div class="premium-card"><div class="premium-card-header"><div><h2>Activity log</h2><p>{{ $logs->total() }} total record{{ $logs->total() === 1 ? '' : 's' }}{{ request('date') ? ' for ' . \Carbon\Carbon::parse(request('date'))->format('d-m-Y') : '' }}.</p></div><div class="premium-table-search"><i class="bx bx-search"></i><input type="search" id="quickSearch" aria-label="Search activity records" placeholder="Search displayed records"></div></div>
         <div class="premium-card-body p-0"><div class="table-responsive"><table class="table premium-table activity-log-table"><thead><tr><th>Date &amp; time</th><th>User</th><th>Module</th><th>Action</th><th>Details summary</th><th>IP address</th><th class="premium-action-cell">Action</th></tr></thead><tbody>
             @forelse($logs as $log)
-                @php($requestData = $log->request_data ? json_decode($log->request_data, true) : [])
+                <?php $requestData = $log->request_data ? json_decode($log->request_data, true) : []; ?>
                 <tr>
                     <td><strong class="premium-name">{{ $log->created_at->format('d-m-Y') }}</strong><small class="activity-log-time">{{ $log->created_at->format('h:i:s A') }}</small></td>
                     <td><span class="activity-user" title="{{ $log->user_name ?: 'System' }}">{{ $log->user_name ?: 'System' }}</span></td>

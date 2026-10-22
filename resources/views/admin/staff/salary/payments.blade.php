@@ -1,7 +1,7 @@
 @extends('layouts.appadmin')
 
 @section('content')
-@php($selectedStructure = $staff ? optional($staffList->firstWhere('id', $staff->id))->salaryStructure : null)
+<?php $selectedStructure = $staff ? optional($staffList->firstWhere('id', $staff->id))->salaryStructure : null; ?>
 <div class="container-fluid premium-page salary-payment-page">
     <section class="premium-page-header">
         <div><span class="premium-eyebrow">Payroll</span><h1>Salary Payment</h1><p>Edit the salary components, review the attendance-adjusted calculation, and record the payment.</p></div>

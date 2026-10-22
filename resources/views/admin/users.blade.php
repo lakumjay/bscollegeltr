@@ -12,7 +12,7 @@
 
     <div class="premium-card mb-4"><div class="premium-card-header"><div><h2>User directory</h2><p>{{ $users->count() }} managed user{{ $users->count() === 1 ? '' : 's' }}. Each user receives one role.</p></div></div><div class="premium-card-body p-0"><div class="table-responsive"><table class="table premium-table js-premium-datatable users-table" id="usersTable"><thead><tr><th>User</th><th>Email</th><th>Role</th><th>Role permissions</th><th class="premium-action-cell">Action</th></tr></thead><tbody>
         @forelse($users as $user)
-            @php($role = $user->roles->first())
+            <?php $role = $user->roles->first(); ?>
             <tr><td><div class="user-identity"><span class="user-avatar">{{ strtoupper(mb_substr($user->name, 0, 1)) }}</span><strong>{{ $user->name }}</strong></div></td><td><span class="user-email">{{ $user->email }}</span></td><td>@if($role)<span class="role-badge">{{ $role->name }}</span>@else<span class="permission-badges-empty">No role assigned</span>@endif</td><td><div class="permission-badges">@forelse($role?->permissions ?? [] as $permission)<span>{{ $permission->name }}</span>@empty<span class="permission-badges-empty">No permissions assigned</span>@endforelse</div></td><td class="premium-action-cell"><button type="button" class="premium-btn premium-btn-outline premium-btn-sm btn-edit-user" data-id="{{ $user->id }}" data-name="{{ $user->name }}" data-email="{{ $user->email }}" data-role-id="{{ $role?->id }}"><i class="bx bx-edit-alt"></i> Edit</button></td></tr>
         @empty<tr><td colspan="5" class="premium-empty-state"><i class="bx bx-user-x"></i> No user accounts have been created.</td></tr>@endforelse
     </tbody></table></div></div></div>

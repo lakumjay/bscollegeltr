@@ -60,7 +60,7 @@
                         </thead>
                         <tbody>
                             @foreach($payments as $payment)
-                            @php($member = $payment->staff)
+                            <?php $member = $payment->staff; ?>
                             <tr>
                                 <td>{{ $payment->payment_date->format('d-m-Y') }}</td>
                                 <td>{{ $member?->staff_id ?? 'Archived #' . $payment->staff_id }}</td>

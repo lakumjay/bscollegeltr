@@ -40,7 +40,7 @@
         @if($payments->isEmpty())
             <section class="premium-empty-state"><i class="fa fa-file-text-o"></i><h3>No fee payments found</h3><p>Try changing the selected filters or date range.</p></section>
         @else
-            @php($totalAmount = $payments->sum('amount'))
+            <?php $totalAmount = $payments->sum('amount'); ?>
             <section class="finance-summary-grid">
                 <article><span>Payment records</span><strong>{{ $payments->count() }}</strong><small>Matched collections</small></article>
                 <article><span>Total collected</span><strong>₹{{ number_format($totalAmount, 2) }}</strong><small>For this result</small></article>
