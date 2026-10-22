@@ -33,17 +33,35 @@ class HomeController extends Controller
         $session = $sessionId ? Session::find($sessionId) : null;
         $sessionName = $session?->session_name ?? 'Not Assigned';
 
-        // ── Core counts for Active Session ───────────────────────────
-        $totalStudents = Student::where(function ($q) use ($sessionId) {
-                $q->where('session_id', $sessionId)
-                  ->orWhereIn('id', function ($sub) use ($sessionId) {
-                      $sub->select('student_id')->from('student_courses')->where('session_id', $sessionId);
-                  });
+        // ── Core counts for Active Session & All-Time ───────────────
+        $totalStudents = Student::where(function ($q) use ($sessionId, $sessionName) {
+                if ($sessionId) {
+                    $q->where('session_id', $sessionId)
+                      ->orWhereIn('id', function ($sub) use ($sessionId) {
+                          $sub->select('student_id')->from('student_courses')->where('session_id', $sessionId);
+                      });
+                }
+                if ($sessionName && $sessionName !== 'Not Assigned') {
+                    $q->orWhere('batch', $sessionName);
+                    if (preg_match('/^(\d{4})-(\d{2})$/', $sessionName, $m)) {
+                        $q->orWhere('batch', $m[1] . '-' . substr($m[1], 0, 2) . $m[2]);
+                    } elseif (preg_match('/^(\d{4})-(\d{2})(\d{2})$/', $sessionName, $m) && substr($m[1], 0, 2) === $m[2]) {
+                        $q->orWhere('batch', $m[1] . '-' . $m[3]);
+                    }
+                }
             })
             ->when(!$isAdmin, fn($q) => $q->where('user_id', $user->id))
             ->count();
 
+        $totalAllStudents = Student::when(!$isAdmin, fn($q) => $q->where('user_id', $user->id))->count();
         $totalStaff = Staff::count();
+        $totalCourses = \App\Models\Courses::count();
+        $totalSessions = Session::count();
+
+        $totalCertificates = \App\Models\StudentCertificate::count();
+        $clcCount = \App\Models\StudentCertificate::where('type', 'clc')->count();
+        $charCount = \App\Models\StudentCertificate::where('type', 'character')->count();
+        $bonafideCount = \App\Models\StudentCertificate::where('type', 'bonafied')->count();
 
         // ── Fee totals for Active Session ────────────────────────────
         $totalCollected = (float) (FeePayment::where('session_id', $sessionId)
@@ -133,12 +151,29 @@ class HomeController extends Controller
 
         // ── Course-wise student count in Active Session ──────────────
         $courseWise = DB::table('students')
-            ->join('courses', 'courses.id', '=', DB::raw(DbHelper::castInt('students.course')))
-            ->join('student_courses', 'student_courses.student_id', '=', 'students.id')
-            ->where('student_courses.session_id', $sessionId)
+            ->leftJoin('courses', function ($join) {
+                $join->on('courses.id', '=', DB::raw(DbHelper::castInt('students.course')))
+                     ->orOn('courses.name', '=', 'students.course');
+            })
+            ->where(function ($q) use ($sessionId, $sessionName) {
+                if ($sessionId) {
+                    $q->where('students.session_id', $sessionId)
+                      ->orWhereIn('students.id', function ($sub) use ($sessionId) {
+                          $sub->select('student_id')->from('student_courses')->where('session_id', $sessionId);
+                      });
+                }
+                if ($sessionName && $sessionName !== 'Not Assigned') {
+                    $q->orWhere('students.batch', $sessionName);
+                    if (preg_match('/^(\d{4})-(\d{2})$/', $sessionName, $m)) {
+                        $q->orWhere('students.batch', $m[1] . '-' . substr($m[1], 0, 2) . $m[2]);
+                    } elseif (preg_match('/^(\d{4})-(\d{2})(\d{2})$/', $sessionName, $m) && substr($m[1], 0, 2) === $m[2]) {
+                        $q->orWhere('students.batch', $m[1] . '-' . $m[3]);
+                    }
+                }
+            })
             ->when(!$isAdmin, fn($q) => $q->where('students.user_id', $user->id))
-            ->selectRaw('courses.name as course_name, COUNT(DISTINCT students.id) as cnt')
-            ->groupBy('courses.name')
+            ->groupBy(DB::raw("COALESCE(courses.name, students.course, 'Unassigned')"))
+            ->selectRaw("COALESCE(courses.name, students.course, 'Unassigned') as course_name, COUNT(DISTINCT students.id) as cnt")
             ->orderByDesc('cnt')
             ->get();
 
@@ -160,15 +195,37 @@ class HomeController extends Controller
 
         // ── Gender breakdown in Active Session ───────────────────────
         $genderData = DB::table('students')
-            ->join('student_courses', 'student_courses.student_id', '=', 'students.id')
-            ->where('student_courses.session_id', $sessionId)
+            ->where(function ($q) use ($sessionId, $sessionName) {
+                if ($sessionId) {
+                    $q->where('students.session_id', $sessionId)
+                      ->orWhereIn('students.id', function ($sub) use ($sessionId) {
+                          $sub->select('student_id')->from('student_courses')->where('session_id', $sessionId);
+                      });
+                }
+                if ($sessionName && $sessionName !== 'Not Assigned') {
+                    $q->orWhere('students.batch', $sessionName);
+                    if (preg_match('/^(\d{4})-(\d{2})$/', $sessionName, $m)) {
+                        $q->orWhere('students.batch', $m[1] . '-' . substr($m[1], 0, 2) . $m[2]);
+                    } elseif (preg_match('/^(\d{4})-(\d{2})(\d{2})$/', $sessionName, $m) && substr($m[1], 0, 2) === $m[2]) {
+                        $q->orWhere('students.batch', $m[1] . '-' . $m[3]);
+                    }
+                }
+            })
             ->when(!$isAdmin, fn($q) => $q->where('students.user_id', $user->id))
-            ->selectRaw("COALESCE(NULLIF(students.gender,''), 'Unknown') as gender, COUNT(DISTINCT students.id) as cnt")
+            ->selectRaw("
+                CASE 
+                    WHEN LOWER(TRIM(gender)) = 'male' THEN 'Male'
+                    WHEN LOWER(TRIM(gender)) = 'female' THEN 'Female'
+                    ELSE 'Other / Unknown'
+                END as gender,
+                COUNT(DISTINCT id) as cnt
+            ")
             ->groupBy('gender')
             ->get();
 
         return view('home', compact(
-            'sessionName', 'totalStudents', 'totalStaff',
+            'sessionName', 'totalStudents', 'totalAllStudents', 'totalStaff', 'totalCourses', 'totalSessions',
+            'totalCertificates', 'clcCount', 'charCount', 'bonafideCount',
             'totalCollected', 'todayCollection', 'monthCollection', 'totalDiscounts',
             'totalExpense', 'otherIncome', 'totalGrossInflow', 'netIncome',
             'totalExpectedFee', 'totalDue',

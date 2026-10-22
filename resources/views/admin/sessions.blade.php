@@ -28,7 +28,7 @@
                     <small class="text-muted">Enter the 4-year or custom academic session format.</small>
                 </div>
                 <div class="col-md-3">
-                    <button type="submit" class="btn btn-success px-4 w-100" style="height: 38px;">
+                    <button type="submit" class="btn btn-success px-4 w-100" style="height: 38px;" onclick="if(this.form.checkValidity()){this.disabled=true;this.innerHTML='<i class=\'fa fa-spinner fa-spin me-1\'></i> Saving...';this.form.submit();}">
                         <i class="fa fa-save me-1"></i> Save Session
                     </button>
                 </div>

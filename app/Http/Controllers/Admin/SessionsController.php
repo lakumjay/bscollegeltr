@@ -9,6 +9,8 @@ use App\Models\User;
 use Auth;
 use Illuminate\Support\Facades\DB;
 
+use Illuminate\Validation\Rule;
+
 class SessionsController extends Controller
 {
     public function __construct()
@@ -21,7 +23,10 @@ class SessionsController extends Controller
      */
     public function index()
     {
-        $sessions = Session::orderByDesc('id')->get();
+        $sessions = Session::all()->sort(function ($a, $b) {
+            return strnatcasecmp($b->session_name, $a->session_name);
+        })->values();
+
         $currentSessionId = User::query()->whereNotNull('active_session_id')->value('active_session_id')
             ?? Auth::user()->active_session_id;
 
@@ -29,18 +34,38 @@ class SessionsController extends Controller
     }
 
     /**
-     * Store a newly created academic session.
+     * Store a newly created academic session with duplicate prevention.
      */
     public function store(Request $request)
     {
+        $raw = trim((string) $request->session_name);
+        // Normalize whitespace and spaced dashes: e.g. "2026 - 2030" -> "2026-2030"
+        $normalized = trim(preg_replace('/\s*-\s*/', '-', $raw));
+        $normalized = trim(preg_replace('/\s+/', ' ', $normalized));
+
+        $request->merge(['session_name' => $normalized]);
+
         $request->validate([
-            'session_name' => 'required|string|max:50',
+            'session_name' => [
+                'required',
+                'string',
+                'max:50',
+                Rule::unique('sessions', 'session_name'),
+            ],
+        ], [
+            'session_name.required' => 'Session name is required.',
+            'session_name.unique' => "Session '{$normalized}' already exists.",
         ]);
 
-        $name = trim((string) $request->session_name);
-        $session = Session::firstOrCreate(['session_name' => $name]);
+        // Secondary guard: case-insensitive check
+        $existing = Session::whereRaw('LOWER(REPLACE(session_name, " ", "")) = ?', [strtolower(str_replace(' ', '', $normalized))])->first();
+        if ($existing) {
+            return redirect()->to(url('admin/sessions'))->with('error', "Session '{$existing->session_name}' already exists.");
+        }
 
-        return redirect()->to(url('admin/sessions'))->with('success', "Academic session '{$session->session_name}' is ready.");
+        $session = Session::create(['session_name' => $normalized]);
+
+        return redirect()->to(url('admin/sessions'))->with('success', "Academic session '{$session->session_name}' created successfully.");
     }
 
     /**

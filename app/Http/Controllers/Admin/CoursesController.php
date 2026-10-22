@@ -151,23 +151,46 @@ class CoursesController extends Controller
     public function studentStrength()
     {
         $user = Auth::user();
-    
-        $strength = \DB::table('student_courses')
-        ->join('students', 'student_courses.student_id', '=', 'students.id')
-        ->join('courses', \DB::raw(DbHelper::castInt('students.course')), '=', 'courses.id')
-        ->where('student_courses.session_id', $user->active_session_id)
-        ->groupBy('students.course', 'courses.name')
-        ->selectRaw("
-            students.course,
-            courses.name as course_name,
-            SUM(CASE WHEN students.gender = 'Male'   THEN 1 ELSE 0 END) as boys,
-            SUM(CASE WHEN students.gender = 'Female' THEN 1 ELSE 0 END) as girls,
-            SUM(CASE WHEN students.gender = 'Other'  THEN 1 ELSE 0 END) as others,
-            COUNT(*) as total
-        ")
-        ->get();
-    
-    
+        $sessionId = $user ? $user->active_session_id : null;
+        $session = $sessionId ? \DB::table('sessions')->where('id', $sessionId)->first() : null;
+        $sessionName = $session ? $session->session_name : null;
+
+        $strengthQuery = \DB::table('students')
+            ->leftJoin('courses', function ($join) {
+                $join->on('courses.id', '=', \DB::raw(DbHelper::castInt('students.course')))
+                     ->orOn('courses.name', '=', 'students.course');
+            });
+
+        if ($sessionId) {
+            $strengthQuery->where(function ($q) use ($sessionId, $sessionName) {
+                $q->where('students.session_id', $sessionId)
+                  ->orWhereIn('students.id', function ($sub) use ($sessionId) {
+                      $sub->select('student_id')->from('student_courses')->where('session_id', $sessionId);
+                  });
+                if ($sessionName && $sessionName !== 'Not Assigned') {
+                    $q->orWhere('students.batch', $sessionName);
+                    if (preg_match('/^(\d{4})-(\d{2})$/', $sessionName, $m)) {
+                        $q->orWhere('students.batch', $m[1] . '-' . substr($m[1], 0, 2) . $m[2]);
+                    } elseif (preg_match('/^(\d{4})-(\d{2})(\d{2})$/', $sessionName, $m) && substr($m[1], 0, 2) === $m[2]) {
+                        $q->orWhere('students.batch', $m[1] . '-' . $m[3]);
+                    }
+                }
+            });
+        }
+
+        $strength = $strengthQuery
+            ->groupBy(\DB::raw("COALESCE(courses.name, students.course, 'Unassigned')"), \DB::raw("COALESCE(courses.id, students.course)"))
+            ->selectRaw("
+                COALESCE(courses.id, students.course) as course,
+                COALESCE(courses.name, students.course, 'Unassigned') as course_name,
+                SUM(CASE WHEN LOWER(TRIM(students.gender)) = 'male'   THEN 1 ELSE 0 END) as boys,
+                SUM(CASE WHEN LOWER(TRIM(students.gender)) = 'female' THEN 1 ELSE 0 END) as girls,
+                SUM(CASE WHEN LOWER(TRIM(students.gender)) NOT IN ('male', 'female') THEN 1 ELSE 0 END) as others,
+                COUNT(DISTINCT students.id) as total
+            ")
+            ->orderByDesc('total')
+            ->get();
+
         return view('admin.strength', compact('strength'));
     }
     
