@@ -491,18 +491,25 @@ public function certificate_certificate($student_id,$type,Request $request, ClcC
     public function storeStudent(Request $request)
     {
         $user = Auth::user();
+
+        if ($request->filled('admission_date')) {
+            $request->merge(['admission_date' => str_replace('/', '-', trim($request->admission_date))]);
+        }
+        if ($request->filled('date_of_birth')) {
+            $request->merge(['date_of_birth' => str_replace('/', '-', trim($request->date_of_birth))]);
+        }
+
         $request->validate([
-            
             'reg_no' => 'nullable|string|max:255',
             'roll_no' => 'required|string|max:255',
-            'first_name' => ['required', 'string', 'max:100', 'regex:/^[A-Za-z]+(?:[ \'-][A-Za-z]+)*$/'],
-            'last_name' => ['nullable', 'string', 'max:100', 'regex:/^[A-Za-z]+(?:[ \'-][A-Za-z]+)*$/'],
+            'first_name' => ['required', 'string', 'max:100', 'regex:/^[A-Za-z0-9 .\'-]+$/'],
+            'last_name' => ['nullable', 'string', 'max:100', 'regex:/^[A-Za-z0-9 .\'-]+$/'],
             'gender' => 'required|in:Male,Female,Other',
             'date_of_birth' => 'required|date',
-            'phone_number' => ['required', 'regex:/^\\d{10,15}$/'], // 'unique:students,phone_number' commented out to allow shared parent contact numbers
+            'phone_number' => ['required', 'regex:/^\d{10,15}$/'], // 'unique:students,phone_number' commented out to allow shared parent contact numbers
             'email' => 'required|email|max:255|unique:students',
-            'father_name' => ['required', 'string', 'max:100', 'regex:/^[A-Za-z]+(?:[ \'-][A-Za-z]+)*$/'],
-            'mother_name' => ['required', 'string', 'max:100', 'regex:/^[A-Za-z]+(?:[ \'-][A-Za-z]+)*$/'],
+            'father_name' => ['required', 'string', 'max:100', 'regex:/^[A-Za-z0-9 .\'-]+$/'],
+            'mother_name' => ['required', 'string', 'max:100', 'regex:/^[A-Za-z0-9 .\'-]+$/'],
             'course' => 'required|integer|exists:courses,id',
             'batch' => 'required|string|max:255',
             'admission_date' => 'required|date',
@@ -529,14 +536,14 @@ public function certificate_certificate($student_id,$type,Request $request, ClcC
             'first_name' => $request->first_name,
             'last_name' => $request->last_name,
             'gender' => $request->gender,
-            'date_of_birth' => $request->date_of_birth ? Carbon::parse($request->date_of_birth)->format('Y-m-d') : null,
+            'date_of_birth' => self::parseDateSafe($request->date_of_birth),
             'phone_number' => $request->phone_number,
             'email' => $request->email,
             'father_name' => $request->father_name,
             'mother_name' => $request->mother_name,
             'course' => $request->course,
             'batch' => $request->batch,
-            'admission_date' => $request->admission_date ? Carbon::parse($request->admission_date)->format('Y-m-d') : null,
+            'admission_date' => self::parseDateSafe($request->admission_date),
             'current_year' => $request->current_year,
             'current_semester' => $request->current_semester,
             'status' => $request->status,
@@ -639,23 +646,26 @@ public function certificate_certificate($student_id,$type,Request $request, ClcC
     public function updateStudent(Request $request, $id)
     {
         $user = Auth::user();
-        $student = Student::where('id', $id)
-            
-            // ->where('session_id', $user->active_session_id)
-            ->firstOrFail();
+        $student = Student::where('id', $id)->firstOrFail();
+
+        if ($request->filled('admission_date')) {
+            $request->merge(['admission_date' => str_replace('/', '-', trim($request->admission_date))]);
+        }
+        if ($request->filled('date_of_birth')) {
+            $request->merge(['date_of_birth' => str_replace('/', '-', trim($request->date_of_birth))]);
+        }
 
         $request->validate([
-            'reg_no' => 'nullable|string|max:255|',
-            'roll_no' => 'required|string|max:255|',
-            // unique:students,roll_no,' . $student->id,
-            'first_name' => ['required', 'string', 'max:100', 'regex:/^[A-Za-z]+(?:[ \'-][A-Za-z]+)*$/'],
-            'last_name' => ['nullable', 'string', 'max:100', 'regex:/^[A-Za-z]+(?:[ \'-][A-Za-z]+)*$/'],
+            'reg_no' => 'nullable|string|max:255',
+            'roll_no' => 'required|string|max:255',
+            'first_name' => ['required', 'string', 'max:100', 'regex:/^[A-Za-z0-9 .\'-]+$/'],
+            'last_name' => ['nullable', 'string', 'max:100', 'regex:/^[A-Za-z0-9 .\'-]+$/'],
             'gender' => 'required|in:Male,Female,Other',
             'date_of_birth' => 'required|date',
-            'phone_number' => ['required', 'regex:/^\\d{10,15}$/'],
-            'email' => 'required|email|max:255|',//unique:students,email,' . $student->id,
-            'father_name' => ['required', 'string', 'max:100', 'regex:/^[A-Za-z]+(?:[ \'-][A-Za-z]+)*$/'],
-            'mother_name' => ['required', 'string', 'max:100', 'regex:/^[A-Za-z]+(?:[ \'-][A-Za-z]+)*$/'],
+            'phone_number' => ['required', 'regex:/^\d{10,15}$/'],
+            'email' => 'required|email|max:255',
+            'father_name' => ['required', 'string', 'max:100', 'regex:/^[A-Za-z0-9 .\'-]+$/'],
+            'mother_name' => ['required', 'string', 'max:100', 'regex:/^[A-Za-z0-9 .\'-]+$/'],
             'course' => 'required|integer|exists:courses,id',
             'batch' => 'required|string|max:255',
             'admission_date' => 'required|date',
@@ -677,20 +687,19 @@ public function certificate_certificate($student_id,$type,Request $request, ClcC
         ]);
 
         $data = [
-                        'reg_no' => $request->reg_no,
-
+            'reg_no' => $request->reg_no,
             'roll_no' => $request->roll_no,
             'first_name' => $request->first_name,
             'last_name' => $request->last_name,
             'gender' => $request->gender,
-            'date_of_birth' => $request->date_of_birth ? Carbon::parse($request->date_of_birth)->format('Y-m-d') : null,
+            'date_of_birth' => self::parseDateSafe($request->date_of_birth),
             'phone_number' => $request->phone_number,
             'email' => $request->email,
             'father_name' => $request->father_name,
             'mother_name' => $request->mother_name,
             'course' => $request->course,
             'batch' => $request->batch,
-            'admission_date' => $request->admission_date ? Carbon::parse($request->admission_date)->format('Y-m-d') : null,
+            'admission_date' => self::parseDateSafe($request->admission_date),
             'current_year' => $request->current_year,
             'current_semester' => $request->current_semester,
             'status' => $request->status,
@@ -698,10 +707,9 @@ public function certificate_certificate($student_id,$type,Request $request, ClcC
             'category' => $request->category,
             'caste' => $request->caste,
             'special_category' => $request->special_category,
-            'correspondence_address'=>$request->correspondence_address,
-            'permanent_address'=>$request->permanent_address,
-                        'student_id'=>$request->student_id
-
+            'correspondence_address' => $request->correspondence_address,
+            'permanent_address' => $request->permanent_address,
+            'student_id' => $request->student_id,
         ];
 
         // Handle file uploads
@@ -714,13 +722,13 @@ public function certificate_certificate($student_id,$type,Request $request, ClcC
                 $file = $request->file($field);
                 $fname = $field . '_' . time() . '.' . $file->getClientOriginalExtension();
                 $file->move(public_path('uploads'), $fname);
-                $data[$field] = 'Uploads/' . $fname;
+                $data[$field] = 'uploads/' . $fname;
             }
         }
 
         $student->update($data);
 
-        return redirect()->to(url('admin/students/strength'))->with('success', 'Student updated successfully.');
+        return redirect()->to(url('admin/students/' . $student->id))->with('success', 'Student updated successfully.');
     }
 
     /**
@@ -1084,6 +1092,27 @@ function convertDate($date)
 
     return $parts[2] . '-' . $parts[1] . '-' . $parts[0];
 }
+
+    /**
+     * Safely parse various date formats (DD-MM-YYYY, DD/MM/YYYY, YYYY-MM-DD) into Y-m-d.
+     */
+    public static function parseDateSafe($date)
+    {
+        if (empty($date)) return null;
+        $date = trim((string)$date);
+        $normalized = str_replace('/', '-', $date);
+        foreach (['d-m-Y', 'Y-m-d', 'd-m-y', 'Y/m/d', 'd/m/Y'] as $fmt) {
+            try {
+                $d = Carbon::createFromFormat($fmt, $normalized);
+                if ($d !== false) return $d->format('Y-m-d');
+            } catch (\Exception $e) {}
+        }
+        try {
+            return Carbon::parse($normalized)->format('Y-m-d');
+        } catch (\Exception $e) {
+            return null;
+        }
+    }
 
     /**
      * Run or verify the 2026-2030 student import from web browser.

@@ -137,21 +137,45 @@ $(function () {
         preview.html(content);
     });
 
+    // Support DD-MM-YYYY, YYYY-MM-DD and DD/MM/YYYY dates
+    $.validator.methods.date = function (value, element) {
+        if (this.optional(element)) return true;
+        if (typeof moment !== 'undefined') {
+            return moment(value, ['DD-MM-YYYY', 'YYYY-MM-DD', 'D-M-YYYY', 'DD/MM/YYYY', 'D/M/YYYY', 'YYYY/MM/DD'], true).isValid();
+        }
+        var norm = value.replace(/\//g, '-').split('-');
+        if (norm.length === 3) {
+            var d = parseInt(norm[0], 10), m = parseInt(norm[1], 10), y = parseInt(norm[2], 10);
+            if (norm[0].length === 4) { y = parseInt(norm[0], 10); m = parseInt(norm[1], 10); d = parseInt(norm[2], 10); }
+            var dt = new Date(y, m - 1, d);
+            return dt.getFullYear() === y && (dt.getMonth() + 1) === m && dt.getDate() === d;
+        }
+        return !/Invalid|NaN/.test(new Date(value).toString());
+    };
+
+    $('.premium-datepicker').on('change', function () {
+        if ($(this).valid) $(this).valid();
+    });
+
     $.validator.addMethod('notFutureDate', function (value) {
         if (!value) return true;
-        const selectedDate = new Date(value + 'T00:00:00');
-        const today = new Date();
-        today.setHours(0, 0, 0, 0);
-        return !Number.isNaN(selectedDate.getTime()) && selectedDate <= today;
+        if (typeof moment !== 'undefined') {
+            const m = moment(value, ['DD-MM-YYYY', 'YYYY-MM-DD', 'DD/MM/YYYY'], true);
+            return m.isValid() && m.isSameOrBefore(moment(), 'day');
+        }
+        return true;
     }, 'Date of birth cannot be in the future.');
+
     $.validator.addMethod('personName', function (value, element) {
-        return this.optional(element) || /^[A-Za-z]+(?:[ '\-][A-Za-z]+)*$/.test(value.trim());
-    }, 'Use letters, spaces, hyphens or apostrophes only.');
+        return this.optional(element) || /^[A-Za-z0-9 .\'-]+$/.test(value.trim());
+    }, 'Use letters, numbers, spaces, dots, hyphens or apostrophes only.');
+
     $.validator.addMethod('studentPhoto', function (value, element) {
         if (this.optional(element)) return true;
         const file = element.files && element.files[0];
         return !!file && /image\/(jpeg|png|gif)/.test(file.type) && file.size <= 2 * 1024 * 1024;
     }, 'Upload a JPG, PNG or GIF image no larger than 2 MB.');
+
     $.validator.addMethod('studentDocument', function (value, element) {
         if (this.optional(element)) return true;
         const file = element.files && element.files[0];
@@ -163,9 +187,38 @@ $(function () {
         onkeyup: function (element) { $(element).valid(); },
         onclick: function (element) { $(element).valid(); },
         rules: {
-            roll_no: { required: true, maxlength: 255 }, student_id: { required: true, maxlength: 255 }, first_name: { required: true, maxlength: 100, personName: true }, last_name: { maxlength: 100, personName: true }, gender: { required: true }, date_of_birth: { required: true, date: true, notFutureDate: true }, phone_number: { required: true, digits: true, minlength: 10, maxlength: 15 }, email: { required: true, email: true }, father_name: { required: true, maxlength: 100, personName: true }, mother_name: { required: true, maxlength: 100, personName: true }, permanent_address: { required: true }, correspondence_address: { required: true }, course: { required: true }, batch: { required: true }, admission_date: { required: true, date: true }, current_year: { required: true, range: [1, 4] }, current_semester: { required: true, range: [1, 8] }, status: { required: true }, photo: { studentPhoto: true }, aadhar_card: { studentDocument: true }, id_proof: { studentDocument: true }, category_certificate: { studentDocument: true }
+            roll_no: { required: true, maxlength: 255 },
+            student_id: { required: true, maxlength: 255 },
+            first_name: { required: true, maxlength: 100, personName: true },
+            last_name: { maxlength: 100, personName: true },
+            gender: { required: true },
+            date_of_birth: { required: true, date: true, notFutureDate: true },
+            phone_number: { required: true, digits: true, minlength: 10, maxlength: 15 },
+            email: { required: true, email: true },
+            father_name: { required: true, maxlength: 100, personName: true },
+            mother_name: { required: true, maxlength: 100, personName: true },
+            permanent_address: { required: true },
+            correspondence_address: { required: true },
+            course: { required: true },
+            batch: { required: true },
+            admission_date: { required: true, date: true },
+            current_year: { required: true, range: [1, 4] },
+            current_semester: { required: true, range: [1, 8] },
+            status: { required: true },
+            photo: { studentPhoto: true },
+            aadhar_card: { studentDocument: true },
+            id_proof: { studentDocument: true },
+            category_certificate: { studentDocument: true }
         },
-        messages: { first_name: { required: 'Please enter the first name.' }, father_name: { required: "Please enter the father's name." }, mother_name: { required: "Please enter the mother's name." }, date_of_birth: { required: 'Please select the date of birth.', date: 'Please choose a valid date.' }, phone_number: { required: 'Please enter a phone number.', digits: 'Phone number can contain digits only.', minlength: 'Enter at least 10 digits.', maxlength: 'Phone number cannot exceed 15 digits.' }, course: 'Please select a course.', admission_date: 'Please choose the admission date.' },
+        messages: {
+            first_name: { required: 'Please enter the first name.' },
+            father_name: { required: "Please enter the father's name." },
+            mother_name: { required: "Please enter the mother's name." },
+            date_of_birth: { required: 'Please select the date of birth.', date: 'Please enter a valid date (DD-MM-YYYY).' },
+            admission_date: { required: 'Please select the admission date.', date: 'Please enter a valid date (DD-MM-YYYY).' },
+            phone_number: { required: 'Please enter a phone number.', digits: 'Phone number can contain digits only.', minlength: 'Enter at least 10 digits.', maxlength: 'Phone number cannot exceed 15 digits.' },
+            course: 'Please select a course.'
+        },
         errorPlacement: function (error, element) {
             const dateControl = element.closest('.premium-date-control');
             if (dateControl.length) error.insertAfter(dateControl);
