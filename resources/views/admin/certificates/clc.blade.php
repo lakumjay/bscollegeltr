@@ -256,8 +256,8 @@
     $studentName = trim(($student->first_name ?? '') . ' ' . ($student->last_name ?? '')) ?: '—';
     $collegeName = $profile?->college_name ?? 'VANANCHAL COLLEGE';
     $collegeAddress = $profile?->address ?? 'TANDWA - 825321, Distt. - CHATRA (JHARKHAND)';
-    $affiliation = $profile?->affiliation ?? 'Permanent Affiliated to Vinoba Bhave University, Hazaribag';
-    $universityName = $profile?->university_name ?? 'Vinoba Bhave University, Hazaribag';
+    $affiliation = $profile?->affiliation ?: ($profile?->university_name ? 'Permanent Affiliated to ' . $profile->university_name : 'Permanent Affiliated to Nilamber-Pitamber University, Medininagar');
+    $universityName = $profile?->university_name ?: ($certificateData->university_name ?? 'Nilamber-Pitamber University, Medininagar');
     $logoAsset = $profile?->logo ?? $profile?->banner ?? null;
     $logoUrl = $logoAsset && preg_match('/^(?:data:|https?:\/\/)/i', $logoAsset)
         ? $logoAsset
@@ -355,25 +355,25 @@
             <div class="field-row">
                 <div class="field-number">1.</div>
                 <div class="field-label">Name</div>
-                <div class="field-fill strong">{{ $studentName }}</div>
+                <div class="field-fill strong"><strong>{{ $studentName }}</strong></div>
             </div>
 
             <div class="field-row">
                 <div class="field-number">2.</div>
                 <div class="field-label">Father's Name</div>
-                <div class="field-fill strong">{{ $student->father_name ?? '—' }}</div>
+                <div class="field-fill strong"><strong>{{ $student->father_name ?? '—' }}</strong></div>
             </div>
 
             <div class="field-row">
                 <div class="field-number">3.</div>
                 <div class="field-label">Date of Birth</div>
-                <div class="field-fill strong">{{ $dateOfBirth }}</div>
+                <div class="field-fill strong"><strong>{{ $dateOfBirth }}</strong></div>
             </div>
 
             <div class="field-row">
                 <div class="field-number">4.</div>
                 <div class="field-label">Permanent Address</div>
-                <div class="field-fill strong">{{ $student->permanent_address ?? '—' }}</div>
+                <div class="field-fill strong"><strong>{{ $student->permanent_address ?? '—' }}</strong></div>
             </div>
 
             <div class="field-row">
@@ -381,30 +381,30 @@
                 <div class="academic-complex-wrap">
                     <div class="academic-subrow">
                         <span>Has Passed</span>
-                        <div class="field-fill strong center">{{ $courseName }}</div>
+                        <div class="field-fill strong center"><strong>{{ $courseName }}</strong></div>
                         <span>from</span>
                     </div>
                     <div class="academic-subrow">
-                        <div class="field-fill strong">{{ $universityName }}</div>
+                        <div class="field-fill strong"><strong>{{ $universityName }}</strong></div>
                         <span>of Session</span>
-                        <div class="field-fill strong center" style="flex: 0 0 30mm;">{{ $sessionName }}</div>
+                        <div class="field-fill strong center" style="flex: 0 0 30mm;"><strong>{{ $sessionName }}</strong></div>
                         @if(!empty($academicYear))
                             <span>Academic Year</span>
-                            <div class="field-fill strong center" style="flex: 0 0 28mm;">{{ $academicYear }}</div>
+                            <div class="field-fill strong center" style="flex: 0 0 28mm;"><strong>{{ $academicYear }}</strong></div>
                         @endif
                     </div>
                     <div class="academic-subrow">
                         <span>Roll</span>
-                        <div class="field-fill strong center" style="flex: 0 0 25mm;">{{ $student->roll_no ?? '—' }}</div>
+                        <div class="field-fill strong center" style="flex: 0 0 25mm;"><strong>{{ $student->roll_no ?? '—' }}</strong></div>
                         <span>No.</span>
-                        <div class="field-fill strong center" style="flex: 0 0 30mm;">{{ $student->student_id ?? $student->reg_no ?? '—' }}</div>
+                        <div class="field-fill strong center" style="flex: 0 0 30mm;"><strong>{{ $student->student_id ?? $student->reg_no ?? '—' }}</strong></div>
                         <span>Registration</span>
                     </div>
                     <div class="academic-subrow">
                         <span>No.</span>
-                        <div class="field-fill strong center">{{ $registrationNumber }}</div>
+                        <div class="field-fill strong center"><strong>{{ $registrationNumber }}</strong></div>
                         <span>Year</span>
-                        <div class="field-fill strong center" style="flex: 0 0 35mm;">{{ $examinationYear }}</div>
+                        <div class="field-fill strong center" style="flex: 0 0 35mm;"><strong>{{ $examinationYear }}</strong></div>
                     </div>
                 </div>
             </div>
@@ -412,26 +412,26 @@
             <div class="field-row">
                 <div class="field-number">6.</div>
                 <div class="field-label">Category</div>
-                <div class="field-fill strong">{{ $studentCategory }}</div>
+                <div class="field-fill strong"><strong>{{ $studentCategory }}</strong></div>
             </div>
 
             <div class="field-row">
                 <div class="field-number">7.</div>
                 <div class="field-label">Subject</div>
-                <div class="field-fill strong">{{ $subjects }}</div>
+                <div class="field-fill strong"><strong>{{ $subjects }}</strong></div>
             </div>
 
             <div class="statement-row">
                 <div class="field-number">8.</div>
                 <div class="statement-text">
-                    All sums due by him to the College have been paid, including fees up to <span class="statement-fill" style="min-width: 32mm;">{{ $issueDate }}</span>.
+                    All sums due by him to the College have been paid, including fees up to <span class="statement-fill" style="min-width: 32mm; font-weight: 700;"><strong>{{ $issueDate }}</strong></span>.
                 </div>
             </div>
 
             <div class="statement-row">
                 <div class="field-number">9.</div>
                 <div class="statement-text">
-                    His/Her conduct has been <span class="statement-fill" style="min-width: 25mm;">{{ $conduct }}</span>. I know nothing against his/her character <span class="statement-fill" style="min-width: 25mm;">{{ $characterRecord }}</span>.
+                    His/Her conduct has been <span class="statement-fill" style="min-width: 25mm; font-weight: 700;"><strong>{{ $conduct }}</strong></span>. I know nothing against his/her character <span class="statement-fill" style="min-width: 25mm; font-weight: 700;"><strong>{{ $characterRecord }}</strong></span>.
                 </div>
             </div>
         </section>
@@ -439,7 +439,7 @@
         <p class="blessing">I wish him/her for Bright future.</p>
 
         <footer class="signatures">
-            <div class="signature-date">Date: {{ $issueDate }}</div>
+            <div class="signature-date">Date: <strong>{{ $issueDate }}</strong></div>
             <div class="signature-row">
                 <div class="signature-col left">
                     <div class="signature-line"></div>

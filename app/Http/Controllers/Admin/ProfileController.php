@@ -26,6 +26,8 @@ class ProfileController extends Controller
         $request->validate([
             'college_name' => 'required|string|max:255',
             'name_in_hindi' => 'nullable|string|max:255',
+            'university_name' => 'nullable|string|max:255',
+            'affiliation' => 'nullable|string|max:255',
             'contact_number' => 'required|string|max:20',
             'email' => 'required|email|max:255',
             'address' => 'nullable|string',
@@ -53,6 +55,8 @@ class ProfileController extends Controller
             'user_id' => Auth::user()->id,
             'college_name' => $request->college_name,
             'name_in_hindi' => $request->name_in_hindi,
+            'university_name' => $request->university_name,
+            'affiliation' => $request->affiliation,
             'contact_number' => $request->contact_number,
             'email' => $request->email,
             'address' => $request->address,

@@ -170,6 +170,7 @@
     $certData = json_decode($StudentCertificate->data ?? '{}') ?: (object) [];
     $certSession = $certData->session ?? optional($student->session)->session_name ?: ($student->batch ?? '');
     $certAcademicYear = $certData->academic_year ?? '';
+    $certSemester = $certData->semester ?? (is_numeric($student->current_semester) ? ('Semester ' . $student->current_semester) : ($student->current_semester ?: ''));
     if (empty($certAcademicYear)) {
         if (!empty($student->academic_year_start) && !empty($student->academic_year_end)) {
             $certAcademicYear = $student->academic_year_start . ' to ' . $student->academic_year_end;
@@ -193,37 +194,38 @@
                 </div>
 
             <p class="hindi">
-                पत्रांक- <font style="font-weight:600;  font-size: 15px;">{{ $StudentCertificate->certificate_number ?: (($profile->lc_prefix ?? 'BSM/LTR') . '-' . $StudentCertificate->sr) }}</font>
-                <span class="date-align">दिनांक- {{ date('d M Y') }}</span>
+                पत्रांक- <font style="font-weight:700; font-size: 15px;"><strong>{{ $StudentCertificate->certificate_number ?: (($profile->lc_prefix ?? 'BSM/LTR') . '-' . $StudentCertificate->sr) }}</strong></font>
+                <span class="date-align">दिनांक- <strong>{{ date('d M Y') }}</strong></span>
             </p>
 
             <h1>BONAFIDE CERTIFICATE</h1>
 
-            <p style="    text-align: justify;">
+            <p style="text-align: justify;">
                 This is to certify that Mr./Mrs.
-                <span class="underline"  >
-                    {{ $student->first_name }} {{ $student->last_name }}
+                <span class="underline" style="font-weight: 700;">
+                    <strong>{{ $student->first_name }} {{ $student->last_name }}</strong>
                 </span>
            
                 D/O, S/O
-                <span class="underline">{{ $student->father_name }}</span>
+                <span class="underline" style="font-weight: 700;"><strong>{{ $student->father_name }}</strong></span>
         
                 is a student of
-                <span class="underline">{{ $student->course_details->name }}</span>
-                Semester<span class="underline">
-                   {!! str_repeat('&nbsp;', 12) !!} </span> Roll No.
-                <span class="underline">{{ $student->roll_no }}</span>
+                <span class="underline" style="font-weight: 700;"><strong>{{ optional($student->course_details)->name ?: ($student->course ?: '—') }}</strong></span>
+                Semester <span class="underline" style="min-width: 60px; font-weight: 700;"><strong>{{ $certSemester ?: '—' }}</strong></span> Roll No.
+                <span class="underline" style="font-weight: 700;"><strong>{{ $student->roll_no }}</strong></span>
                 Subject
-                <span class="underline"  >
-                    @if($subjects->isEmpty())
-                        None
-                    @else
-                        {{ $subjects->pluck('name')->implode(', ') }}
-                    @endif
+                <span class="underline" style="font-weight: 700;">
+                    <strong>
+                        @if($subjects->isEmpty())
+                            None
+                        @else
+                            {{ $subjects->pluck('name')->implode(', ') }}
+                        @endif
+                    </strong>
                 </span>
-                Session <span class="underline" style="min-width: 70px; font-weight: 600;">{{ $certSession ?: '—' }}</span>
+                Session <span class="underline" style="min-width: 70px; font-weight: 700;"><strong>{{ $certSession ?: '—' }}</strong></span>
                 for the academic year
-                <span class="underline" style="min-width: 90px; font-weight: 600;">{{ $certAcademicYear ?: '—' }}</span>
+                <span class="underline" style="min-width: 90px; font-weight: 700;"><strong>{{ $certAcademicYear ?: '—' }}</strong></span>
             </p>
 <p>He/She is a Bonafied Student of our college</p>
            <center><b>Fee Structure</b></center>
@@ -252,37 +254,38 @@
                 </div>
 
                 <p class="hindi">
-                    पत्रांक <font style="font-weight:600;  font-size: 15px;">{{ $StudentCertificate->certificate_number ?: (($profile->lc_prefix ?? 'BSM/LTR') . '-' . $StudentCertificate->sr) }}</font>
-                    <span class="date-align">दिनांक- {{ date('d M Y') }}</span>
+                    पत्रांक <font style="font-weight:700; font-size: 15px;"><strong>{{ $StudentCertificate->certificate_number ?: (($profile->lc_prefix ?? 'BSM/LTR') . '-' . $StudentCertificate->sr) }}</strong></font>
+                    <span class="date-align">दिनांक- <strong>{{ date('d M Y') }}</strong></span>
                 </p>
 
                 <h1>BONAFIDE CERTIFICATE</h1>
 
-                <p style="    text-align: justify;">
+                <p style="text-align: justify;">
                     This is to certify that Mr./Mrs.
-                    <span class="underline"  >
-                        {{ $student->first_name }} {{ $student->last_name }}
+                    <span class="underline" style="font-weight: 700;">
+                        <strong>{{ $student->first_name }} {{ $student->last_name }}</strong>
                     </span>
                
                     D/O, S/O
-                    <span class="underline">{{ $student->father_name }}</span>
+                    <span class="underline" style="font-weight: 700;"><strong>{{ $student->father_name }}</strong></span>
             
                     is a student of
-                    <span class="underline">{{ $student->course_details->name }}</span>
-                    Semester  <span class="underline">
-                       {!! str_repeat('&nbsp;', 12) !!} </span>Roll No.
-                    <span class="underline">{{ $student->roll_no }}</span>
+                    <span class="underline" style="font-weight: 700;"><strong>{{ optional($student->course_details)->name ?: ($student->course ?: '—') }}</strong></span>
+                    Semester <span class="underline" style="min-width: 60px; font-weight: 700;"><strong>{{ $certSemester ?: '—' }}</strong></span> Roll No.
+                    <span class="underline" style="font-weight: 700;"><strong>{{ $student->roll_no }}</strong></span>
                     Subject
-                    <span class="underline"  >
-                        @if($subjects->isEmpty())
-                            None
-                        @else
-                            {{ $subjects->pluck('name')->implode(', ') }}
-                        @endif
+                    <span class="underline" style="font-weight: 700;">
+                        <strong>
+                            @if($subjects->isEmpty())
+                                None
+                            @else
+                                {{ $subjects->pluck('name')->implode(', ') }}
+                            @endif
+                        </strong>
                     </span>
-                    Session <span class="underline" style="min-width: 70px; font-weight: 600;">{{ $certSession ?: '—' }}</span>
+                    Session <span class="underline" style="min-width: 70px; font-weight: 700;"><strong>{{ $certSession ?: '—' }}</strong></span>
                     for the academic year
-                    <span class="underline" style="min-width: 90px; font-weight: 600;">{{ $certAcademicYear ?: '—' }}</span>
+                    <span class="underline" style="min-width: 90px; font-weight: 700;"><strong>{{ $certAcademicYear ?: '—' }}</strong></span>
                 </p>
     <p>He/She is a Bonafied Student of our college</p>
     <center><b>Fee Structure</b></center>

@@ -34,10 +34,9 @@
                 <div class="premium-table-wrap"><table class="premium-table"><thead><tr><th>Roll no</th><th>Student</th><th>Current semester</th><th>Batch</th><th class="text-end">Action</th></tr></thead><tbody>
                 @foreach($students as $student)
                     @php
-                        $studentSession = $student->StudentCourse->firstWhere('session_id', Auth::user()->active_session_id);
-                        $currentYear = $studentSession->semaster ?? '--';
+                        $studentSession = $student->StudentCourse->firstWhere('session_id', Auth::user()->active_session_id) ?? $student->StudentCourse->first();
+                        $currentYear = $studentSession->semaster ?? $student->current_semester ?? '--';
                     @endphp
-                    @if(!request()->filled('sem_filter') || $currentYear == request('sem_filter'))
                     <tr><td>{{ $student->roll_no ?: '-' }}</td><td><strong>{{ $student->first_name }} {{ $student->last_name }}</strong></td><td><span class="finance-semester-badge">{{ $currentYear }}</span></td><td>{{ $student->batch ?: '-' }}</td><td class="text-end">
                         @if(true || \App\Models\FeeRecord::where('student_id', $student->id)->where('course_id', $selectedCourseId)->where('session_id', Auth::user()->active_session_id)->exists())
                             <a href="{{ route('fee_management.view', ['student_id' => $student->id, 'course_id' => $selectedCourseId]) }}" class="premium-btn premium-btn-outline premium-btn-sm"><i class="fa fa-eye"></i> View fees</a>
@@ -47,7 +46,6 @@
                     </td></tr>
 
                     <div class="modal fade" id="generateFeeModal{{ $student->id }}" tabindex="-1" aria-hidden="true"><div class="modal-dialog"><div class="modal-content premium-modal"><div class="modal-header"><div><span class="premium-eyebrow">Fee generation</span><h5>Generate fee for {{ $student->first_name }}</h5></div><button type="button" class="btn-close" data-bs-dismiss="modal"></button></div><form method="POST" action="{{ route('fee_management.generate') }}">@csrf<div class="modal-body"><input type="hidden" name="student_id" value="{{ $student->id }}"><input type="hidden" name="course_id" value="{{ $selectedCourseId }}"><div class="finance-field"><label>Special category <small>(optional)</small></label><select name="special_category_id"><option value="">None</option>@foreach(\App\Models\SpecialCategory::where('course_id', $selectedCourseId)->where('user_id', Auth::id())->get() as $category)<option value="{{ $category->id }}">{{ $category->category_name }}</option>@endforeach</select></div></div><div class="modal-footer"><button type="button" class="premium-btn premium-btn-outline" data-bs-dismiss="modal">Cancel</button><button type="submit" class="premium-btn premium-btn-primary">Generate fee</button></div></form></div></div></div>
-                    @endif
                 @endforeach
                 </tbody></table></div>
                 <div class="premium-pagination">{{ $students->appends(request()->query())->links() }}</div>

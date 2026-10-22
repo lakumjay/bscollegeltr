@@ -244,7 +244,7 @@
     $studentName = trim(($student->first_name ?? '') . ' ' . ($student->last_name ?? '')) ?: '—';
     $collegeName = $profile?->college_name ?? 'VANANCHAL COLLEGE';
     $collegeAddress = $profile?->address ?? 'TANDWA - 825321, Distt. - CHATRA (JHARKHAND)';
-    $affiliation = $profile?->affiliation ?? 'Permanent Affiliated to Vinoba Bhave University, Hazaribag.';
+    $affiliation = $profile?->affiliation ?: ($profile?->university_name ? 'Permanent Affiliated to ' . $profile->university_name : 'Permanent Affiliated to Nilamber-Pitamber University, Medininagar.');
     $logoAsset = $profile?->logo ?? $profile?->banner ?? null;
     $logoUrl = $logoAsset && preg_match('/^(?:data:|https?:\/\/)/i', $logoAsset)
         ? $logoAsset
@@ -269,6 +269,7 @@
     $courseName = optional($student->course_details)->name ?: '—';
     $sessionName = $certData->session ?? optional($student->session)->session_name ?: ($student->batch ?? '—');
     $academicYear = $certData->academic_year ?? null;
+    $certSemester = $certData->semester ?? null;
     if (empty($academicYear) && preg_match('/^(\d{4})/', (string)$sessionName, $m)) {
         $startY = (int)$m[1];
         $academicYear = $startY . '-' . ($startY + 1);
@@ -329,37 +330,44 @@
                 <div class="sl-no">Certificate No. &nbsp; <strong>{{ $certificateNumber }}</strong></div>
             </div>
             <div class="meta-right">
-                <div class="cert-date">Date: <span style="border-bottom: 1.5px dotted #111; padding: 0 3mm 0.5mm; display: inline-block;">{{ $issueDate }}</span></div>
+                <div class="cert-date">Date: <span style="border-bottom: 1.5px dotted #111; padding: 0 3mm 0.5mm; display: inline-block;"><strong>{{ $issueDate }}</strong></span></div>
             </div>
         </section>
 
         <section class="certificate-body">
             <div class="field-row">
                 <span class="field-label">Name of Student</span>
-                <span class="inline-fill">{{ $studentName }}</span>
+                <span class="inline-fill"><strong>{{ $studentName }}</strong></span>
             </div>
 
             <div class="field-row">
                 <span class="field-label">Son/Daughter of</span>
-                <span class="inline-fill">{{ $student->father_name ?? '—' }}</span>
+                <span class="inline-fill"><strong>{{ $student->father_name ?? '—' }}</strong></span>
             </div>
 
             <div class="field-row">
                 <span class="field-label">Resident of</span>
-                <span class="inline-fill">{{ $student->permanent_address ?? '—' }}</span>
+                <span class="inline-fill"><strong>{{ $student->permanent_address ?? '—' }}</strong></span>
             </div>
 
             <div class="field-row">
                 <span class="field-label">is/was a regular Student of this college for the class</span>
-                <span class="inline-fill">{{ $courseName }}</span>
+                <span class="inline-fill"><strong>{{ $courseName }}</strong></span>
             </div>
+
+            @if(!empty($certSemester))
+                <div class="field-row">
+                    <span class="field-label">Semester</span>
+                    <span class="inline-fill fixed-short"><strong>{{ $certSemester }}</strong></span>
+                </div>
+            @endif
 
             <div class="field-row">
                 <span class="field-label">Session</span>
-                <span class="inline-fill fixed-short">{{ $sessionName }}</span>
+                <span class="inline-fill fixed-short"><strong>{{ $sessionName }}</strong></span>
                 @if(!empty($academicYear))
                     <span class="field-label" style="padding-left: 6mm;">Academic Year</span>
-                    <span class="inline-fill fixed-short">{{ $academicYear }}</span>
+                    <span class="inline-fill fixed-short"><strong>{{ $academicYear }}</strong></span>
                 @endif
             </div>
 

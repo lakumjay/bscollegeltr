@@ -295,8 +295,9 @@
                                         } else {
                                             $defaultAcademicYear = date('Y') . '-' . (date('Y') + 1);
                                         }
+                                        $studentSemNum = (int) ($student->current_semester ?: 1);
                                     @endphp
-                                    <div class="col-md-6">
+                                    <div class="col-md-4">
                                         <label class="form-label small fw-semibold text-secondary mb-1">
                                             <i class="bx bx-calendar me-1"></i> Session <span class="text-danger">*</span>
                                         </label>
@@ -312,7 +313,7 @@
                                             @endforeach
                                         </select>
                                     </div>
-                                    <div class="col-md-6">
+                                    <div class="col-md-4">
                                         <label class="form-label small fw-semibold text-secondary mb-1">
                                             <i class="bx bx-time-five me-1"></i> Academic Year <span class="text-danger">*</span>
                                         </label>
@@ -326,6 +327,19 @@
                                                     {{ $ayOpt }}
                                                 </option>
                                             @endforeach
+                                        </select>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label class="form-label small fw-semibold text-secondary mb-1">
+                                            <i class="bx bx-layer me-1"></i> Semester <span class="text-danger">*</span>
+                                        </label>
+                                        <select name="data[semester]" class="form-select" required>
+                                            <option value="">-- Select Semester --</option>
+                                            @for($sem = 1; $sem <= 8; $sem++)
+                                                <option value="Semester {{ $sem }}" {{ $studentSemNum === $sem ? 'selected' : '' }}>
+                                                    Semester {{ $sem }}
+                                                </option>
+                                            @endfor
                                         </select>
                                     </div>
                                     @foreach($certificate_fields[$K] as $key=>$val)

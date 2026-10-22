@@ -33,10 +33,14 @@ class FeeManagementController extends Controller
      */
     private function getStudentSemester(int $studentId, int $sessionId): int
     {
-        return (int) (DB::table('student_courses')
+        $sem = DB::table('student_courses')
             ->where('student_id', $studentId)
             ->where('session_id', $sessionId)
-            ->value('semaster') ?: 1);
+            ->value('semaster');
+        if (!$sem) {
+            $sem = DB::table('students')->where('id', $studentId)->value('current_semester');
+        }
+        return (int) ($sem ?: 1);
     }
 
     /**
@@ -71,23 +75,53 @@ class FeeManagementController extends Controller
 
         if ($selectedCourseId) {
             $sessionId = $user->active_session_id;
+            $courseObj = Courses::find($selectedCourseId);
+            $courseName = $courseObj?->name;
 
             $query = Student::with(['StudentCourse' => function ($relation) use ($sessionId) {
-                    $relation->where('session_id', $sessionId);
+                    if ($sessionId) {
+                        $relation->where('session_id', $sessionId);
+                    }
                 }])
-                ->where('course', $selectedCourseId)
-                ->whereIn('id', function ($q) use ($sessionId) {
-                    $q->select('student_id')
-                        ->from('student_courses')
-                        ->where('session_id', $sessionId);
+                ->where(function ($q) use ($selectedCourseId, $courseName) {
+                    $q->where('course', (string)$selectedCourseId);
+                    if ($courseName) {
+                        $q->orWhere('course', $courseName);
+                    }
                 });
 
-            if ($search = $request->query('search')) {
-                $query->where(function ($q) use ($search) {
-                    $q->whereRaw("CONCAT(first_name, ' ', last_name) LIKE ?", ["%{$search}%"])
-                      ->orWhere('roll_no', 'LIKE', "%{$search}%");
+            if ($sessionId) {
+                $query->where(function ($q) use ($sessionId) {
+                    $q->whereIn('id', function ($sub) use ($sessionId) {
+                        $sub->select('student_id')
+                            ->from('student_courses')
+                            ->where('session_id', $sessionId);
+                    })->orWhere('session_id', $sessionId);
                 });
             }
+
+            if ($search = $request->query('search')) {
+                $il = DbHelper::ilike();
+                $query->where(function ($q) use ($search, $il) {
+                    $q->whereRaw("CONCAT(COALESCE(first_name, ''), ' ', COALESCE(last_name, '')) {$il} ?", ["%{$search}%"])
+                      ->orWhereRaw("roll_no {$il} ?", ["%{$search}%"])
+                      ->orWhereRaw("student_id {$il} ?", ["%{$search}%"]);
+                });
+            }
+
+            if ($request->filled('sem_filter')) {
+                $sem = (int) $request->query('sem_filter');
+                $query->where(function ($q) use ($sessionId, $sem) {
+                    $q->whereHas('StudentCourse', function ($sc) use ($sessionId, $sem) {
+                        if ($sessionId) {
+                            $sc->where('session_id', $sessionId);
+                        }
+                        $sc->where('semaster', $sem);
+                    })->orWhere('current_semester', $sem);
+                });
+            }
+
+            $query->orderByRaw(DbHelper::rollNoOrder());
 
             $students = $query->paginate(30)->withQueryString();
         }
