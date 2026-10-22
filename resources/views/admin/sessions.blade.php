@@ -4,19 +4,16 @@
 <div class="premium-page premium-page--compact sessions-page">
     <section class="premium-page-header">
         <div><span class="premium-eyebrow">Academic settings</span><h1>Academic sessions</h1><p>Choose the institution-wide academic year used for new student, attendance, salary and fee records.</p></div>
-        <div class="sessions-header-status">
-            <div>
+        <div class="d-flex align-items-center gap-2 flex-wrap">
+            <div class="sessions-header-status">
                 <span>Current session</span><strong>{{ optional($sessions->firstWhere('id', $currentSessionId))->session_name ?? 'Not selected' }}</strong>
             </div>
             <form action="{{ route('admin.sessions.merge') }}" method="POST" class="d-inline" onsubmit="return confirm('Do you want to automatically merge equivalent duplicate sessions (e.g. 2026-2030 into 2026-30)?');">
                 @csrf
-                <button type="submit" class="btn btn-outline-warning btn-sm ms-2" style="font-weight: 600;">
-                    <i class="fa fa-magic me-1"></i> Clean Duplicates
+                <button type="submit" class="btn btn-warning btn-sm text-dark fw-bold px-3 py-1 shadow-sm" style="font-size: 12px; border-radius: 6px; letter-spacing: 0.2px;">
+                    Clean Duplicates
                 </button>
             </form>
-            <button type="button" class="btn btn-primary btn-sm ms-2" data-bs-toggle="collapse" data-bs-target="#createSessionBox" style="font-weight: 600;">
-                <i class="fa fa-plus me-1"></i> Add Session
-            </button>
         </div>
     </section>
 
@@ -24,55 +21,33 @@
     @if(session('error')) <div class="alert alert-danger">{{ session('error') }}</div> @endif
     @if($errors->any()) <div class="alert alert-danger">{{ $errors->first() }}</div> @endif
 
-    <div class="collapse mb-4" id="createSessionBox">
-        <div class="card card-body shadow-sm border-0" style="background: #ffffff; border-radius: 12px; padding: 20px;">
-            <h6 class="fw-bold mb-3"><i class="fa fa-calendar-plus-o text-primary me-2"></i> Add New Academic Session</h6>
-            <form action="{{ route('admin.sessions.store') }}" method="POST" class="row g-3 align-items-end">
-                @csrf
-                <div class="col-md-5">
-                    <label class="form-label small fw-semibold text-secondary mb-1">Session Name / Year</label>
-                    <input type="text" name="session_name" class="form-control" placeholder="e.g. 2026-30" required>
-                    <small class="text-muted">Enter the 4-year or custom academic session format.</small>
-                </div>
-                <div class="col-md-3">
-                    <button type="submit" class="btn btn-success px-4 w-100" style="height: 38px;" onclick="if(this.form.checkValidity()){this.disabled=true;this.innerHTML='<i class=\'fa fa-spinner fa-spin me-1\'></i> Saving...';this.form.submit();}">
-                        <i class="fa fa-save me-1"></i> Save Session
-                    </button>
-                </div>
-            </form>
-        </div>
-    </div>
-
     <section class="premium-content-card sessions-directory">
         <div class="premium-card-heading"><div><span class="premium-eyebrow">Available years</span><h2>Select an academic session</h2></div><span class="premium-count-badge">{{ $sessions->count() }} sessions</span></div>
         <div class="sessions-grid">
             @forelse($sessions as $session)
                 @php($isActive = (int) $currentSessionId === (int) $session->id)
                 <article class="session-tile {{ $isActive ? 'is-active' : '' }}">
-                    <div class="session-tile__icon"><i class="fa fa-calendar"></i></div>
-                    <div class="session-tile__content"><span class="premium-eyebrow">Academic session</span><h3>{{ $session->session_name }}</h3><span class="session-status {{ $isActive ? 'is-active' : '' }}"><i class="fa fa-circle"></i> {{ $isActive ? 'Currently active' : 'Available' }}</span></div>
+                    <div class="session-tile__content">
+                        <span class="premium-eyebrow">Academic session</span>
+                        <h3 class="mb-1">{{ $session->session_name }}</h3>
+                        <span class="session-status {{ $isActive ? 'is-active' : '' }}">{{ $isActive ? 'Currently active' : 'Available' }}</span>
+                    </div>
                     <div class="d-flex align-items-center gap-2">
                         @if($isActive)
-                            <span class="premium-btn premium-btn-outline premium-btn-sm is-static"><i class="fa fa-check"></i> Active</span>
+                            <span class="badge bg-success-subtle text-success border border-success-subtle px-2 py-1" style="font-size: 11px; font-weight: 600; border-radius: 6px;">Active</span>
                         @else
-                            <form method="POST" action="{{ route('admin.sessions.activate', $session->id) }}" class="d-inline">@csrf<button type="submit" class="premium-btn premium-btn-primary premium-btn-sm"><i class="fa fa-power-off"></i> Activate</button></form>
-                        @endif
-                        <button type="button" class="btn btn-sm btn-outline-secondary px-2" title="Edit Session" onclick="editSessionName({{ $session->id }}, '{{ addslashes($session->session_name) }}')">
-                            <i class="fa fa-pencil"></i>
-                        </button>
-                        @if(!$isActive)
-                            <form method="POST" action="{{ route('admin.sessions.destroy', $session->id) }}" onsubmit="return confirm('Are you sure you want to delete session \'{{ addslashes($session->session_name) }}\'? Any linked records will remain safe.');" class="d-inline">
+                            <form method="POST" action="{{ route('admin.sessions.activate', $session->id) }}" class="d-inline">
                                 @csrf
-                                @method('DELETE')
-                                <button type="submit" class="btn btn-sm btn-outline-danger px-2" title="Delete Session">
-                                    <i class="fa fa-trash"></i>
-                                </button>
+                                <button type="submit" class="btn btn-sm btn-dark px-2 py-1" style="font-size: 11px; font-weight: 600; border-radius: 6px;">Activate</button>
                             </form>
                         @endif
+                        <button type="button" class="btn btn-sm btn-outline-secondary px-2 py-1" style="font-size: 11px; font-weight: 600; border-radius: 6px;" title="Edit Session" onclick="editSessionName({{ $session->id }}, '{{ addslashes($session->session_name) }}')">
+                            Edit
+                        </button>
                     </div>
                 </article>
             @empty
-                <div class="premium-empty-state"><i class="fa fa-calendar-o"></i><h3>No academic sessions available</h3><p>Create a session before selecting an active academic year.</p></div>
+                <div class="premium-empty-state"><h3>No academic sessions available</h3><p>Create a session before selecting an active academic year.</p></div>
             @endforelse
         </div>
     </section>
