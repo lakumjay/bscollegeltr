@@ -34,7 +34,20 @@ class StudentExportController extends Controller
         }
 
         if ($request->filled('batch')) {
-            $query->where('batch', $request->batch);
+            $batch = trim((string) $request->batch);
+            if (preg_match('/^(\d{4})-(\d{2})$/', $batch, $m)) {
+                $altBatch = $m[1] . '-' . substr($m[1], 0, 2) . $m[2]; // e.g. 2026-30 -> 2026-2030
+                $query->where(function ($q) use ($batch, $altBatch) {
+                    $q->where('batch', $batch)->orWhere('batch', $altBatch);
+                });
+            } elseif (preg_match('/^(\d{4})-(\d{2})(\d{2})$/', $batch, $m) && substr($m[1], 0, 2) === $m[2]) {
+                $altBatch = $m[1] . '-' . $m[3]; // e.g. 2026-2030 -> 2026-30
+                $query->where(function ($q) use ($batch, $altBatch) {
+                    $q->where('batch', $batch)->orWhere('batch', $altBatch);
+                });
+            } else {
+                $query->where('batch', $batch);
+            }
         }
 
         if ($request->filled('semester')) {

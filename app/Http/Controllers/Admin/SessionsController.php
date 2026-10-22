@@ -29,6 +29,21 @@ class SessionsController extends Controller
     }
 
     /**
+     * Store a newly created academic session.
+     */
+    public function store(Request $request)
+    {
+        $request->validate([
+            'session_name' => 'required|string|max:50',
+        ]);
+
+        $name = trim((string) $request->session_name);
+        $session = Session::firstOrCreate(['session_name' => $name]);
+
+        return redirect()->to(url('admin/sessions'))->with('success', "Academic session '{$session->session_name}' is ready.");
+    }
+
+    /**
      * Activate a session for the authenticated user.
      */
     public function activate($id)
@@ -43,4 +58,3 @@ class SessionsController extends Controller
         return redirect()->to(url('admin/sessions'))->with('success', 'Active academic session updated for all users.');
     }
 }
-?>

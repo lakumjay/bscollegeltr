@@ -228,7 +228,20 @@ class CoursesController extends Controller
     }
 
     if ($request->filled('batch')) {
-        $studentsQuery->where('batch', $request->query('batch'));
+        $batch = trim((string) $request->query('batch'));
+        if (preg_match('/^(\d{4})-(\d{2})$/', $batch, $m)) {
+            $altBatch = $m[1] . '-' . substr($m[1], 0, 2) . $m[2]; // e.g. 2026-30 -> 2026-2030
+            $studentsQuery->where(function ($q) use ($batch, $altBatch) {
+                $q->where('batch', $batch)->orWhere('batch', $altBatch);
+            });
+        } elseif (preg_match('/^(\d{4})-(\d{2})(\d{2})$/', $batch, $m) && substr($m[1], 0, 2) === $m[2]) {
+            $altBatch = $m[1] . '-' . $m[3]; // e.g. 2026-2030 -> 2026-30
+            $studentsQuery->where(function ($q) use ($batch, $altBatch) {
+                $q->where('batch', $batch)->orWhere('batch', $altBatch);
+            });
+        } else {
+            $studentsQuery->where('batch', $batch);
+        }
     }
 
     if ($request->filled('semester')) {
@@ -253,9 +266,23 @@ class CoursesController extends Controller
 
     $students = $studentsQuery->paginate(30)->withQueryString();
     $allCourses = Courses::orderBy('name')->get(['id', 'name']);
-    $allBatches = Student::query()->whereNotNull('batch')->where('batch', '!=', '')->distinct()->orderBy('batch')->pluck('batch');
+
+    $studentBatches = Student::query()->whereNotNull('batch')->where('batch', '!=', '')->distinct()->pluck('batch')->toArray();
+    $sessionBatches = Session::pluck('session_name')->toArray();
+    $defaultBatches = ['2026-2030', '2026-30'];
+
+    $rawBatches = array_values(array_unique(array_filter(array_merge($studentBatches, $sessionBatches, $defaultBatches), fn ($b) => !empty(trim((string)$b)))));
+    usort($rawBatches, function ($a, $b) {
+        $aNum = preg_match('/^\d/', $a);
+        $bNum = preg_match('/^\d/', $b);
+        if ($aNum && !$bNum) return -1;
+        if (!$aNum && $bNum) return 1;
+        return strnatcasecmp($b, $a);
+    });
+    $allBatches = collect($rawBatches);
+
     $allSubjects = Subject::when($course, fn ($query) => $query->where('course_id', $course))->orderBy('name')->get(['id', 'name']);
-    $sessions = Session::orderBy('session_name')->get(['id', 'session_name']);
+    $sessions = Session::orderByDesc('session_name')->get(['id', 'session_name']);
     $profile = Profile::first();
 
     return view('admin.students', compact(
@@ -431,7 +458,21 @@ public function certificate_certificate($student_id,$type,Request $request, ClcC
         $next_student_id = $lastStudent ? ((int) $lastStudent->student_id) + 1 : '';
         $defaultBatch = optional(Session::find($user->active_session_id))->session_name;
 
-        return view('admin.create-student', compact('courses', 'special_categories', 'next_roll_no', 'next_student_id', 'defaultBatch'));
+        $rawBatches = array_values(array_unique(array_filter(array_merge(
+            Session::pluck('session_name')->toArray(),
+            Student::distinct()->pluck('batch')->toArray(),
+            ['2026-2030', '2026-30']
+        ))));
+        usort($rawBatches, function ($a, $b) {
+            $aNum = preg_match('/^\d/', $a);
+            $bNum = preg_match('/^\d/', $b);
+            if ($aNum && !$bNum) return -1;
+            if (!$aNum && $bNum) return 1;
+            return strnatcasecmp($b, $a);
+        });
+        $allBatches = $rawBatches;
+
+        return view('admin.create-student', compact('courses', 'special_categories', 'next_roll_no', 'next_student_id', 'defaultBatch', 'allBatches'));
     }
 
     /**
@@ -565,7 +606,21 @@ public function certificate_certificate($student_id,$type,Request $request, ClcC
         $special_categories=SpecialCategory::get();
         $defaultBatch = optional(Session::find($user->active_session_id))->session_name;
 
-        return view('admin.edit-student', compact('student', 'courses', 'subjects', 'special_categories', 'defaultBatch'));
+        $rawBatches = array_values(array_unique(array_filter(array_merge(
+            Session::pluck('session_name')->toArray(),
+            Student::distinct()->pluck('batch')->toArray(),
+            ['2026-2030', '2026-30']
+        ))));
+        usort($rawBatches, function ($a, $b) {
+            $aNum = preg_match('/^\d/', $a);
+            $bNum = preg_match('/^\d/', $b);
+            if ($aNum && !$bNum) return -1;
+            if (!$aNum && $bNum) return 1;
+            return strnatcasecmp($b, $a);
+        });
+        $allBatches = $rawBatches;
+
+        return view('admin.edit-student', compact('student', 'courses', 'subjects', 'special_categories', 'defaultBatch', 'allBatches'));
     }
 
     /**
@@ -766,14 +821,14 @@ public function certificate_certificate($student_id,$type,Request $request, ClcC
     public function upload()
     {
         $courses = Courses::with('subjects')->get();
-            $sessions = Session::all();
+        $sessions = Session::orderByDesc('session_name')->get();
 
         return view('admin.student_upload', compact('courses','sessions'));
     }
-       public function uploadAKS()
+    public function uploadAKS()
     {
         $courses = Courses::with('subjects')->get();
-            $sessions = Session::all();
+        $sessions = Session::orderByDesc('session_name')->get();
 
         return view('admin.student_uploadAKS', compact('courses','sessions'));
     }

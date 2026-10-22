@@ -56,6 +56,7 @@ Route::delete('/course/{courseId}/subject/{subjectId}', [CoursesController::clas
 
     // Session Routes Start
     Route::get('/sessions', [SessionsController::class, 'index'])->name('admin.sessions.index');
+    Route::post('/sessions/create', [SessionsController::class, 'store'])->name('admin.sessions.store');
     Route::post('/sessions/activate/{id}', [SessionsController::class, 'activate'])->name('admin.sessions.activate');
     // Session Routes End
     // Students Routes Start
