@@ -13,8 +13,8 @@
             margin: 0;
             padding: 0;
             font-family: Arial, sans-serif;
-            font-size: 16px;
-            line-height: 1.6;
+            font-size: 15px;
+            line-height: 1.5;
             background-color: #f5f5f5;
             min-height: 100vh;
             display: flex;
@@ -32,9 +32,9 @@
             background-color: white;
             box-shadow: 0 0 10px rgba(0,0,0,0.1);
             width: 48vw;
-            height: 90vh;
-            margin: 1vw;
-            padding: 1.2vw;
+            height: 94vh;
+            margin: 0.5vw;
+            padding: 1vw 1.2vw;
             box-sizing: border-box;
             position: relative;
             display: flex;
@@ -60,13 +60,28 @@
             flex-direction: column;
             height: 100%;
         }
+        .college-banner-container {
+            width: 100%;
+            text-align: center;
+            margin: 0 auto 6px;
+        }
+        .college-banner-img {
+            width: 100%;
+            max-width: 100%;
+            max-height: 105px;
+            height: auto;
+            object-fit: contain;
+            display: block;
+            margin: 0 auto;
+        }
         .certificate h1 {
             text-align: center;
-            font-size: 24px;
-            margin-bottom: 20px;
+            font-size: 21px;
+            margin: 8px 0 12px;
+            letter-spacing: 0.5px;
         }
         .certificate p {
-            margin: 10px 0;
+            margin: 6px 0;
         }
         .underline {
             border-bottom: 2px dotted black;
@@ -75,7 +90,7 @@
             text-align: center;
         }
         .long-underline {
-              border-bottom: 2px dotted black;
+            border-bottom: 2px dotted black;
             display: inline-block;
             padding-inline:10px;
             text-align: center;
@@ -91,13 +106,12 @@
         .signature {
             display: flex;
             justify-content: flex-end;
-            margin-top: 40px;
+            margin-top: 25px;
         }
         .signature-wrapper {
             display: flex;
-            margin-top:20px;
+            margin-top: 15px;
             justify-content: space-between;
-            
         }
         .hindi {
             font-family: 'Noto Serif Devanagari', serif;
@@ -105,8 +119,14 @@
         .cut-line {
             width: 0;
             border-left: 2px dashed #444;
-            height: 92vh;
+            height: 94vh;
             align-self: center;
+        }
+        .fee-structure-img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 4px auto;
         }
         @media print {
             body {
@@ -120,17 +140,21 @@
             .certificate {
                 box-shadow: none;
                 margin: 0;
-                padding: 10mm;
+                padding: 6mm 8mm;
                 width: 50%;
                 height: 100%;
+                page-break-inside: avoid;
             }
             .cut-line {
                 border-left: 2px dashed #444;
                 height: 100%;
             }
+            .college-banner-img {
+                max-height: 95px !important;
+            }
         }
         table{
-        font-size:14px
+            font-size:14px;
         }
     </style>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+Devanagari&display=swap" rel="stylesheet">
@@ -152,9 +176,9 @@
             @endif
             <div class="certificate-inner">
                 <div style="text-align:right;margin-bottom:4px;"><span style="background:#2c5aa0;color:#fff;font-size:9px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;border-radius:6px;padding:2px 8px;">Student Copy</span></div>
-                <center>
-                    <img src="{{ $bannerUrl }}" style="max-height:60px;width:auto;max-width:100%;">
-                </center>
+                <div class="college-banner-container">
+                    <img src="{{ $bannerUrl }}" class="college-banner-img" alt="College Banner">
+                </div>
 
             <p class="hindi">
                 पत्रांक- <font style="font-weight:600;  font-size: 15px;">{{ $StudentCertificate->certificate_number ?: (($profile->lc_prefix ?? 'BSM/LTR') . '-' . $StudentCertificate->sr) }}</font>
@@ -196,7 +220,7 @@
             </p>
 <p>He/She is a Bonafied Student of our college</p>
            <center><b>Fee Structure</b></center>
-            <img src="{{url('fee_structure.png')}}"/>
+            <img src="{{url('fee_structure.png')}}" class="fee-structure-img" alt="Fee Structure"/>
             <div class="signature-wrapper">
                 <div class="signature">
                     <div>Assistant</div>
@@ -216,9 +240,9 @@
             @endif
             <div class="certificate-inner">
                 <div style="text-align:right;margin-bottom:4px;"><span style="background:#333;color:#fff;font-size:9px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;border-radius:6px;padding:2px 8px;">College Copy</span></div>
-                <center>
-                    <img src="{{ $bannerUrl }}" style="max-height:60px;width:auto;max-width:100%;">
-                </center>
+                <div class="college-banner-container">
+                    <img src="{{ $bannerUrl }}" class="college-banner-img" alt="College Banner">
+                </div>
 
                 <p class="hindi">
                     पत्रांक <font style="font-weight:600;  font-size: 15px;">{{ $StudentCertificate->certificate_number ?: (($profile->lc_prefix ?? 'BSM/LTR') . '-' . $StudentCertificate->sr) }}</font>
@@ -260,7 +284,7 @@
                 </p>
     <p>He/She is a Bonafied Student of our college</p>
     <center><b>Fee Structure</b></center>
-                <img src="{{url('fee_structure.png')}}"/>
+                <img src="{{url('fee_structure.png')}}" class="fee-structure-img" alt="Fee Structure"/>
                 <div class="signature-wrapper">
                     <div class="signature">
                         <div>Assistant</div>

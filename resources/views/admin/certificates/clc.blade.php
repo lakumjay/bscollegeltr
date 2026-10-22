@@ -262,6 +262,10 @@
     $logoUrl = $logoAsset && preg_match('/^(?:data:|https?:\/\/)/i', $logoAsset)
         ? $logoAsset
         : ($logoAsset && file_exists(public_path($logoAsset)) ? url($logoAsset) : asset('images/default-college-logo.svg'));
+    $bannerAsset = $profile?->banner ?? null;
+    $bannerUrl = $bannerAsset && preg_match('/^(?:data:|https?:\/\/)/i', $bannerAsset)
+        ? $bannerAsset
+        : ($bannerAsset && file_exists(public_path($bannerAsset)) ? url($bannerAsset) : null);
 
     $studentPhoto = null;
     if (!empty($student->photo)) {
@@ -306,29 +310,35 @@
     @endif
 
     <div class="certificate-content">
-        <header class="college-header">
-            <div class="header-body-row">
-                @if($logoUrl)
-                    <div class="college-logo-box">
-                        <img class="college-logo" src="{{ $logoUrl }}" onerror="this.onerror=null;this.src='{{ asset('images/default-college-logo.svg') }}';" alt="{{ $collegeName }} emblem">
-                    </div>
-                @else
-                    <div style="flex: 0 0 32mm;"></div>
-                @endif
-                <div class="college-info">
-                    <h1 class="college-name">{{ $collegeName }}</h1>
-                    <p class="college-address">{{ $collegeAddress }}</p>
-                    <p class="college-affiliation">{{ $affiliation }}</p>
-                </div>
-                @if($studentPhoto)
-                    <div class="student-photo-box">
-                        <img class="student-photo" src="{{ $studentPhoto }}" onerror="this.onerror=null;this.parentElement.style.display='none';" alt="{{ $studentName }}">
-                    </div>
-                @else
-                    <div style="flex: 0 0 32mm;"></div>
-                @endif
+        @if($bannerUrl)
+            <div class="college-banner-header" style="width: 100%; text-align: center; margin-bottom: 5mm;">
+                <img src="{{ $bannerUrl }}" style="width: 100%; max-height: 32mm; object-fit: contain; display: block; margin: 0 auto;" alt="{{ $collegeName }}">
             </div>
-        </header>
+        @else
+            <header class="college-header">
+                <div class="header-body-row">
+                    @if($logoUrl)
+                        <div class="college-logo-box">
+                            <img class="college-logo" src="{{ $logoUrl }}" onerror="this.onerror=null;this.src='{{ asset('images/default-college-logo.svg') }}';" alt="{{ $collegeName }} emblem">
+                        </div>
+                    @else
+                        <div style="flex: 0 0 32mm;"></div>
+                    @endif
+                    <div class="college-info">
+                        <h1 class="college-name">{{ $collegeName }}</h1>
+                        <p class="college-address">{{ $collegeAddress }}</p>
+                        <p class="college-affiliation">{{ $affiliation }}</p>
+                    </div>
+                    @if($studentPhoto)
+                        <div class="student-photo-box">
+                            <img class="student-photo" src="{{ $studentPhoto }}" onerror="this.onerror=null;this.parentElement.style.display='none';" alt="{{ $studentName }}">
+                        </div>
+                    @else
+                        <div style="flex: 0 0 32mm;"></div>
+                    @endif
+                </div>
+            </header>
+        @endif
 
         <section class="document-heading">
             <div class="certificate-number">Certificate No.<br><strong>{{ $certificateNumber }}</strong></div>
