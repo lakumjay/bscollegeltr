@@ -265,8 +265,14 @@
         }
     }
 
+    $certData = json_decode($StudentCertificate->data ?? '{}') ?: (object) [];
     $courseName = optional($student->course_details)->name ?: '—';
-    $sessionName = optional($student->session)->session_name ?: ($student->batch ?? '—');
+    $sessionName = $certData->session ?? optional($student->session)->session_name ?: ($student->batch ?? '—');
+    $academicYear = $certData->academic_year ?? null;
+    if (empty($academicYear) && preg_match('/^(\d{4})/', (string)$sessionName, $m)) {
+        $startY = (int)$m[1];
+        $academicYear = $startY . '-' . ($startY + 1);
+    }
     $issueDate = optional($StudentCertificate->created_at)->format('d-m-Y') ?? now()->format('d-m-Y');
     $rawPrefix = strtoupper(trim((string) ($profile?->lc_prefix ?? '')));
     $cleanPrefix = trim(preg_replace('/[^A-Z0-9_\-\/]/', '', $rawPrefix), '/');
@@ -351,6 +357,10 @@
             <div class="field-row">
                 <span class="field-label">Session</span>
                 <span class="inline-fill fixed-short">{{ $sessionName }}</span>
+                @if(!empty($academicYear))
+                    <span class="field-label" style="padding-left: 6mm;">Academic Year</span>
+                    <span class="inline-fill fixed-short">{{ $academicYear }}</span>
+                @endif
             </div>
 
             <p class="statement-paragraph">

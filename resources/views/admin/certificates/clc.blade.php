@@ -279,7 +279,12 @@
     }
 
     $courseName = optional($student->course_details)->name ?: '—';
-    $sessionName = optional($student->session)->session_name ?: ($student->batch ?? '—');
+    $sessionName = $certificateData->session ?? optional($student->session)->session_name ?: ($student->batch ?? '—');
+    $academicYear = $certificateData->academic_year ?? null;
+    if (empty($academicYear) && preg_match('/^(\d{4})/', (string)$sessionName, $m)) {
+        $startY = (int)$m[1];
+        $academicYear = $startY . '-' . ($startY + 1);
+    }
     $issueDate = optional($StudentCertificate->created_at)->format('d-m-Y') ?? now()->format('d-m-Y');
     $dateOfBirth = optional($student->date_of_birth)->format('d-m-Y') ?? '—';
     $registrationNumber = $certificateData->registration_number ?? $certificateData->registrtaion_number ?? $student->reg_no ?? '—';
@@ -382,7 +387,11 @@
                     <div class="academic-subrow">
                         <div class="field-fill strong">{{ $universityName }}</div>
                         <span>of Session</span>
-                        <div class="field-fill strong center" style="flex: 0 0 35mm;">{{ $sessionName }}</div>
+                        <div class="field-fill strong center" style="flex: 0 0 30mm;">{{ $sessionName }}</div>
+                        @if(!empty($academicYear))
+                            <span>Academic Year</span>
+                            <div class="field-fill strong center" style="flex: 0 0 28mm;">{{ $academicYear }}</div>
+                        @endif
                     </div>
                     <div class="academic-subrow">
                         <span>Roll</span>

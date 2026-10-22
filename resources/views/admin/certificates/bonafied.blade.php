@@ -166,6 +166,18 @@
         ? $logoAsset
         : ($logoAsset && file_exists(public_path($logoAsset)) ? url($logoAsset) : asset('images/default-college-logo.svg'));
     $bannerUrl = $profile?->banner && file_exists(public_path($profile->banner)) ? url($profile->banner) : $logoUrl;
+
+    $certData = json_decode($StudentCertificate->data ?? '{}') ?: (object) [];
+    $certSession = $certData->session ?? optional($student->session)->session_name ?: ($student->batch ?? '');
+    $certAcademicYear = $certData->academic_year ?? '';
+    if (empty($certAcademicYear)) {
+        if (!empty($student->academic_year_start) && !empty($student->academic_year_end)) {
+            $certAcademicYear = $student->academic_year_start . ' to ' . $student->academic_year_end;
+        } elseif (preg_match('/^(\d{4})/', (string)$certSession, $m)) {
+            $startY = (int)$m[1];
+            $certAcademicYear = $startY . '-' . ($startY + 1);
+        }
+    }
 @endphp
     <div class="certificates-container">
 
@@ -209,14 +221,9 @@
                         {{ $subjects->pluck('name')->implode(', ') }}
                     @endif
                 </span>
-                Session <span class="underline">
-                   {!! str_repeat('&nbsp;', 12) !!} </span>
+                Session <span class="underline" style="min-width: 70px; font-weight: 600;">{{ $certSession ?: '—' }}</span>
                 for the academic year
-                <span class="underline">
-                   {!! str_repeat('&nbsp;', 12) !!}
- to {{ $student->academic_year_end }} {!! str_repeat('&nbsp;', 12) !!}
-
-                </span>
+                <span class="underline" style="min-width: 90px; font-weight: 600;">{{ $certAcademicYear ?: '—' }}</span>
             </p>
 <p>He/She is a Bonafied Student of our college</p>
            <center><b>Fee Structure</b></center>
@@ -273,14 +280,9 @@
                             {{ $subjects->pluck('name')->implode(', ') }}
                         @endif
                     </span>
-                    Session <span class="underline">
-                       {!! str_repeat('&nbsp;', 12) !!} </span>
+                    Session <span class="underline" style="min-width: 70px; font-weight: 600;">{{ $certSession ?: '—' }}</span>
                     for the academic year
-                    <span class="underline">
-                       {!! str_repeat('&nbsp;', 12) !!}
-     to {{ $student->academic_year_end }} {!! str_repeat('&nbsp;', 12) !!}
-
-                    </span>
+                    <span class="underline" style="min-width: 90px; font-weight: 600;">{{ $certAcademicYear ?: '—' }}</span>
                 </p>
     <p>He/She is a Bonafied Student of our college</p>
     <center><b>Fee Structure</b></center>

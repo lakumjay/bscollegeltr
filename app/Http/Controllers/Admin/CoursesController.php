@@ -291,13 +291,19 @@ class CoursesController extends Controller
     });
     $allBatches = collect($rawBatches);
 
+    $currentYear = (int) date('Y');
+    $academicYears = [];
+    for ($y = $currentYear + 4; $y >= 2015; $y--) {
+        $academicYears[] = $y . '-' . ($y + 1);
+    }
+
     $allSubjects = Subject::when($course, fn ($query) => $query->where('course_id', $course))->orderBy('name')->get(['id', 'name']);
     $sessions = Session::orderByDesc('session_name')->get(['id', 'session_name']);
     $profile = Profile::first();
 
     return view('admin.students', compact(
         'students', 'course', 'course_name', 'certificate_fields',
-        'allCourses', 'allBatches', 'allSubjects', 'sessions', 'activeSessionId', 'profile'
+        'allCourses', 'allBatches', 'academicYears', 'allSubjects', 'sessions', 'activeSessionId', 'profile'
     ));
 }
 public function download_csv(Request $request){

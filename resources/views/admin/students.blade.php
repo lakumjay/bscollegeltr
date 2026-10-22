@@ -283,6 +283,51 @@
                                             <small class="text-muted">Auto-numbering is OFF in Profile Settings. College staff can enter the custom patrak / certificate number here.</small>
                                         </div>
                                     @endif
+                                    @php
+                                        $studentSessionVal = $student->batch ?: optional($student->session)->session_name ?: '';
+                                        $defaultAcademicYear = '';
+                                        if (preg_match('/^(\d{4})/', (string)$studentSessionVal, $m)) {
+                                            $startY = (int)$m[1];
+                                            $defaultAcademicYear = $startY . '-' . ($startY + 1);
+                                        } elseif (!empty($student->academic_year_start)) {
+                                            $startY = (int)$student->academic_year_start;
+                                            $defaultAcademicYear = $startY . '-' . ($startY + 1);
+                                        } else {
+                                            $defaultAcademicYear = date('Y') . '-' . (date('Y') + 1);
+                                        }
+                                    @endphp
+                                    <div class="col-md-6">
+                                        <label class="form-label small fw-semibold text-secondary mb-1">
+                                            <i class="bx bx-calendar me-1"></i> Session <span class="text-danger">*</span>
+                                        </label>
+                                        <select name="data[session]" class="form-select" required>
+                                            <option value="">-- Select Session --</option>
+                                            @if($studentSessionVal && !collect($allBatches)->contains($studentSessionVal))
+                                                <option value="{{ $studentSessionVal }}" selected>{{ $studentSessionVal }}</option>
+                                            @endif
+                                            @foreach($allBatches as $batchOpt)
+                                                <option value="{{ $batchOpt }}" {{ ($studentSessionVal === $batchOpt || ($studentSessionVal && str_starts_with($batchOpt, substr($studentSessionVal, 0, 4)))) ? 'selected' : '' }}>
+                                                    {{ $batchOpt }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="form-label small fw-semibold text-secondary mb-1">
+                                            <i class="bx bx-time-five me-1"></i> Academic Year <span class="text-danger">*</span>
+                                        </label>
+                                        <select name="data[academic_year]" class="form-select" required>
+                                            <option value="">-- Select Academic Year --</option>
+                                            @if($defaultAcademicYear && !in_array($defaultAcademicYear, $academicYears ?? [], true))
+                                                <option value="{{ $defaultAcademicYear }}" selected>{{ $defaultAcademicYear }}</option>
+                                            @endif
+                                            @foreach(($academicYears ?? []) as $ayOpt)
+                                                <option value="{{ $ayOpt }}" {{ $defaultAcademicYear === $ayOpt ? 'selected' : '' }}>
+                                                    {{ $ayOpt }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                    </div>
                                     @foreach($certificate_fields[$K] as $key=>$val)
                                         <div class="col-md-6">
                                             <label class="form-label small fw-semibold text-secondary mb-1">{{$val}}</label>
